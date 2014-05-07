@@ -6,7 +6,6 @@ import org.mech.rougue.core.game.model.map.render.MapObjectOrdererRenderer;
 import org.mech.rougue.core.game.model.map.render.SeenMapRenderer;
 import org.mech.rougue.core.game.model.map.tile.TileTheme;
 import org.mech.rougue.core.game.model.player.render.PlayerRenderer;
-import org.mech.rougue.core.game.model.trap.render.TrapRenderer;
 import org.mech.rougue.factory.AbstractDefinition;
 import org.mech.rougue.playground.MonsterRenderer;
 
@@ -20,7 +19,6 @@ public class RendererDefinition extends AbstractDefinition {
 
 		singleton(PlayerRenderer.class);
 		singleton(MonsterRenderer.class);
-		singleton(TrapRenderer.class);
 		
 		singleton(TileTheme.class);
 				

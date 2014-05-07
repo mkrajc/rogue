@@ -1,9 +1,9 @@
 package org.mech.rougue.core.game.update.move;
 
-import org.mech.rougue.core.game.model.Move;
-import org.mech.rougue.core.game.model.Positionable;
 import org.mech.rougue.core.game.model.map.Map;
 import org.mech.rougue.core.game.model.map.tile.NewMapTile;
+import org.mech.rougue.core.r.model.geom.Move;
+import org.mech.rougue.core.r.model.geom.Positionable;
 import org.mech.terminator.geometry.Dimension;
 import org.mech.terminator.geometry.Position;
 import org.slf4j.Logger;

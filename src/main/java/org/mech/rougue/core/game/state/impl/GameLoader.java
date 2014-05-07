@@ -1,12 +1,10 @@
 package org.mech.rougue.core.game.state.impl;
 
-import java.util.List;
 import org.mech.rougue.core.game.GameContext;
 import org.mech.rougue.core.game.GameData;
 import org.mech.rougue.core.game.model.area.AreaLoader;
 import org.mech.rougue.core.game.model.map.decorator.themes.IceTempleTileDecorator;
 import org.mech.rougue.core.game.model.player.Player;
-import org.mech.rougue.core.game.play.update.GameUpdateHandler;
 import org.mech.rougue.core.game.state.Loader;
 import org.mech.rougue.core.r.event.LoadAreaEvent;
 import org.mech.rougue.factory.Inject;
@@ -22,9 +20,6 @@ public class GameLoader implements Loader {
 
 	@Inject
 	private AreaLoader areaLoader;
-
-	@Inject
-	private List<GameUpdateHandler> handlers;
 
 	@Inject
 	private Player player;

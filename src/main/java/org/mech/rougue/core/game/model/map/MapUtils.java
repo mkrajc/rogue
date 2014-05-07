@@ -2,7 +2,7 @@ package org.mech.rougue.core.game.model.map;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.mech.rougue.core.r.GObject;
+import org.mech.rougue.core.r.model.common.GObject;
 
 public class MapUtils {
 	public static <T> List<T> getObjectsOfType(Map map, Class<T> clazz) {

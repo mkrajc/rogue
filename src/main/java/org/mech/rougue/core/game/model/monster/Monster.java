@@ -3,15 +3,16 @@ package org.mech.rougue.core.game.model.monster;
 import org.mech.rougue.core.game.GameContext;
 import org.mech.rougue.core.game.model.map.render.MapObject;
 import org.mech.rougue.core.game.model.map.render.RenderId;
-import org.mech.rougue.core.game.play.update.LivingObject;
 import org.mech.rougue.core.game.start.handler.StartHandler;
 import org.mech.rougue.core.game.update.move.MapMover;
+import org.mech.rougue.core.r.model.common.LiveObject;
 import org.mech.rougue.core.r.object.GId;
 import org.mech.rougue.factory.Inject;
 import org.mech.terminator.geometry.Position;
 
-public class Monster extends LivingObject implements MapObject {
+public class Monster extends LiveObject implements MapObject {
 
+	private GId gId;
 	private RenderId id;
 	private Position position;
 	private boolean updated;
@@ -23,10 +24,10 @@ public class Monster extends LivingObject implements MapObject {
 	private StartHandler startHandler;
 
 	@Override
-	protected void onUpdate(GameContext context) {
+	protected void onUpdate(final GameContext context) {
 		final Position playerPosition = context.getData().getPlayer().getPosition();
-		int testX = getPosition().x;
-		int testY = getPosition().y;
+		final int testX = getPosition().x;
+		final int testY = getPosition().y;
 
 		int x = 1;
 		if (playerPosition.x == testX) {
@@ -59,7 +60,7 @@ public class Monster extends LivingObject implements MapObject {
 	}
 
 	@Override
-	public void setPosition(Position position) {
+	public void setPosition(final Position position) {
 		this.position = position;
 		this.updated = true;
 	}
@@ -78,7 +79,7 @@ public class Monster extends LivingObject implements MapObject {
 		return updated;
 	}
 
-	public void setUpdated(boolean state) {
+	public void setUpdated(final boolean state) {
 		this.updated = state;
 	}
 
@@ -89,8 +90,7 @@ public class Monster extends LivingObject implements MapObject {
 
 	@Override
 	public GId id() {
-		// TODO Auto-generated method stub
-		return null;
+		return gId;
 	}
 
 }

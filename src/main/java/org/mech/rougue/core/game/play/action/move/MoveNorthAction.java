@@ -1,6 +1,6 @@
 package org.mech.rougue.core.game.play.action.move;
 
-import org.mech.rougue.core.game.model.Move;
+import org.mech.rougue.core.r.model.geom.Move;
 
 public class MoveNorthAction extends MoveAction {
 

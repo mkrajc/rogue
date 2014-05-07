@@ -3,7 +3,7 @@ package org.mech.rougue.core.r.action.object;
 import java.util.ArrayList;
 import java.util.List;
 import org.mech.rougue.core.game.play.action.Action;
-import org.mech.rougue.core.r.GObject;
+import org.mech.rougue.core.r.model.common.GObject;
 
 public class ObjectActionHelper {
 

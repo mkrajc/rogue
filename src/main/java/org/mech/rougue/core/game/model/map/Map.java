@@ -6,7 +6,7 @@ import org.mech.rougue.core.game.model.map.tile.GroundTile;
 import org.mech.rougue.core.game.model.map.tile.MapTile;
 import org.mech.rougue.core.game.model.map.tile.NewMapTile;
 import org.mech.rougue.core.game.model.map.tile.Tiles;
-import org.mech.rougue.core.r.GObject;
+import org.mech.rougue.core.r.model.common.GObject;
 import org.mech.rougue.core.r.model.map.EnvironmentObject;
 import org.mech.rougue.utils.CollectionUtils;
 import org.mech.terminator.geometry.Dimension;

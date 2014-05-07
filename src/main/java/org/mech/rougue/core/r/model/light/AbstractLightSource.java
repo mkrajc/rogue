@@ -8,14 +8,10 @@ import org.mech.rougue.core.r.event.RebuildLightEvent;
 import org.mech.rougue.core.r.handler.game.light.LightMask;
 import org.mech.terminator.geometry.GeometryUtils;
 import org.mech.terminator.geometry.Position;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public abstract class AbstractLightSource implements LightSource {
 
 	public static final double DEFAULT_BORDER_INTENSITY = LightMask.DEFAULT_SHADOW_INTENSITY + 0.2;
-
-	private final static Logger LOG = LoggerFactory.getLogger(AbstractLightSource.class);
 
 	private final Set<LightPosition> lightPositions = new HashSet<LightPosition>();
 	private Position position;

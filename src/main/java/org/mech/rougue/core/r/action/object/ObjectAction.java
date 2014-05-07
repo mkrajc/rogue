@@ -1,6 +1,6 @@
 package org.mech.rougue.core.r.action.object;
 
-import org.mech.rougue.core.r.GObject;
+import org.mech.rougue.core.r.model.common.GObject;
 
 public interface ObjectAction<T extends GObject> {
 	

@@ -1,12 +1,12 @@
 package org.mech.rougue.core.game.play.action.move;
 
 import org.mech.rougue.core.game.GameContext;
-import org.mech.rougue.core.game.model.Move;
 import org.mech.rougue.core.game.model.player.Player;
 import org.mech.rougue.core.game.play.action.ActionDispatcher;
 import org.mech.rougue.core.game.play.action.DefaultAction;
 import org.mech.rougue.core.game.update.move.MapMover;
 import org.mech.rougue.core.r.event.PlayerMoveEvent;
+import org.mech.rougue.core.r.model.geom.Move;
 import org.mech.rougue.factory.Inject;
 import org.mech.terminator.geometry.Position;
 

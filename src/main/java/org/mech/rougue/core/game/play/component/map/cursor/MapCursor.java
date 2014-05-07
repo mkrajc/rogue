@@ -1,7 +1,7 @@
 package org.mech.rougue.core.game.play.component.map.cursor;
 
-import org.mech.rougue.core.game.model.Positionable;
 import org.mech.rougue.core.game.play.component.map.RenderedMapTile;
+import org.mech.rougue.core.r.model.geom.Positionable;
 import org.mech.terminator.geometry.Position;
 
 public abstract class MapCursor implements Positionable, Cursor {

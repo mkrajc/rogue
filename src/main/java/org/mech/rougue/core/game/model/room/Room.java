@@ -1,6 +1,6 @@
 package org.mech.rougue.core.game.model.room;
 
-import org.mech.rougue.core.game.model.Positionable;
+import org.mech.rougue.core.r.model.geom.Positionable;
 import org.mech.terminator.geometry.Dimension;
 import org.mech.terminator.geometry.Position;
 

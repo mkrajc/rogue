@@ -1,7 +1,7 @@
 package org.mech.rougue.core.r.action.object;
 
 import org.mech.rougue.core.game.play.action.Action;
-import org.mech.rougue.core.r.GObject;
+import org.mech.rougue.core.r.model.common.GObject;
 
 public class ObjectActionToActionAdapter extends Action {
 

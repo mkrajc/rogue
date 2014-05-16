@@ -2,7 +2,6 @@ package org.mech.rougue.core.engine.handler.input;
 
 import java.awt.event.KeyEvent;
 import java.util.concurrent.ConcurrentLinkedQueue;
-import org.mech.terminator.input.InputListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,7 +11,7 @@ public abstract class InputHandlerAdapter implements InputListener, InputHandler
 
 	public ConcurrentLinkedQueue<InputEvent> events = new ConcurrentLinkedQueue<InputEvent>();
 
-	public void queue(KeyEvent event) {
+	public void queue(final KeyEvent event) {
 		LOG.trace("queue input [" + event + "]");
 		events.add(new InputEvent(event.getKeyCode()));
 	}
@@ -26,14 +25,14 @@ public abstract class InputHandlerAdapter implements InputListener, InputHandler
 	}
 
 	@Override
-	public final void handleInput(KeyEvent event) {
+	public final void handleInput(final KeyEvent event) {
 		queue(event);
 	}
 
 	@Override
 	public void processInput() {
 		while (hasNext()) {
-			InputEvent next = next();
+			final InputEvent next = next();
 			LOG.trace(getClass().getSimpleName() + " process input [" + next + "]");
 			onInput(next);
 		}

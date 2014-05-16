@@ -9,8 +9,7 @@ import org.mech.rougue.core.game.play.action.move.MoveNorthAction;
 import org.mech.rougue.core.game.play.action.move.MoveSouthAction;
 import org.mech.rougue.core.game.play.action.move.MoveWestAction;
 import org.mech.rougue.core.game.play.action.turn.TurnFreezeAction;
-import org.mech.rougue.core.game.play.action.ui.CharacterPanelAction;
-import org.mech.rougue.core.game.play.action.ui.OtherScreenPanelAction;
+import org.mech.rougue.core.game.ui.action.PlayerStatsPanelAction;
 import org.mech.rougue.core.r.model.door.action.CloseDoorAction;
 import org.mech.rougue.core.r.model.door.action.DoorActions;
 import org.mech.rougue.core.r.model.door.action.OpenDoorAction;
@@ -32,8 +31,7 @@ public class ActionDefinition extends AbstractDefinition {
 		
 //		singleton(DoorAction.class);
 
-		singleton(CharacterPanelAction.class);
-		singleton(OtherScreenPanelAction.class);
+		singleton(PlayerStatsPanelAction.class);
 		
 		singleton(SeeMapAction.class);
 		

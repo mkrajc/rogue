@@ -25,10 +25,16 @@ public class LocalizedResourceBundle {
 //		return Locale.ENGLISH;
 	}
 
-	public String getMessage(String key) {
+	public String getMessage(final String key) {
 		if(key == null){
 			return "null";
 		}
-		return current == null ? key : current.containsKey(key) ? current.getString(key) : "% " + key + " %";
+		final boolean containsKey = current.containsKey(key);
+		
+		if(!containsKey){
+			System.out.println(key);
+		}
+		
+		return current == null ? key : containsKey ? current.getString(key) : "% " + key + " %";
 	}
 }

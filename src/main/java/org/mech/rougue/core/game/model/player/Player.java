@@ -6,6 +6,7 @@ import org.mech.rougue.core.game.model.map.render.MapObject;
 import org.mech.rougue.core.game.model.map.render.RenderId;
 import org.mech.rougue.core.game.model.map.render.RenderOptions;
 import org.mech.rougue.core.r.handler.game.player.PlayerSight;
+import org.mech.rougue.core.r.model.player.stat.PlayerStats;
 import org.mech.rougue.core.r.object.GId;
 import org.mech.rougue.core.r.object.GIdFactory;
 import org.mech.rougue.factory.Inject;
@@ -13,11 +14,13 @@ import org.mech.terminator.geometry.Position;
 
 public class Player implements MapObject {
 
-	private GId gId;
-	private RenderId renderId;
+	private final GId gId;
+	private final RenderId renderId;
 
 	private String name;
 	private Position position;
+	
+	private PlayerStats stats;
 
 	@Inject
 	private PlayerSight sight;
@@ -28,6 +31,8 @@ public class Player implements MapObject {
 	public Player() {
 		renderId = new RenderId(getType());
 		gId = GIdFactory.next();
+		
+		stats = new PlayerStats();
 	}
 	
 	@PostConstruct
@@ -39,15 +44,17 @@ public class Player implements MapObject {
 		return name;
 	}
 
-	public void setName(String name) {
+	public void setName(final String name) {
 		this.name = name;
 	}
 
+	@Override
 	public Position getPosition() {
 		return position;
 	}
 
-	public void setPosition(Position position) {
+	@Override
+	public void setPosition(final Position position) {
 		this.position = position;
 	}
 
@@ -55,7 +62,7 @@ public class Player implements MapObject {
 		return sight;
 	}
 
-	public void setSight(PlayerSight sight) {
+	public void setSight(final PlayerSight sight) {
 		this.sight = sight;
 	}
 
@@ -77,6 +84,14 @@ public class Player implements MapObject {
 	@Override
 	public GId id() {
 		return gId;
+	}
+
+	public PlayerStats getStats() {
+		return stats;
+	}
+
+	public void setStats(final PlayerStats stats) {
+		this.stats = stats;
 	}
 
 }

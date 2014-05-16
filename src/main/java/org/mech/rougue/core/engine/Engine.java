@@ -1,32 +1,43 @@
 package org.mech.rougue.core.engine;
 
 import javax.annotation.PostConstruct;
-import org.mech.rougue.core.engine.handler.Handler;
 import org.mech.rougue.core.game.GameConstants;
+import org.mech.rougue.core.game.play.component.map.MapComponent;
+import org.mech.rougue.core.game.play.handler.GameInput;
+import org.mech.rougue.core.game.play.handler.GameUpdate;
+import org.mech.rougue.factory.Inject;
 import org.mech.rougue.timer.TickHandler;
 import org.mech.rougue.timer.TickTimer;
+import org.mech.terminator.Terminal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class Engine {
 
 	private final static Logger LOG = LoggerFactory.getLogger(Engine.class);
+	
+	@Inject
+	private MapComponent mapPanel;
+
+	@Inject
+	private GameInput gameInput;
+
+	@Inject
+	private GameUpdate gameUpdate;
 
 	private TickTimer engineTimer;
-
-	private Handler handler;
 
 	@PostConstruct
 	public void init() {
 		engineTimer = new TickTimer("updater", new TickHandler() {
 
 			@Override
-			public void onTick(double delta) {
+			public void onTick(final double delta) {
 				try {
 					processInputs();
 					update();
 					render();
-				} catch (Exception e) {
+				} catch (final Exception e) {
 					LOG.error("Exception occurred in tick", e);
 					System.exit(1);
 				}
@@ -36,23 +47,20 @@ public class Engine {
 	}
 
 	public void start() {
+		LOG.info("engine started");
 		engineTimer.start();
 	}
 
 	public void processInputs() {
-		handler.processInput();
+		gameInput.processInput();
 	}
 
 	public void update() {
-		handler.update();
+		gameUpdate.update();
 	}
 
 	public void render() {
-		handler.render();
+		mapPanel.render();
+		Terminal.getInstance().flush();
 	}
-
-	public void setHandler(Handler handler) {
-		this.handler = handler;
-	}
-
 }

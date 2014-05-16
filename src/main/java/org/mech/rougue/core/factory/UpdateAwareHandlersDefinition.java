@@ -9,12 +9,8 @@ public class UpdateAwareHandlersDefinition extends AbstractDefinition {
 	
 	@Override
 	public void definitions() {
-//		singleton(AreaStatsUpdateHandler.class);
-//		singleton(AreaGateHandler.class);
-		
 		singleton(Player.class);
 		singleton(PlayerSight.class);
-		
 		singleton(LightMask.class);
 	}
 }

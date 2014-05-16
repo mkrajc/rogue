@@ -11,41 +11,41 @@ public class GameState {
 	private boolean paused;
 	private boolean turnFreezed;
 
-	private Map<String, Boolean> stateSwitchMap = new HashMap<String, Boolean>();
+	private final Map<String, Boolean> stateSwitchMap = new HashMap<String, Boolean>();
 
 	public boolean isPaused() {
 		return paused;
 	}
 
-	public void setPaused(boolean paused) {
+	public void setPaused(final boolean paused) {
 		this.paused = paused;
-		LOG.debug("Game pause set to " + paused);
+		LOG.info("Game pause set to " + paused);
 	}
 
 	public boolean isTurnFreezed() {
 		return turnFreezed;
 	}
 
-	public void setTurnFreezed(boolean turnFreezed) {
+	public void setTurnFreezed(final boolean turnFreezed) {
 		this.turnFreezed = turnFreezed;
 		LOG.debug("Turn freeze set to " + turnFreezed);
 	}
 
-	public void setSwitch(String key, boolean value) {
+	public void setSwitch(final String key, final boolean value) {
 		this.stateSwitchMap.put(key, value);
 	}
 
-	public boolean getSwitch(String key, boolean def) {
+	public boolean getSwitch(final String key, final boolean def) {
 		return stateSwitchMap.containsKey(key) ? stateSwitchMap.get(key) : def;
 	}
 
-	public boolean getSwitch(String key) {
+	public boolean getSwitch(final String key) {
 		return getSwitch(key, false);
 	}
 
-	public void switchState(String key) {
-		boolean value = getSwitch(key);
-		boolean newVal = !value;
+	public void switchState(final String key) {
+		final boolean value = getSwitch(key);
+		final boolean newVal = !value;
 		setSwitch(key, newVal);
 		LOG.debug("State [" + key + "] set to [" + newVal + "]");
 	}

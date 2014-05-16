@@ -1,9 +1,11 @@
 package org.mech.rougue.core.game.play.action.game;
 
+import javax.swing.JOptionPane;
 import org.mech.rougue.core.game.play.action.DefaultAction;
-import org.mech.rougue.core.game.play.component.dialog.PauseDialog;
 import org.mech.rougue.core.game.state.GameState;
 import org.mech.rougue.factory.Inject;
+import org.mech.rougue.lang.LocalizedResourceBundle;
+import org.mech.rougue.ui.GameFrame;
 
 public class PauseAction extends DefaultAction {
 
@@ -11,7 +13,10 @@ public class PauseAction extends DefaultAction {
 	private GameState gameState;
 
 	@Inject
-	private PauseDialog dialog;
+	private GameFrame gameFrame;
+
+	@Inject
+	private LocalizedResourceBundle bundle;
 
 	@Override
 	protected void invoke() {
@@ -20,9 +25,9 @@ public class PauseAction extends DefaultAction {
 
 	@Override
 	protected void doInvoke() {
-		boolean paused = !gameState.isPaused();
-		gameState.setPaused(paused);
-		dialog.setVisible(paused);
+		gameState.setPaused(true);
+		JOptionPane.showMessageDialog(gameFrame, "game paused", "Pause", JOptionPane.INFORMATION_MESSAGE);
+		gameState.setPaused(false);
 	}
 
 	@Override

@@ -12,7 +12,7 @@ public class RenderId {
 
 	public RenderId() {}
 
-	public RenderId(String id) {
+	public RenderId(final String id) {
 		this.id = id;
 	}
 
@@ -20,7 +20,7 @@ public class RenderId {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(final String id) {
 		this.id = id;
 		this.finalId = null;
 		this.decorated = false;
@@ -30,7 +30,7 @@ public class RenderId {
 		return ornament;
 	}
 
-	public void setOrnament(String ornament) {
+	public void setOrnament(final String ornament) {
 		if (this.ornament != null) {
 			throw new IllegalArgumentException("ornament=" + this.ornament + " set=" + ornament);
 		}
@@ -41,7 +41,7 @@ public class RenderId {
 		return finalId;
 	}
 
-	public void setFinalId(String finalId) {
+	public void setFinalId(final String finalId) {
 		this.finalId = finalId;
 	}
 
@@ -49,7 +49,7 @@ public class RenderId {
 		return decorated;
 	}
 
-	public void setDecorated(boolean decorated) {
+	public void setDecorated(final boolean decorated) {
 		this.decorated = decorated;
 	}
 
@@ -61,7 +61,12 @@ public class RenderId {
 		return suffix;
 	}
 
-	public void setSuffix(String suffix) {
+	public void setSuffix(final String suffix) {
 		this.suffix = suffix;
+	}
+	
+	@Override
+	public String toString() {
+		return getIdString();
 	}
 }

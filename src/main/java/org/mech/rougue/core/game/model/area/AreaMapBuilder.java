@@ -8,6 +8,8 @@ import org.mech.rougue.core.game.model.map.tile.TileConfiguration;
 import org.mech.rougue.core.game.model.map.tile.Tiles;
 import org.mech.rougue.core.game.model.room.Room;
 import org.mech.rougue.core.r.model.door.Door;
+import org.mech.rougue.core.r.model.trap.DamageTrap;
+import org.mech.rougue.core.r.model.trap.Trap;
 import org.mech.terminator.geometry.Dimension;
 import org.mech.terminator.geometry.Line;
 import org.mech.terminator.geometry.Position;
@@ -15,17 +17,17 @@ import org.mech.terminator.geometry.Rectangle;
 
 public class AreaMapBuilder {
 
-	public void createMap(Area area, Dimension dim) {
+	public void createMap(final Area area, final Dimension dim) {
 		final Map map = new Map(dim);
 
-		for (Room room : area.rooms) {
+		for (final Room room : area.rooms) {
 			buildRoom(room, map);
 		}
 
 		wallize(map);
 		
-		for (Door door : area.doors) {
-			NewMapTile newMapTile = map.get(door.getPosition());
+		for (final Door door : area.doors) {
+			final NewMapTile newMapTile = map.get(door.getPosition());
 			newMapTile.setWall(null);
 			newMapTile.setPassable(door.isOpen());
 			newMapTile.setObstacle(door.isClosed());
@@ -34,18 +36,22 @@ public class AreaMapBuilder {
 		}
 
 		map.registerGameObjects((List) area.getGates());
+		
+		final Trap t = new DamageTrap();
+		t.setPosition(Position.at(7, 1));
+		map.registerGameObject(t);
 
 
 		area.map = map;
 
 	}
 
-	public void createMap(Area area) {
+	public void createMap(final Area area) {
 
 		int maxx = 0;
 		int maxy = 0;
 
-		for (Room room : area.rooms) {
+		for (final Room room : area.rooms) {
 			maxx = Math.max(room.getPosition().x + room.getSize().width, maxx);
 			maxy = Math.max(room.getPosition().y + room.getSize().height, maxy);
 		}
@@ -53,7 +59,7 @@ public class AreaMapBuilder {
 		createMap(area, Dimension.of(maxx, maxy));
 	}
 
-	private void wallize(Map map) {
+	private void wallize(final Map map) {
 		for (int i = 0; i < map.getSize().width; i++) {
 			for (int j = 0; j < map.getSize().height; j++) {
 				final Position at = Position.at(i, j);
@@ -63,7 +69,7 @@ public class AreaMapBuilder {
 
 				if (isWall(mapTile)) {
 //
-					String suff = computeWallId(map, mapTile, at);
+					final String suff = computeWallId(map, mapTile, at);
 					mapTile.getWall().getRenderId().setSuffix(suff);
 //
 //					if (secretDoor) {
@@ -78,16 +84,16 @@ public class AreaMapBuilder {
 //		return mapTile != null && Tiles.SECRET_ID.equals(mapTile.getId().getOrnament());
 //	}
 
-	private String computeWallId(Map map, NewMapTile mapTile, Position at) {
-		Position n = at.addY(-1);
-		Position s = at.addY(1);
-		Position e = at.addX(1);
-		Position w = at.addX(-1);
+	private String computeWallId(final Map map, final NewMapTile mapTile, final Position at) {
+		final Position n = at.addY(-1);
+		final Position s = at.addY(1);
+		final Position e = at.addX(1);
+		final Position w = at.addX(-1);
 
-		boolean isNorthWall = isWall(map.get(n));
-		boolean isSouthWall = isWall(map.get(s));
-		boolean isWestWall = isWall(map.get(w));
-		boolean isEastWall = isWall(map.get(e));
+		final boolean isNorthWall = isWall(map.get(n));
+		final boolean isSouthWall = isWall(map.get(s));
+		final boolean isWestWall = isWall(map.get(w));
+		final boolean isEastWall = isWall(map.get(e));
 
 		String wallIdOrnament = "";
 
@@ -110,20 +116,20 @@ public class AreaMapBuilder {
 		return wallIdOrnament;
 	}
 
-	private boolean isWall(NewMapTile mapTile) {
+	private boolean isWall(final NewMapTile mapTile) {
 		return mapTile != null && mapTile.getWall() != null && Tiles.ROOM_WALL_ID.contains(mapTile.getWall().getId());
 	}
 
-	private void buildRoom(Room room, Map map) {
+	private void buildRoom(final Room room, final Map map) {
 		final Dimension dim = room.getSize();
 		final Position roomPosition = room.getPosition();
 
-		Position end = roomPosition.add(dim.toPosition());
+		final Position end = roomPosition.add(dim.toPosition());
 
 		for (int i = roomPosition.x; i < end.x; i++) {
 			for (int j = roomPosition.y; j < end.y; j++) {
-				Position at = Position.at(i, j);
-				NewMapTile mapTile = new NewMapTile();
+				final Position at = Position.at(i, j);
+				final NewMapTile mapTile = new NewMapTile();
 				mapTile.setGround(new GroundTile(Tiles.ROOM_GROUND));
 				putTile(map, mapTile, at);
 			}
@@ -139,22 +145,22 @@ public class AreaMapBuilder {
 	}
 
 
-	private void putTile(Map map, NewMapTile tile, Position position) {
+	private void putTile(final Map map, final NewMapTile tile, final Position position) {
 		if (map.isPositionInMap(position)) {
 			map.put(tile, position);
 		}
 	}
 
-	private void fillLine(Map map, Line line, TileConfiguration tile) {
-		List<Position> linePos = line.getPoints();
-		for (Position position : linePos) {
-			NewMapTile newMapTile = map.get(position);
+	private void fillLine(final Map map, final Line line, final TileConfiguration tile) {
+		final List<Position> linePos = line.getPoints();
+		for (final Position position : linePos) {
+			final NewMapTile newMapTile = map.get(position);
 			newMapTile.setWall(new GroundTile(tile));
 			putTile(map, newMapTile, position);
 		}
 	}
 
-	public void build(Area area) {
+	public void build(final Area area) {
 		createMap(area);
 	}
 }

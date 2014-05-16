@@ -1,5 +1,6 @@
 package org.mech.rougue.core.game.model.map.render;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -20,51 +21,63 @@ public class MapObjectOrdererRenderer extends AbstractOrderedMapRenderer {
 	@Inject
 	private List<MapObjectRenderer> renderers;
 
-	private java.util.Map<String, MapObjectRenderer> map = new HashMap<String, MapObjectRenderer>();
+	private final java.util.Map<String, MapObjectRenderer> map = new HashMap<String, MapObjectRenderer>();
 
 	@PostConstruct
 	public void setup() {
-		for (MapObjectRenderer objectRenderer : renderers) {
+		for (final MapObjectRenderer objectRenderer : renderers) {
 			map.put(objectRenderer.getType(), objectRenderer);
 		}
 	}
 
 	@Override
-	public void render(GameContext context, GameMapTerminal mapTerminal) {
-		Map cMap = context.getData().getMap();
+	public void render(final GameContext context, final GameMapTerminal mapTerminal) {
 		final List<MapObject> mapObjects = context.getGameObjects(MapObject.class);
+		
+		// player must go last
+		Collections.reverse(mapObjects);
+
+		for (final MapObject mapObject : mapObjects) {
+			renderMapObject(mapObject, context, mapTerminal);
+		}
+	}
+	
+	private void renderMapObject(final MapObject mapObject, final GameContext context, final GameMapTerminal mapTerminal){
+		final Map cMap = context.getData().getMap();
 		final LightMask lightMask = context.getGameObject(LightMask.class);
+		if (isOnScreen(context, mapObject, mapTerminal)) {
+			final Position at = mapObject.getPosition();
+			final boolean memorable = (mapObject.getRenderOptions() & RenderOptions.MEMORABLE) == RenderOptions.MEMORABLE;
+			final boolean fixed = (mapObject.getRenderOptions() & RenderOptions.FIXED) == RenderOptions.FIXED;
+			final boolean invisible = (mapObject.getRenderOptions() & RenderOptions.INVISIBLE) == RenderOptions.INVISIBLE;
 
-		for (MapObject mapObject : mapObjects) {
-			if (isOnScreen(context, mapObject, mapTerminal)) {
-				final Position at = mapObject.getPosition();
-				boolean memorable = (mapObject.getRenderOptions() & RenderOptions.MEMORABLE) != 1;
-				boolean fixed = (mapObject.getRenderOptions() & RenderOptions.FIXED) != 1;
+			boolean render = false;
+			
+			if(invisible){
+				return;
+			}
 
-				boolean render = false;
-
-				if (memorable) {
-					if (cMap.getStats().seen(at)) {
-						dispatch(mapObject, context, mapTerminal);
-						render = true;
-					}
-				}
-
-				if (!render && fixed) {
+			if (memorable) {
+				if (cMap.getStats().seen(at)) {
 					dispatch(mapObject, context, mapTerminal);
 					render = true;
 				}
+			}
 
-				if (!render && lightMask.isLighten(at)) {
-					dispatch(mapObject, context, mapTerminal);
-					render = true;
-				}
+			if (!render && fixed) {
+				dispatch(mapObject, context, mapTerminal);
+				render = true;
+			}
+
+			if (!render && lightMask.isLighten(at)) {
+				dispatch(mapObject, context, mapTerminal);
+				render = true;
 			}
 		}
 	}
 
 	@SuppressWarnings("unchecked")
-	private void dispatch(MapObject mapObject, GameContext context, GameMapTerminal mapTerminal) {
+	private void dispatch(final MapObject mapObject, final GameContext context, final GameMapTerminal mapTerminal) {
 		MapObjectRenderer mapObjectRenderer = map.get(mapObject.getType());
 
 		if (mapObjectRenderer == null) {
@@ -79,7 +92,7 @@ public class MapObjectOrdererRenderer extends AbstractOrderedMapRenderer {
 		mapObjectRenderer.render(mapObject, context, mapTerminal);
 	}
 
-	private boolean isOnScreen(GameContext context, MapObject mapObject, GameMapTerminal mapTerminal) {
+	private boolean isOnScreen(final GameContext context, final MapObject mapObject, final GameMapTerminal mapTerminal) {
 		return mapTerminal.toTerminal(mapObject.getPosition()) != null && context.getData().getMap().getStats().seen(mapObject.getPosition());
 	}
 

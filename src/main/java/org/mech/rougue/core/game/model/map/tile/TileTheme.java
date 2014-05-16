@@ -19,11 +19,11 @@ public class TileTheme {
 
 	@Inject
 	private TilesProperties properties;
-	
-	@Inject 
+
+	@Inject
 	private Decorator decorator;
 
-	private Map<String, String> map = new HashMap<String, String>();
+	private final Map<String, String> map = new HashMap<String, String>();
 
 	private String theme;
 
@@ -31,23 +31,23 @@ public class TileTheme {
 		return theme;
 	}
 
-	public void setTheme(String theme) {
+	public void setTheme(final String theme) {
 		this.theme = theme;
 		this.decorator.setup();
 		this.map.clear();
 	}
 
-	public void put(String id, String finalId) {
+	public void put(final String id, final String finalId) {
 		map.put(id, finalId);
 	}
 
-	public void updateRenderId(RenderId id) {
-		String mapId = id.getIdString();
+	public void updateRenderId(final RenderId id) {
+		final String mapId = id.getIdString();
 		String finalId = map.get(mapId);
 		if (finalId == null) {
-			String[] ids = getIds(id);
+			final String[] ids = getIds(id);
 
-			for (String d : ids) {
+			for (final String d : ids) {
 				if (properties.contains(d)) {
 					finalId = d;
 					put(mapId, d);
@@ -58,28 +58,28 @@ public class TileTheme {
 		}
 
 		if (finalId == null) {
-			throw new IllegalArgumentException("not found config for = " + id);
+			LOG.warn("Config not found for id=[" + id + "]");
 		}
 
 		id.setFinalId(finalId);
 
 	}
-	
-	private String[] getIds(RenderId id) {
+
+	private String[] getIds(final RenderId id) {
 		final List<String> ids = new ArrayList<String>();
-		
+
 		final String rendId = id.getId();
 		final String orn = id.getOrnament();
 		final String suffix = id.getSuffix();
-		
+
 		if (orn != null && suffix != null) {
 			ids.add(theme + DOT + rendId + DOT + suffix + DOT + orn);
 		}
-		
+
 		if (suffix != null) {
 			ids.add(theme + DOT + rendId + DOT + suffix);
 		}
-		
+
 		if (orn != null) {
 			ids.add(theme + DOT + rendId + DOT + orn);
 		}

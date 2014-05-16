@@ -18,25 +18,29 @@ public abstract class AbstractMapRenderer implements MapRenderer {
 
 	@Inject
 	private TileTheme theme;
-	
-	@Inject 
+
+	@Inject
 	private Decorator decorator;
 
-	protected void render(GameMapTerminal mapTerminal, RenderedMapTile rTile, RenderId id, Position p) {
-		check(id, p);
-		final TerminalCharConfig config = configProvider.provide(id.getFinalId());
-		rTile.setChar(config.getCharConfig().get());
-		rTile.setFg(ColorConfigUtils.getFixedColor(config.getFgConfig()));
-		rTile.setBg(ColorConfigUtils.getFixedColor(config.getBgConfig()));
-		rTile.setBold(config.isBold());
+	protected void render(final GameMapTerminal mapTerminal, final RenderedMapTile rTile, final RenderId id, final Position p) {
+		final RenderId finalId = check(id, p);
+		if (finalId != null && finalId.getFinalId() != null) {
+			final TerminalCharConfig config = configProvider.provide(finalId.getFinalId());
+			rTile.setChar(config.getCharConfig().get());
+			rTile.setFg(ColorConfigUtils.getFixedColor(config.getFgConfig()));
+			rTile.setBg(ColorConfigUtils.getFixedColor(config.getBgConfig()));
+			rTile.setBold(config.isBold());
+		}
 	}
 
-	protected void check(RenderId id, Position p) {
-		if (id.getFinalId() == null) {
+	protected RenderId check(final RenderId id, final Position p) {
+		if (id != null && id.getFinalId() == null) {
 			final IdDecorator idDecorator = decorator.getIdDecorator();
 			idDecorator.decorate(id, p);
 			theme.updateRenderId(id);
-		} 
+		}
+
+		return id;
 	}
 
 }

@@ -6,7 +6,6 @@ import org.mech.rougue.core.engine.handler.render.RenderHandler;
 import org.mech.rougue.core.game.GameContext;
 import org.mech.rougue.core.game.model.map.render.AbstractOrderedMapRenderer;
 import org.mech.rougue.factory.Inject;
-import org.mech.terminator.Terminal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,7 +29,7 @@ public class MapComponent implements RenderHandler {
 
 	@Override
 	public void render() {
-		final GameMapTerminal mapTerminal = new GameMapTerminal(context, Terminal.getInstance());
+		final GameMapTerminal mapTerminal = new GameMapTerminal(context);
 
 		for (final AbstractOrderedMapRenderer gameRenderer : renderers) {
 			LOG.trace(gameRenderer.getClass().getSimpleName() + " invoking ...");

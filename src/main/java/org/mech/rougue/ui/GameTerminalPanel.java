@@ -17,6 +17,7 @@ public class GameTerminalPanel extends TerminalPanel  {
 	private GameInput gameInput;
 
 	public GameTerminalPanel() {
+		setSquareTerminal(true);
 		final GameTerminalPanel gp = this;
 		tickTimer = new TickTimer("render", new TickHandler() {
 

@@ -2,14 +2,13 @@ package org.mech.rougue.core.game.play.component.map;
 
 import java.awt.Color;
 import org.mech.rougue.core.config.ui.ColorConfigUtils;
-import org.mech.rougue.core.game.model.map.tile.MapTile;
 import org.mech.rougue.core.game.model.map.tile.NewMapTile;
 import org.mech.terminator.ITerminal;
 import org.mech.terminator.geometry.Position;
 
 public class RenderedMapTile {
 
-	private ITerminal terminal;
+	private final ITerminal terminal;
 
 	private boolean grayscale = false;
 	private Color fg;
@@ -17,10 +16,10 @@ public class RenderedMapTile {
 	private char c;
 	private boolean bold = false;
 	
-	private Position terminalPosition;
-	private NewMapTile tile;
+	private final Position terminalPosition;
+	private final NewMapTile tile;
 
-	public RenderedMapTile(Position termPosition, ITerminal terminal, NewMapTile tile) {
+	public RenderedMapTile(final Position termPosition, final ITerminal terminal, final NewMapTile tile) {
 		if (termPosition == null) {
 			System.out.println("help");
 		}
@@ -29,7 +28,7 @@ public class RenderedMapTile {
 		this.tile = tile;
 	}
 
-	public void setGrayscale(boolean value) {
+	public void setGrayscale(final boolean value) {
 		grayscale = value;
 	}
 
@@ -41,13 +40,13 @@ public class RenderedMapTile {
 		return c;
 	}
 
-	public void setChar(char c) {
+	public void setChar(final char c) {
 		this.c = c;
 	}
 
 	public void render() {
 		terminal.put(getChar(), getLine(), getColumn());
-		Color bgColor = bg;
+		final Color bgColor = bg;
 		Color fgColor = fg;
 
 		if (isGrayscale()) {
@@ -62,13 +61,13 @@ public class RenderedMapTile {
 		terminal.fg(fgColor, getLine(), getColumn());
 	}
 
-	public void setBg(Color color) {
+	public void setBg(final Color color) {
 		if (color != null) {
 			this.bg = color;
 		}
 	}
 
-	public void setFg(Color color) {
+	public void setFg(final Color color) {
 		if (color != null) {
 			this.fg = color;
 		}
@@ -98,7 +97,7 @@ public class RenderedMapTile {
 		return bold;
 	}
 
-	public void setBold(boolean bold) {
+	public void setBold(final boolean bold) {
 		this.bold = bold;
 	}
 

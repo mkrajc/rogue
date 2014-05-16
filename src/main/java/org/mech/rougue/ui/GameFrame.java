@@ -28,12 +28,6 @@ public class GameFrame extends TerminalFrame implements Handler {
 	@Inject
 	private StartGameAction startGameAction;
 
-	//	@Override
-	//	public void showWindow() {
-	//		super.showWindow();
-	//		((GameTerminalPanel) getTerminalPanel()).autoRender();
-	//	}
-
 	@Override
 	public void showWindow() {
 		pack();
@@ -44,19 +38,20 @@ public class GameFrame extends TerminalFrame implements Handler {
 	public void setup(){
 //		setIgnoreRepaint(true);
 		startPanel = new StartPanel();
-		gamePanel = new JPanel(new MigLayout("ins 0"));
+		gamePanel = new JPanel(new MigLayout("ins 0, fill"));
 		
 		leftPanel = new JPanel(new MigLayout("ins 0, hidemode 2"));
 		rightPanel = new JPanel(new MigLayout("ins 0, hidemode 2"));
 		leftPanel.setVisible(false);
 		rightPanel.setVisible(false);
 		
-		gamePanel.add(leftPanel);
-		gamePanel.add(gameTerminal);
-		gamePanel.add(rightPanel);
+//		gamePanel.add(leftPanel, "shrink 100, min 0");
+		gamePanel.add(gameTerminal, "grow");
+//		gamePanel.add(rightPanel);
 		
 		startPanel.setHandler(this);
 		setContentPane(startPanel);
+		
 	}
 
 	public GameFrame() {

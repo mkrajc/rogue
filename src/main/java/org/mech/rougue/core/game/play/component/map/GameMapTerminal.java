@@ -7,33 +7,35 @@ import org.mech.rougue.core.game.GameContext;
 import org.mech.rougue.core.game.GameData;
 import org.mech.rougue.core.game.model.map.tile.NewMapTile;
 import org.mech.terminator.ITerminal;
+import org.mech.terminator.Terminal;
 import org.mech.terminator.geometry.Dimension;
 import org.mech.terminator.geometry.NestedRectangle;
 import org.mech.terminator.geometry.Position;
 import org.mech.terminator.geometry.Rectangle;
 
 public class GameMapTerminal {
-	private final GameMapScaler gameMapScaler = new GameMapScaler();
+//	private final GameMapScaler gameMapScaler = new GameMapScaler();
 	private final NestedRectangle area;
 	private final ITerminal terminal;
 
 	private final org.mech.rougue.core.game.model.map.Map gameMap;
 	private final Map<Position, RenderedMapTile> tiles;
 
-	public GameMapTerminal(final GameContext context, final ITerminal trmnl) {
+	public GameMapTerminal(final GameContext context) {
 		this.tiles = new HashMap<Position, RenderedMapTile>();
 
 		final GameData game = context.getData();
 		this.gameMap = game.getMap();
-		this.terminal = gameMapScaler.upscaleIfNeeded(gameMap, trmnl);
+		this.terminal =  Terminal.getInstance(); //gameMapScaler.upscaleIfNeeded(gameMap, trmnl);
 
 		final Dimension mapSize = gameMap.getSize();
 		final Dimension termSize = terminal.getSize().toDimension();
 
 		final Position playerPosition = game.getPlayer().getPosition();
 		final Position mapPosition = getMapPosition(mapSize, termSize, playerPosition);
-
-		area = new NestedRectangle(mapPosition, termSize, new Rectangle(Position.at(0, 0), mapSize));
+		final Rectangle termBoundary = new Rectangle(mapPosition, termSize);
+		
+		area = new NestedRectangle(mapPosition, mapSize, termBoundary);
 	}
 
 	public Dimension getSize() {
@@ -41,12 +43,8 @@ public class GameMapTerminal {
 	}
 
 	public Position toTerminal(final Position mapPosition) {
-		return area.outerAbsToRel(mapPosition);
+		return area.innerAbsToRel(mapPosition);
 	}
-
-	// private Position toMap(Position termPosition) {
-	// return area.innerToOuter(termPosition);
-	// }
 
 	private Position getMapPosition(final Dimension mapSize, final Dimension visibleArea, final Position playerPosition) {
 		int x = Math.max(playerPosition.x - visibleArea.width / 2, 0);
@@ -54,6 +52,10 @@ public class GameMapTerminal {
 
 		x = Math.min(x, mapSize.width - visibleArea.width);
 		y = Math.min(y, mapSize.height - visibleArea.height);
+		
+		x = Math.max(x, 0);
+		y = Math.max(y, 0);
+		
 		return Position.at(x, y);
 	}
 
@@ -85,7 +87,7 @@ public class GameMapTerminal {
 		return get(Position.at(x, y));
 	}
 
-	public NestedRectangle getBoundary() {
-		return area;
+	public Rectangle getBoundary() {
+		return area.intersect();
 	}
 }

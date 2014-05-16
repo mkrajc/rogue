@@ -8,8 +8,8 @@ import org.mech.rougue.core.game.play.component.map.GameMapTerminal;
 import org.mech.rougue.core.game.play.component.map.RenderedMapTile;
 import org.mech.rougue.core.r.handler.game.light.LightMask;
 import org.mech.rougue.ui.color.ColorUtils;
-import org.mech.terminator.geometry.NestedRectangle;
 import org.mech.terminator.geometry.Position;
+import org.mech.terminator.geometry.Rectangle;
 
 public class LightMaskRenderer extends AbstractOrderedMapRenderer {
 
@@ -17,9 +17,9 @@ public class LightMaskRenderer extends AbstractOrderedMapRenderer {
 	private static final Color LIGHT = Color.WHITE;
 
 	@Override
-	public void render(GameContext context, GameMapTerminal mapTerminal) {
+	public void render(final GameContext context, final GameMapTerminal mapTerminal) {
 
-		final NestedRectangle rectangle = mapTerminal.getBoundary();
+		final Rectangle rectangle = mapTerminal.getBoundary();
 		final Position start = rectangle.getTopLeftPosition();
 		final Position end = rectangle.getBottomRightPosition();
 

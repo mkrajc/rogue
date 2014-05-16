@@ -7,8 +7,8 @@ import org.mech.rougue.core.game.play.component.map.GameMapTerminal;
 import org.mech.rougue.core.game.play.component.map.RenderedMapTile;
 import org.mech.rougue.core.game.state.GameState;
 import org.mech.rougue.factory.Inject;
-import org.mech.terminator.geometry.NestedRectangle;
 import org.mech.terminator.geometry.Position;
+import org.mech.terminator.geometry.Rectangle;
 
 public class SeenMapRenderer extends AbstractOrderedMapRenderer {
 
@@ -21,8 +21,8 @@ public class SeenMapRenderer extends AbstractOrderedMapRenderer {
 	private GameState state;
 
 	@Override
-	public void render(GameContext context, GameMapTerminal mapTerminal) {
-		final NestedRectangle rectangle = mapTerminal.getBoundary();
+	public void render(final GameContext context, final GameMapTerminal mapTerminal) {
+		final Rectangle rectangle = mapTerminal.getBoundary();
 		final Position start = rectangle.getTopLeftPosition();
 		final Position end = rectangle.getBottomRightPosition();
 
@@ -46,11 +46,11 @@ public class SeenMapRenderer extends AbstractOrderedMapRenderer {
 
 	}
 
-	private boolean seePosition(GameContext context, Position position) {
+	private boolean seePosition(final GameContext context, final Position position) {
 		return state.getSwitch(SEE_ALL_SWITCH) || context.getData().getMap().getStats().seen(position);
 	}
 
-	private RenderId getCoveredId(Position p) {
+	private RenderId getCoveredId(final Position p) {
 		if (p.x % 2 == 0 && p.y % 2 == 0 && (p.x + p.y) % 4 == 2) {
 			return new RenderId(TileConstants.COVERED);
 		} else if (p.x % 2 == 1 && p.y % 2 == 1) {

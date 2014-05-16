@@ -33,10 +33,6 @@ public class Starter {
 
 		Terminal.setInstance(new Terminal(new TerminalSize(30, 100)));
 
-		//		GameTerminalPanel panel = new GameTerminalPanel();
-
-		//		window.setTerminalPanel(panel);
-
 		final Starter starter = Factory.getBean(Starter.class);
 		starter.onStart();
 	}

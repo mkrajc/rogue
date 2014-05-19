@@ -2,6 +2,7 @@ package org.mech.rougue.core.r.event;
 
 import org.mech.rougue.core.game.model.player.Player;
 import org.mech.rougue.core.r.event.PlayerMoveEvent.Handler;
+import org.mech.rougue.core.r.model.geom.Positionable;
 import org.mech.terminator.geometry.Position;
 
 public class PlayerMoveEvent extends Event<Handler> {
@@ -29,6 +30,10 @@ public class PlayerMoveEvent extends Event<Handler> {
 
 	public Position getCurrentPosition() {
 		return currentPosition;
+	}
+	
+	public boolean isPlayerStandingOn(final Positionable p){
+		return p.getPosition().equals(currentPosition);
 	}
 
 	@Override

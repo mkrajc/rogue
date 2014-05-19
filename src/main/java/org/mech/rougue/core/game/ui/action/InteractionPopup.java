@@ -14,6 +14,7 @@ import org.mech.rougue.core.r.action.object.ObjectAction;
 import org.mech.rougue.core.r.event.EventBus;
 import org.mech.rougue.core.r.event.ShowInteractionEvent;
 import org.mech.rougue.factory.Inject;
+import org.mech.rougue.lang.LocalizedResourceBundle;
 import org.mech.rougue.ui.GameTerminalPanel;
 import org.mech.rougue.utils.CollectionUtils;
 
@@ -29,6 +30,9 @@ public class InteractionPopup extends JPopupMenu implements ShowInteractionEvent
 
 	@Inject
 	private Interaction interactions;
+	
+	@Inject
+	private LocalizedResourceBundle i18n;
 
 	@PostConstruct
 	public void setup() {
@@ -53,7 +57,7 @@ public class InteractionPopup extends JPopupMenu implements ShowInteractionEvent
 					this.add(new JLabel(interactiveObject.toString()));
 					this.add(new Separator());
 					for (final ObjectAction a : interactiveObject.getActions()) {
-						final JMenuItem item = new JMenuItem(a.getActionName());
+						final JMenuItem item = new JMenuItem(i18n.getMessage(a.getActionName()));
 						item.addActionListener(new ActionListener() {
 
 							@Override

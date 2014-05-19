@@ -6,6 +6,5 @@ public interface Lockable {
 
 	void lock(Key key);
 	void unlock(Key key);
-	void swap(Key key);
 
 }

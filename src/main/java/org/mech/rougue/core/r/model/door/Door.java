@@ -6,13 +6,10 @@ import org.mech.rougue.core.game.model.map.render.MapObject;
 import org.mech.rougue.core.game.model.map.render.RenderId;
 import org.mech.rougue.core.game.model.map.render.RenderOptions;
 import org.mech.rougue.core.game.model.map.tile.Tiles;
-import org.mech.rougue.core.r.action.object.InteractionRegistration;
 import org.mech.rougue.core.r.action.object.InteractiveObject;
+import org.mech.rougue.core.r.action.object.PlayerMoveInFrontOfItemInteraction;
 import org.mech.rougue.core.r.context.ContextAwareGObject;
-import org.mech.rougue.core.r.event.EventBus;
 import org.mech.rougue.core.r.event.PlayerMoveEvent;
-import org.mech.rougue.core.r.handler.game.UpdateAwareGObject;
-import org.mech.rougue.core.r.handler.register.Registration;
 import org.mech.rougue.core.r.model.door.action.AbstractDoorAction;
 import org.mech.rougue.core.r.model.door.action.CloseDoorAction;
 import org.mech.rougue.core.r.model.door.action.OpenDoorAction;
@@ -20,10 +17,9 @@ import org.mech.rougue.core.r.model.map.EnvironmentObject;
 import org.mech.rougue.core.r.object.GId;
 import org.mech.rougue.core.r.object.GIdFactory;
 import org.mech.rougue.utils.CollectionUtils;
-import org.mech.terminator.geometry.GeometryUtils;
 import org.mech.terminator.geometry.Position;
 
-public class Door implements MapObject, UpdateAwareGObject, EnvironmentObject, PlayerMoveEvent.Handler, InteractiveObject, ContextAwareGObject {
+public class Door implements MapObject, EnvironmentObject, InteractiveObject, ContextAwareGObject {
 
 	public static final String TYPE = "DOOR";
 
@@ -35,11 +31,12 @@ public class Door implements MapObject, UpdateAwareGObject, EnvironmentObject, P
 	private Position position;
 	private boolean open = true;
 
-	private Registration interaction;
+	private final PlayerMoveInFrontOfItemInteraction interaction;
 
 	public Door() {
 		this.renderId = new RenderId(getType());
 		this.gId = GIdFactory.next();
+		this.interaction = new PlayerMoveInFrontOfItemInteraction(this);
 	}
 
 	public Door(final Position at) {
@@ -64,7 +61,6 @@ public class Door implements MapObject, UpdateAwareGObject, EnvironmentObject, P
 	public void setOpen(final boolean open) {
 		this.open = open;
 		this.renderId.setId(open ? Tiles.DOOR_OPENED_ID : Tiles.DOOR_CLOSED_ID);
-		destroyActions();
 	}
 
 	public boolean isClosed() {
@@ -105,31 +101,6 @@ public class Door implements MapObject, UpdateAwareGObject, EnvironmentObject, P
 	}
 
 	@Override
-	public void update(final GameContext gameContext) {
-		if (playerStoodInFrontOfDoor(gameContext)) {
-			refreshActions(gameContext);
-		}
-	}
-
-	private boolean playerStoodInFrontOfDoor(final GameContext context) {
-		return GeometryUtils.distPyth(context.getData().getPlayer().getPosition(), position) == 1.0;
-	}
-
-	private void destroyActions() {
-		if (interaction != null) {
-			interaction.destroy();
-			interaction = null;
-		}
-	}
-
-	private void refreshActions(final GameContext context) {
-		if (interaction == null) {
-			interaction = new InteractionRegistration(context, this);
-			interaction.register();
-		}
-	}
-
-	@Override
 	public boolean isPassable() {
 		return isOpen();
 	}
@@ -137,20 +108,6 @@ public class Door implements MapObject, UpdateAwareGObject, EnvironmentObject, P
 	@Override
 	public boolean isLightObstacle() {
 		return isClosed();
-	}
-
-	@Override
-	public void onPlayerMove(final PlayerMoveEvent event) {
-		if (playerStoodInFrontOfDoor(event.getContext())) {
-			refreshActions(event.getContext());
-		} else {
-			destroyActions();
-		}
-	}
-
-	@Override
-	public void registerHandlers(final EventBus bus) {
-		bus.addHandler(PlayerMoveEvent.class, this);
 	}
 
 	@Override
@@ -163,11 +120,13 @@ public class Door implements MapObject, UpdateAwareGObject, EnvironmentObject, P
 	@Override
 	public void onAdd(final GameContext context) {
 		this.context = context;
+		this.context.eventBus.addHandler(PlayerMoveEvent.class, interaction);
 	}
 
 	@Override
 	public void onRemove(final GameContext context) {
-
+		interaction.destroy();
+		this.context.eventBus.removeHandler(interaction);
 	}
 
 }

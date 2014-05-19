@@ -13,7 +13,7 @@ public class OpenDoorAction extends AbstractDoorAction {
 
 	@Override
 	public String getActionName() {
-		return "open_door_action";
+		return "i_open_door";
 	}
 
 	@Override

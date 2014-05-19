@@ -14,7 +14,7 @@ public class CloseDoorAction extends AbstractDoorAction {
 	
 	@Override
 	public String getActionName() {
-		return "close_door_action";
+		return "i_close_door";
 	}
 
 	@Override

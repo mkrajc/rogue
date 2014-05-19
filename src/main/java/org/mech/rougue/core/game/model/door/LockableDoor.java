@@ -11,7 +11,7 @@ public class LockableDoor extends Door implements Lockable {
 	private boolean locked;
 	private String keyId;
 
-	public LockableDoor(String keyId, Position at) {
+	public LockableDoor(final String keyId, final Position at) {
 		super(at);
 		this.keyId = keyId;
 	}
@@ -29,7 +29,7 @@ public class LockableDoor extends Door implements Lockable {
 	}
 
 	@Override
-	public void lock(Key key) {
+	public void lock(final Key key) {
 		if (pass(key)) {
 			LOG.warn("Key not from this door");
 		}
@@ -41,7 +41,7 @@ public class LockableDoor extends Door implements Lockable {
 	}
 
 	@Override
-	public void unlock(Key key) {
+	public void unlock(final Key key) {
 		if (pass(key)) {
 			LOG.warn("Key not from this door");
 		}
@@ -52,21 +52,12 @@ public class LockableDoor extends Door implements Lockable {
 		}
 	}
 
-	@Override
-	public void swap(Key key) {
-		if (isLocked()) {
-			unlock(key);
-		} else {
-			lock(key);
-		}
-	}
-
-	protected boolean pass(Key key) {
+	protected boolean pass(final Key key) {
 		return key.pass(keyId);
 	}
 	
 	@Override
-	public void setOpen(boolean open) {
+	public void setOpen(final boolean open) {
 		if(open && locked){
 			throw new IllegalStateException("doors cannot be locked when opened");
 		}
@@ -78,7 +69,7 @@ public class LockableDoor extends Door implements Lockable {
 		return "lockable (" + keyId + ") " + super.toString();
 	}
 
-	public void setLocked(boolean locked) {
+	public void setLocked(final boolean locked) {
 		this.locked = locked;
 	}
 
@@ -86,8 +77,9 @@ public class LockableDoor extends Door implements Lockable {
 		return keyId;
 	}
 
-	public void setKeyId(String keyId) {
+	public void setKeyId(final String keyId) {
 		this.keyId = keyId;
 	}
+	
 
 }

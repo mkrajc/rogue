@@ -6,18 +6,16 @@ import org.mech.rougue.core.game.model.map.render.RenderId;
 import org.mech.rougue.core.game.update.move.MapMover;
 import org.mech.rougue.core.r.model.common.LiveObject;
 import org.mech.rougue.core.r.object.GId;
-import org.mech.rougue.factory.Inject;
 import org.mech.terminator.geometry.Position;
 
 public class Monster extends LiveObject implements MapObject {
 
 	private GId gId;
-	private RenderId id;
+	private final RenderId id = new RenderId(getType());
 	private Position position;
 	private boolean updated;
 
-	@Inject
-	private MapMover mapMoveVisitor;
+	private final MapMover mapMoveVisitor = new MapMover();
 
 
 	@Override
@@ -42,7 +40,8 @@ public class Monster extends LiveObject implements MapObject {
 
 		final Position newMonsterPosition = getPosition().addXY(x, y);
 
-//		mapMoveVisitor.move(this, newMonsterPosition, context.getData().getCurrentMap());
+		mapMoveVisitor.move(this, newMonsterPosition, context.getData().getMap());
+		System.out.println("new position " + newMonsterPosition);
 
 		if (getPosition().equals(playerPosition)) {
 			System.err.println("GAME OVER from Monster " + this);

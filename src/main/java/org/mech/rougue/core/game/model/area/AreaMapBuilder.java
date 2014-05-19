@@ -8,8 +8,10 @@ import org.mech.rougue.core.game.model.map.tile.TileConfiguration;
 import org.mech.rougue.core.game.model.map.tile.Tiles;
 import org.mech.rougue.core.game.model.room.Room;
 import org.mech.rougue.core.r.model.door.Door;
-import org.mech.rougue.core.r.model.trap.DamageTrap;
-import org.mech.rougue.core.r.model.trap.Trap;
+import org.mech.rougue.core.r.model.inv.Item;
+import org.mech.rougue.core.r.model.inv.ItemMapObject;
+import org.mech.rougue.core.r.model.inv.ItemType;
+import org.mech.rougue.core.r.object.GId;
 import org.mech.terminator.geometry.Dimension;
 import org.mech.terminator.geometry.Line;
 import org.mech.terminator.geometry.Position;
@@ -37,9 +39,26 @@ public class AreaMapBuilder {
 
 		map.registerGameObjects((List) area.getGates());
 		
-		final Trap t = new DamageTrap();
-		t.setPosition(Position.at(7, 1));
-		map.registerGameObject(t);
+//		final Trap t = new DamageTrap();
+//		t.setPosition(Position.at(7, 1));
+//		map.registerGameObject(t);
+		
+//		final Monster m = new Monster();
+		final Item test = new Item(){
+
+			@Override
+			public GId id() {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+			@Override
+			public ItemType getType() {
+				return ItemType.JEWEL;
+			}};
+		final ItemMapObject m = new ItemMapObject(test);
+		m.setPosition(Position.at(7, 1));
+		map.registerGameObject(m);
 
 
 		area.map = map;

@@ -6,6 +6,7 @@ import org.mech.rougue.core.game.model.map.render.MapObject;
 import org.mech.rougue.core.game.model.map.render.RenderId;
 import org.mech.rougue.core.game.model.map.render.RenderOptions;
 import org.mech.rougue.core.r.handler.game.player.PlayerSight;
+import org.mech.rougue.core.r.model.inv.Inventory;
 import org.mech.rougue.core.r.model.player.stat.PlayerStats;
 import org.mech.rougue.core.r.object.GId;
 import org.mech.rougue.core.r.object.GIdFactory;
@@ -20,6 +21,8 @@ public class Player implements MapObject {
 	private String name;
 	private Position position;
 	
+	public Inventory inventory;
+	
 	private PlayerStats stats;
 
 	@Inject
@@ -32,6 +35,7 @@ public class Player implements MapObject {
 		renderId = new RenderId(getType());
 		gId = GIdFactory.next();
 		
+		inventory = new Inventory();
 		stats = new PlayerStats();
 	}
 	

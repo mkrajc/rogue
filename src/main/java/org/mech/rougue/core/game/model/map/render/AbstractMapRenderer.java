@@ -6,7 +6,7 @@ import org.mech.rougue.core.config.ui.provider.SimpleTerminalConfigProvider;
 import org.mech.rougue.core.game.model.map.decorator.Decorator;
 import org.mech.rougue.core.game.model.map.decorator.Decorator.IdDecorator;
 import org.mech.rougue.core.game.model.map.tile.TileTheme;
-import org.mech.rougue.core.game.play.component.map.GameMapTerminal;
+import org.mech.rougue.core.game.play.component.map.MapTerminalAdapter;
 import org.mech.rougue.core.game.play.component.map.RenderedMapTile;
 import org.mech.rougue.factory.Inject;
 import org.mech.terminator.geometry.Position;
@@ -22,7 +22,7 @@ public abstract class AbstractMapRenderer implements MapRenderer {
 	@Inject
 	private Decorator decorator;
 
-	protected void render(final GameMapTerminal mapTerminal, final RenderedMapTile rTile, final RenderId id, final Position p) {
+	protected void render(final MapTerminalAdapter mapTerminal, final RenderedMapTile rTile, final RenderId id, final Position p) {
 		final RenderId finalId = check(id, p);
 		if (finalId != null && finalId.getFinalId() != null) {
 			final TerminalCharConfig config = configProvider.provide(finalId.getFinalId());

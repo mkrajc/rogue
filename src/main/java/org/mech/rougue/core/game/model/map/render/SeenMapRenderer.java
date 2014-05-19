@@ -3,7 +3,7 @@ package org.mech.rougue.core.game.model.map.render;
 import org.mech.rougue.core.config.ui.provider.SimpleTerminalConfigProvider;
 import org.mech.rougue.core.game.GameContext;
 import org.mech.rougue.core.game.model.map.tile.TileConstants;
-import org.mech.rougue.core.game.play.component.map.GameMapTerminal;
+import org.mech.rougue.core.game.play.component.map.MapTerminalAdapter;
 import org.mech.rougue.core.game.play.component.map.RenderedMapTile;
 import org.mech.rougue.core.game.state.GameState;
 import org.mech.rougue.factory.Inject;
@@ -21,7 +21,7 @@ public class SeenMapRenderer extends AbstractOrderedMapRenderer {
 	private GameState state;
 
 	@Override
-	public void render(final GameContext context, final GameMapTerminal mapTerminal) {
+	public void render(final GameContext context, final MapTerminalAdapter mapTerminal) {
 		final Rectangle rectangle = mapTerminal.getBoundary();
 		final Position start = rectangle.getTopLeftPosition();
 		final Position end = rectangle.getBottomRightPosition();

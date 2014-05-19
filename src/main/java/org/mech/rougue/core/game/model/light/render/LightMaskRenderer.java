@@ -4,7 +4,7 @@ import java.awt.Color;
 import org.mech.rougue.core.game.GameContext;
 import org.mech.rougue.core.game.model.map.render.AbstractOrderedMapRenderer;
 import org.mech.rougue.core.game.model.map.render.RenderOrder;
-import org.mech.rougue.core.game.play.component.map.GameMapTerminal;
+import org.mech.rougue.core.game.play.component.map.MapTerminalAdapter;
 import org.mech.rougue.core.game.play.component.map.RenderedMapTile;
 import org.mech.rougue.core.r.handler.game.light.LightMask;
 import org.mech.rougue.ui.color.ColorUtils;
@@ -17,7 +17,7 @@ public class LightMaskRenderer extends AbstractOrderedMapRenderer {
 	private static final Color LIGHT = Color.WHITE;
 
 	@Override
-	public void render(final GameContext context, final GameMapTerminal mapTerminal) {
+	public void render(final GameContext context, final MapTerminalAdapter mapTerminal) {
 
 		final Rectangle rectangle = mapTerminal.getBoundary();
 		final Position start = rectangle.getTopLeftPosition();

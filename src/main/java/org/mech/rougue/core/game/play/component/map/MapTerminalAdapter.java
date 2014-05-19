@@ -13,7 +13,7 @@ import org.mech.terminator.geometry.NestedRectangle;
 import org.mech.terminator.geometry.Position;
 import org.mech.terminator.geometry.Rectangle;
 
-public class GameMapTerminal {
+public class MapTerminalAdapter {
 //	private final GameMapScaler gameMapScaler = new GameMapScaler();
 	private final NestedRectangle area;
 	private final ITerminal terminal;
@@ -21,7 +21,7 @@ public class GameMapTerminal {
 	private final org.mech.rougue.core.game.model.map.Map gameMap;
 	private final Map<Position, RenderedMapTile> tiles;
 
-	public GameMapTerminal(final GameContext context) {
+	public MapTerminalAdapter(final GameContext context) {
 		this.tiles = new HashMap<Position, RenderedMapTile>();
 
 		final GameData game = context.getData();

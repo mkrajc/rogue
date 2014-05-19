@@ -29,7 +29,7 @@ public class MapComponent implements RenderHandler {
 
 	@Override
 	public void render() {
-		final GameMapTerminal mapTerminal = new GameMapTerminal(context);
+		final MapTerminalAdapter mapTerminal = new MapTerminalAdapter(context);
 
 		for (final AbstractOrderedMapRenderer gameRenderer : renderers) {
 			LOG.trace(gameRenderer.getClass().getSimpleName() + " invoking ...");

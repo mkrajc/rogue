@@ -6,7 +6,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import org.mech.rougue.core.game.GameContext;
 import org.mech.rougue.core.game.model.map.Map;
-import org.mech.rougue.core.game.play.component.map.GameMapTerminal;
+import org.mech.rougue.core.game.play.component.map.MapTerminalAdapter;
 import org.mech.rougue.core.r.handler.game.light.LightMask;
 import org.mech.rougue.factory.Inject;
 import org.mech.terminator.geometry.Position;
@@ -31,7 +31,7 @@ public class MapObjectOrdererRenderer extends AbstractOrderedMapRenderer {
 	}
 
 	@Override
-	public void render(final GameContext context, final GameMapTerminal mapTerminal) {
+	public void render(final GameContext context, final MapTerminalAdapter mapTerminal) {
 		final List<MapObject> mapObjects = context.getGameObjects(MapObject.class);
 		
 		// player must go last
@@ -42,7 +42,7 @@ public class MapObjectOrdererRenderer extends AbstractOrderedMapRenderer {
 		}
 	}
 	
-	private void renderMapObject(final MapObject mapObject, final GameContext context, final GameMapTerminal mapTerminal){
+	private void renderMapObject(final MapObject mapObject, final GameContext context, final MapTerminalAdapter mapTerminal){
 		final Map cMap = context.getData().getMap();
 		final LightMask lightMask = context.getGameObject(LightMask.class);
 		if (isOnScreen(context, mapObject, mapTerminal)) {
@@ -77,7 +77,7 @@ public class MapObjectOrdererRenderer extends AbstractOrderedMapRenderer {
 	}
 
 	@SuppressWarnings("unchecked")
-	private void dispatch(final MapObject mapObject, final GameContext context, final GameMapTerminal mapTerminal) {
+	private void dispatch(final MapObject mapObject, final GameContext context, final MapTerminalAdapter mapTerminal) {
 		MapObjectRenderer mapObjectRenderer = map.get(mapObject.getType());
 
 		if (mapObjectRenderer == null) {
@@ -92,7 +92,7 @@ public class MapObjectOrdererRenderer extends AbstractOrderedMapRenderer {
 		mapObjectRenderer.render(mapObject, context, mapTerminal);
 	}
 
-	private boolean isOnScreen(final GameContext context, final MapObject mapObject, final GameMapTerminal mapTerminal) {
+	private boolean isOnScreen(final GameContext context, final MapObject mapObject, final MapTerminalAdapter mapTerminal) {
 		return mapTerminal.toTerminal(mapObject.getPosition()) != null && context.getData().getMap().getStats().seen(mapObject.getPosition());
 	}
 

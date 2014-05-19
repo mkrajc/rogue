@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 public class Engine {
 
 	private final static Logger LOG = LoggerFactory.getLogger(Engine.class);
-	
+
 	@Inject
 	private MapComponent mapPanel;
 
@@ -26,6 +26,8 @@ public class Engine {
 	private GameUpdate gameUpdate;
 
 	private TickTimer engineTimer;
+
+	private boolean pause = false;
 
 	@PostConstruct
 	public void init() {
@@ -50,12 +52,12 @@ public class Engine {
 		LOG.info("engine started");
 		engineTimer.start();
 	}
-	
+
 	public void pause() {
 		LOG.info("engine paused");
 		engineTimer.pause();
 	}
-	
+
 	public void resume() {
 		LOG.info("engine resumed");
 		engineTimer.resume();

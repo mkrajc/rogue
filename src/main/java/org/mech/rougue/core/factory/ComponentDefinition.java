@@ -1,6 +1,7 @@
 package org.mech.rougue.core.factory;
 
 import org.mech.rougue.core.game.play.component.map.MapComponent;
+import org.mech.rougue.core.game.ui.InventoryPanel;
 import org.mech.rougue.core.game.ui.PlayerStatsPanel;
 import org.mech.rougue.core.game.ui.action.InteractionPopup;
 import org.mech.rougue.factory.AbstractDefinition;
@@ -14,7 +15,9 @@ public class ComponentDefinition extends AbstractDefinition {
 		singleton(InteractionPopup.class);
 		
 		singleton(MapComponent.class);
+		
 		singleton(PlayerStatsPanel.class);
+		singleton(InventoryPanel.class);
 	}
 
 }

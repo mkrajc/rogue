@@ -21,4 +21,8 @@ public class Inventory {
 		LOG.info("item droped to inventory " + item);
 	}
 
+	public List<Item> getItems() {
+		return items;
+	}
+
 }

@@ -10,6 +10,7 @@ import org.mech.rougue.core.game.play.action.move.MoveNorthAction;
 import org.mech.rougue.core.game.play.action.move.MoveSouthAction;
 import org.mech.rougue.core.game.play.action.move.MoveWestAction;
 import org.mech.rougue.core.game.play.action.turn.TurnFreezeAction;
+import org.mech.rougue.core.game.ui.action.InventoryPanelAction;
 import org.mech.rougue.core.game.ui.action.PlayerStatsPanelAction;
 import org.mech.rougue.core.r.action.object.Interaction;
 import org.mech.rougue.factory.AbstractDefinition;
@@ -32,6 +33,7 @@ public class ActionDefinition extends AbstractDefinition {
 		singleton(Interaction.class);
 
 		singleton(PlayerStatsPanelAction.class);
+		singleton(InventoryPanelAction.class);
 		singleton(SeeMapAction.class);
 		
 	}

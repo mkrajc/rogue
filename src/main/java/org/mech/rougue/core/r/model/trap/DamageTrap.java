@@ -11,5 +11,7 @@ public class DamageTrap extends Trap {
 	protected void doActivateTrap(final GameContext context) {
 		final Stat<Integer> hitPoints = context.getData().getPlayer().getStats().getHitPoints();
 		hitPoints.setValue(hitPoints.getValue() - dmg);
+		
+		
 	}
 }

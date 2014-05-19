@@ -16,6 +16,7 @@ public class PlayerStatsPanel extends ShowPanel {
 
 	public void setPlayerStats(final GameContext context) {
 		removeAll();
+		
 		final PlayerStats stats = context.getData().getPlayer().getStats();
 
 		for (final StatGroup group : stats.getGroups()) {
@@ -31,6 +32,7 @@ public class PlayerStatsPanel extends ShowPanel {
 				add(new JLabel(stat.getValue() == null ? "" : stat.getValue().toString()), "wrap");
 			}
 		}
+		
 	}
 
 }

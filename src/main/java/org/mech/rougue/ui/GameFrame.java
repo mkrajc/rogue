@@ -47,7 +47,7 @@ public class GameFrame extends TerminalFrame implements Handler {
 		
 //		gamePanel.add(leftPanel, "shrink 100, min 0");
 		gamePanel.add(gameTerminal, "grow");
-//		gamePanel.add(rightPanel);
+		gamePanel.add(rightPanel);
 		
 		startPanel.setHandler(this);
 		setContentPane(startPanel);

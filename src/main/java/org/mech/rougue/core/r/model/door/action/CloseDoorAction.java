@@ -1,11 +1,16 @@
 package org.mech.rougue.core.r.model.door.action;
 
+import org.mech.rougue.core.game.GameContext;
 import org.mech.rougue.core.r.model.door.Door;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class CloseDoorAction extends AbstractDoorAction{
+public class CloseDoorAction extends AbstractDoorAction {
 	private final static Logger LOG = LoggerFactory.getLogger(CloseDoorAction.class);
+	
+	public CloseDoorAction(final GameContext ctx, final Door door) {
+		super(ctx, door);
+	}
 	
 	@Override
 	public String getActionName() {
@@ -13,14 +18,14 @@ public class CloseDoorAction extends AbstractDoorAction{
 	}
 
 	@Override
-	public void doInvoke(Door door) {
+	public void doInvoke(final Door door) {
 		door.close();
 		LOG.debug("door [" + door + "] closed");
 	}
 
 	@Override
-	public boolean enabled(Door object) {
-		return object.isOpen();
+	public boolean enabled() {
+		return door.isOpen();
 	}
 
 }

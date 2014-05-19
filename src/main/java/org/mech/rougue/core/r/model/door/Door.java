@@ -1,28 +1,33 @@
 package org.mech.rougue.core.r.model.door;
 
+import java.util.List;
 import org.mech.rougue.core.game.GameContext;
 import org.mech.rougue.core.game.model.map.render.MapObject;
 import org.mech.rougue.core.game.model.map.render.RenderId;
 import org.mech.rougue.core.game.model.map.render.RenderOptions;
 import org.mech.rougue.core.game.model.map.tile.Tiles;
-import org.mech.rougue.core.game.play.action.Action;
-import org.mech.rougue.core.game.play.action.ActionDispatcher;
-import org.mech.rougue.core.r.action.object.ObjectActionHelper;
+import org.mech.rougue.core.r.action.object.InteractionRegistration;
+import org.mech.rougue.core.r.action.object.InteractiveObject;
+import org.mech.rougue.core.r.context.ContextAwareGObject;
 import org.mech.rougue.core.r.event.EventBus;
 import org.mech.rougue.core.r.event.PlayerMoveEvent;
 import org.mech.rougue.core.r.handler.game.UpdateAwareGObject;
-import org.mech.rougue.core.r.handler.register.BulkRegistration;
 import org.mech.rougue.core.r.handler.register.Registration;
-import org.mech.rougue.core.r.handler.register.action.ActionOnDispatcherRegistrationHandler;
+import org.mech.rougue.core.r.model.door.action.AbstractDoorAction;
+import org.mech.rougue.core.r.model.door.action.CloseDoorAction;
+import org.mech.rougue.core.r.model.door.action.OpenDoorAction;
 import org.mech.rougue.core.r.model.map.EnvironmentObject;
 import org.mech.rougue.core.r.object.GId;
 import org.mech.rougue.core.r.object.GIdFactory;
+import org.mech.rougue.utils.CollectionUtils;
 import org.mech.terminator.geometry.GeometryUtils;
 import org.mech.terminator.geometry.Position;
 
-public class Door implements MapObject, UpdateAwareGObject, EnvironmentObject, PlayerMoveEvent.Handler {
+public class Door implements MapObject, UpdateAwareGObject, EnvironmentObject, PlayerMoveEvent.Handler, InteractiveObject, ContextAwareGObject {
 
 	public static final String TYPE = "DOOR";
+
+	private GameContext context;
 
 	private final GId gId;
 	private final RenderId renderId;
@@ -30,7 +35,7 @@ public class Door implements MapObject, UpdateAwareGObject, EnvironmentObject, P
 	private Position position;
 	private boolean open = true;
 
-	private Registration doorActionsRegistrations;
+	private Registration interaction;
 
 	public Door() {
 		this.renderId = new RenderId(getType());
@@ -103,26 +108,24 @@ public class Door implements MapObject, UpdateAwareGObject, EnvironmentObject, P
 	public void update(final GameContext gameContext) {
 		if (playerStoodInFrontOfDoor(gameContext)) {
 			refreshActions(gameContext);
-		} 
+		}
 	}
 
 	private boolean playerStoodInFrontOfDoor(final GameContext context) {
-		return GeometryUtils.distPyth(context.getData().getPlayer().getPosition(), position) <= 1.0;
+		return GeometryUtils.distPyth(context.getData().getPlayer().getPosition(), position) == 1.0;
 	}
 
 	private void destroyActions() {
-		if (doorActionsRegistrations != null) {
-			doorActionsRegistrations.destroy();
-			doorActionsRegistrations = null;
+		if (interaction != null) {
+			interaction.destroy();
+			interaction = null;
 		}
 	}
 
 	private void refreshActions(final GameContext context) {
-		if (doorActionsRegistrations == null) {
-			// TODO let action dispatcher handle transformation
-			doorActionsRegistrations = new BulkRegistration<ActionDispatcher, Action>(context.actionDispatcher, ObjectActionHelper.toInputActions(
-					this, context.actions.doorActions.getActiveDoorActions(this)), new ActionOnDispatcherRegistrationHandler());
-			doorActionsRegistrations.register();
+		if (interaction == null) {
+			interaction = new InteractionRegistration(context, this);
+			interaction.register();
 		}
 	}
 
@@ -149,4 +152,22 @@ public class Door implements MapObject, UpdateAwareGObject, EnvironmentObject, P
 	public void registerHandlers(final EventBus bus) {
 		bus.addHandler(PlayerMoveEvent.class, this);
 	}
+
+	@Override
+	public List<AbstractDoorAction> getActions() {
+		final OpenDoorAction openDoorAction = new OpenDoorAction(context, this);
+		final CloseDoorAction closeDoorAction = new CloseDoorAction(context, this);
+		return (List<AbstractDoorAction>) (isClosed() ? CollectionUtils.asList(openDoorAction) : CollectionUtils.asList(closeDoorAction));
+	}
+
+	@Override
+	public void onAdd(final GameContext context) {
+		this.context = context;
+	}
+
+	@Override
+	public void onRemove(final GameContext context) {
+
+	}
+
 }

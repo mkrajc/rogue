@@ -5,7 +5,6 @@ import java.util.List;
 import org.mech.rougue.core.game.play.action.ActionDispatcher;
 import org.mech.rougue.core.game.state.GameState;
 import org.mech.rougue.core.r.context.ContextAwareGObject;
-import org.mech.rougue.core.r.context.GActions;
 import org.mech.rougue.core.r.event.Event;
 import org.mech.rougue.core.r.event.EventBus;
 import org.mech.rougue.core.r.handler.game.UpdateAwareGObject;
@@ -22,9 +21,6 @@ public class GameContext {
 	@Inject
 	public GameState state;
 	
-	@Inject
-	public GActions actions;
-
 	@Inject
 	public ActionDispatcher actionDispatcher;
 

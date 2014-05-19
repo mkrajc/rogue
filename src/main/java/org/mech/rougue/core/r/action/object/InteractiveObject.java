@@ -5,6 +5,6 @@ import org.mech.rougue.core.r.model.common.GObject;
 
 public interface InteractiveObject extends GObject {
 
-	List<ObjectAction> getActions();
+	<A extends ObjectAction> List<A> getActions();
 
 }

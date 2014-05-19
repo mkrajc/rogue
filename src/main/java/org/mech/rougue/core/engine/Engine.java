@@ -50,6 +50,16 @@ public class Engine {
 		LOG.info("engine started");
 		engineTimer.start();
 	}
+	
+	public void pause() {
+		LOG.info("engine paused");
+		engineTimer.pause();
+	}
+	
+	public void resume() {
+		LOG.info("engine resumed");
+		engineTimer.resume();
+	}
 
 	public void processInputs() {
 		gameInput.processInput();

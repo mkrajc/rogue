@@ -1,13 +1,11 @@
 package org.mech.rougue.core.r.action.object;
 
-import org.mech.rougue.core.r.model.common.GObject;
-
-public interface ObjectAction<T extends GObject> {
+public interface ObjectAction {
 	
 	String getActionName();
 	
-	void invoke(T object);
+	void invoke();
 	
-	boolean enabled(T object);
+	boolean enabled();
 	
 }

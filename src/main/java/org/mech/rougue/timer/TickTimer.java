@@ -9,20 +9,28 @@ public class TickTimer {
 	private static final int TARGET_TPS = 60;
 	private static final long NANOS_IN_SEC = 1000000000;
 
-	private TimerRunnable target;
-	private String name;
+	private final TimerRunnable target;
+	private final String name;
 
-	public TickTimer(String name, TickHandler handler) {
+	public TickTimer(final String name, final TickHandler handler) {
 		this(name, handler, TARGET_TPS);
 	}
 
-	public TickTimer(String name, TickHandler handler, int targetTps) {
+	public TickTimer(final String name, final TickHandler handler, final int targetTps) {
 		target = new TimerRunnable(handler, targetTps);
 		this.name = name;
 	}
 
 	public void stop() {
 		target.stopTimer();
+	}
+
+	public void pause() {
+		target.pause();
+	}
+
+	public void resume() {
+		target.resume();
 	}
 
 	public void start() {
@@ -32,22 +40,31 @@ public class TickTimer {
 	private static class TimerRunnable implements Runnable {
 
 		private boolean running = true;
+		private boolean paused = false;
 		private double lastTpsTime = 0.;
 		private int tps = 0;
-		private long optimalTime;
+		private final long optimalTime;
 
-		private TickHandler handler;
+		private final TickHandler handler;
 
-		public TimerRunnable(TickHandler handler, int targetTps) {
+		public TimerRunnable(final TickHandler handler, final int targetTps) {
 			this.handler = handler;
 			this.optimalTime = NANOS_IN_SEC / targetTps;
+		}
+
+		public void pause() {
+			paused = true;
+		}
+
+		public void resume() {
+			paused = false;
 		}
 
 		public void stopTimer() {
 			running = false;
 		}
 
-		private void doUpdate(double delta) {
+		private void doUpdate(final double delta) {
 			handler.onTick(delta);
 		}
 
@@ -56,13 +73,16 @@ public class TickTimer {
 			long lastLoopTime = System.nanoTime();
 			// keep looping round til the game ends
 			while (running) {
+				if (paused) {
+					continue;
+				}
 				// work out how long its been since the last update, this
 				// will be used to calculate how far the entities should
 				// move this loop
-				long now = System.nanoTime();
-				long updateLength = now - lastLoopTime;
+				final long now = System.nanoTime();
+				final long updateLength = now - lastLoopTime;
 				lastLoopTime = now;
-				double delta = updateLength / ((double) optimalTime);
+				final double delta = updateLength / ((double) optimalTime);
 
 				// update the frame counter
 				lastTpsTime += updateLength;
@@ -89,7 +109,7 @@ public class TickTimer {
 				// ns.
 				try {
 					Thread.sleep((lastLoopTime - System.nanoTime() + optimalTime) / 1000000);
-				} catch (Exception e) {}
+				} catch (final Exception e) {}
 			}
 		}
 	}

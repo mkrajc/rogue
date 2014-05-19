@@ -13,7 +13,6 @@ import org.mech.rougue.core.game.start.action.StartGameAction;
 import org.mech.rougue.core.game.state.GameState;
 import org.mech.rougue.core.game.state.impl.GameLoader;
 import org.mech.rougue.core.game.update.move.MapMover;
-import org.mech.rougue.core.r.context.GActions;
 import org.mech.rougue.factory.AbstractDefinition;
 import org.mech.rougue.lang.LocalizedResourceBundle;
 import org.mech.rougue.ui.GameFrame;
@@ -41,7 +40,6 @@ public class CoreDefinition extends AbstractDefinition {
 
 		singleton(GameState.class);
 		singleton(GameContext.class);
-		singleton(GActions.class);
 
 		factory(Monster.class);
 		

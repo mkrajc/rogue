@@ -21,6 +21,8 @@ public class MapComponent implements RenderHandler {
 
 	@Inject
 	private List<AbstractOrderedMapRenderer> renderers;
+	
+	final MapTerminalAdapter mapTerminal = new MapTerminalAdapter();
 
 	//	@PostConstruct
 	//	public void setup() {
@@ -29,7 +31,7 @@ public class MapComponent implements RenderHandler {
 
 	@Override
 	public void render() {
-		final MapTerminalAdapter mapTerminal = new MapTerminalAdapter(context);
+		mapTerminal.adapt(context);
 
 		for (final AbstractOrderedMapRenderer gameRenderer : renderers) {
 			LOG.trace(gameRenderer.getClass().getSimpleName() + " invoking ...");

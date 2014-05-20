@@ -1,6 +1,6 @@
 package org.mech.rougue.core.r.action.object;
 
-import org.mech.rougue.core.r.event.PlayerMoveEvent;
+import org.mech.rougue.core.r.event.player.PlayerMoveEvent;
 
 public class PlayerMoveOnItemInteraction extends PlayerMoveInteraction {
 

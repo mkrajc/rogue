@@ -1,6 +1,6 @@
 package org.mech.rougue.core.r.action.object;
 
-import org.mech.rougue.core.r.event.PlayerMoveEvent;
+import org.mech.rougue.core.r.event.player.PlayerMoveEvent;
 import org.mech.terminator.geometry.GeometryUtils;
 
 public class PlayerMoveInFrontOfItemInteraction extends PlayerMoveInteraction {

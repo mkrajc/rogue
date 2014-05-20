@@ -2,7 +2,7 @@ package org.mech.rougue.core.r.action.object;
 
 import org.mech.rougue.core.game.GameContext;
 import org.mech.rougue.core.r.event.EventBus;
-import org.mech.rougue.core.r.event.PlayerMoveEvent;
+import org.mech.rougue.core.r.event.player.PlayerMoveEvent;
 import org.mech.rougue.core.r.handler.register.Registration;
 import org.mech.rougue.core.r.model.geom.Positionable;
 import org.mech.terminator.geometry.Position;

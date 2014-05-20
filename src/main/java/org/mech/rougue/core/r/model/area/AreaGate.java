@@ -4,7 +4,7 @@ import org.mech.rougue.core.game.model.map.render.MapObject;
 import org.mech.rougue.core.game.model.map.render.RenderId;
 import org.mech.rougue.core.r.event.EventBus;
 import org.mech.rougue.core.r.event.LoadAreaEvent;
-import org.mech.rougue.core.r.event.PlayerMoveEvent;
+import org.mech.rougue.core.r.event.player.PlayerMoveEvent;
 import org.mech.rougue.core.r.object.GId;
 import org.mech.rougue.core.r.object.GIdFactory;
 import org.mech.terminator.geometry.Position;

@@ -5,7 +5,7 @@ import org.mech.rougue.core.game.model.map.render.MapObject;
 import org.mech.rougue.core.game.model.map.render.RenderId;
 import org.mech.rougue.core.game.model.map.render.RenderOptions;
 import org.mech.rougue.core.r.event.EventBus;
-import org.mech.rougue.core.r.event.PlayerMoveEvent;
+import org.mech.rougue.core.r.event.player.PlayerMoveEvent;
 import org.mech.rougue.core.r.handler.register.Registration;
 import org.mech.rougue.core.r.model.common.GObject;
 import org.mech.rougue.core.r.object.GId;

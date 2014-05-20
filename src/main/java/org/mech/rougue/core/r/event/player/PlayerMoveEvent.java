@@ -1,7 +1,8 @@
-package org.mech.rougue.core.r.event;
+package org.mech.rougue.core.r.event.player;
 
 import org.mech.rougue.core.game.model.player.Player;
-import org.mech.rougue.core.r.event.PlayerMoveEvent.Handler;
+import org.mech.rougue.core.r.event.Event;
+import org.mech.rougue.core.r.event.player.PlayerMoveEvent.Handler;
 import org.mech.rougue.core.r.model.geom.Positionable;
 import org.mech.terminator.geometry.Position;
 

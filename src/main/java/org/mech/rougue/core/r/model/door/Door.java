@@ -9,7 +9,7 @@ import org.mech.rougue.core.game.model.map.tile.Tiles;
 import org.mech.rougue.core.r.action.object.InteractiveObject;
 import org.mech.rougue.core.r.action.object.PlayerMoveInFrontOfItemInteraction;
 import org.mech.rougue.core.r.context.ContextAwareGObject;
-import org.mech.rougue.core.r.event.PlayerMoveEvent;
+import org.mech.rougue.core.r.event.player.PlayerMoveEvent;
 import org.mech.rougue.core.r.model.door.action.AbstractDoorAction;
 import org.mech.rougue.core.r.model.door.action.CloseDoorAction;
 import org.mech.rougue.core.r.model.door.action.OpenDoorAction;

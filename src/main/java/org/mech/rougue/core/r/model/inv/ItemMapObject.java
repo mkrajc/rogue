@@ -8,7 +8,7 @@ import org.mech.rougue.core.game.model.map.render.RenderOptions;
 import org.mech.rougue.core.r.action.object.InteractiveObject;
 import org.mech.rougue.core.r.action.object.PlayerMoveOnItemInteraction;
 import org.mech.rougue.core.r.context.ContextAwareGObject;
-import org.mech.rougue.core.r.event.PlayerMoveEvent;
+import org.mech.rougue.core.r.event.player.PlayerMoveEvent;
 import org.mech.rougue.core.r.model.inv.action.TakeItemAction;
 import org.mech.rougue.core.r.object.GId;
 import org.mech.rougue.utils.CollectionUtils;

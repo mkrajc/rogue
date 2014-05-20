@@ -23,8 +23,7 @@ public class StatGroupImpl implements StatGroup {
 		return statMap.get(key);
 	}
 
-	public <T> Stat<T> createStat(final String key, final T value) {
-		final StatImpl<T> sStat = new StatImpl<T>();
+	public <T> Stat<T> createStat(final String key, final T value, final StatImpl<T> sStat) {
 		sStat.group = this;
 		sStat.key = key;
 		sStat.stat = value;
@@ -34,7 +33,11 @@ public class StatGroupImpl implements StatGroup {
 	}
 
 	public <T> Stat<T> createStat(final String key) {
-		return createStat(key, null);
+		return createStat(key, null, new StatImpl<T>());
+	}
+	
+	public IntegerStat createIntegerStat(final String key) {
+		return (IntegerStat) createStat(key, 0, new IntegerStat());
 	}
 
 }

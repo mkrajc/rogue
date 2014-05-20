@@ -1,39 +1,72 @@
 package org.mech.rougue.core.r.model.combat;
 
-import org.mech.rougue.core.r.model.stat.Stat;
+import org.mech.rougue.core.r.model.stat.IntegerStat;
 import org.mech.rougue.core.r.model.stat.StatGroupContainerImpl;
 import org.mech.rougue.core.r.model.stat.StatGroupImpl;
 
-public class CombatantStats extends StatGroupContainerImpl {
+public class CombatantStats {
 
 	private static final Integer BASE_HP = 100;
 
-	private final Stat<Integer> hitPoints;
-	private final Stat<Integer> exp;
-	private final Stat<Integer> level;
-	private final Stat<Integer> resistPoison;
-	private final Stat<Integer> resistMagic;
-	private final Stat<Integer> resistShock;
+	private StatGroupContainerImpl statGroupContainer;
+
+	private final IntegerStat hitPoints;
+	private final IntegerStat exp;
+	private final IntegerStat level;
+	private final IntegerStat armor;
+	
+	private final IntegerStat resistPoison;
+	private final IntegerStat resistMagic;
+	private final IntegerStat resistShock;
 
 	public CombatantStats() {
+		statGroupContainer = new StatGroupContainerImpl();
 		final StatGroupImpl general = createGroup("player.stats.general");
-		level = general.createStat("level");
-		hitPoints = general.createStat("hp");
-		exp = general.createStat("exp");
+		level = general.createIntegerStat("level");
+		hitPoints = general.createIntegerStat("hp");
+		exp = general.createIntegerStat("exp");
+		armor = general.createIntegerStat("armor");
 
 		final StatGroupImpl resist = createGroup("player.stats.resist");
-		resistPoison = resist.createStat("poison");
-		resistMagic = resist.createStat("magic");
-		resistShock = resist.createStat("shock");
+		resistPoison = resist.createIntegerStat("poison");
+		resistMagic = resist.createIntegerStat("magic");
+		resistShock = resist.createIntegerStat("shock");
 
 		hitPoints.setValue(BASE_HP);
 		exp.setValue(0);
 		level.setValue(1);
 	}
 
-	@Override
-	public StatGroupImpl createGroup(final String key) {
-		return (StatGroupImpl) super.createGroup(key);
+	private StatGroupImpl createGroup(final String key) {
+		return (StatGroupImpl) statGroupContainer.createGroup(key);
+	}
+
+	public IntegerStat getHitPoints() {
+		return hitPoints;
+	}
+
+	public IntegerStat getExp() {
+		return exp;
+	}
+
+	public IntegerStat getLevel() {
+		return level;
+	}
+
+	public IntegerStat getResistPoison() {
+		return resistPoison;
+	}
+
+	public IntegerStat getResistMagic() {
+		return resistMagic;
+	}
+
+	public IntegerStat getResistShock() {
+		return resistShock;
+	}
+
+	public IntegerStat getArmor() {
+		return armor;
 	}
 
 }

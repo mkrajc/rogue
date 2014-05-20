@@ -8,22 +8,28 @@ public class CombatantTest {
 
 	@Test
 	public void testTakePhysicalDamage() {
-		final Combatant combatant = new Combatant();
-		final CombatantStats stats = new CombatantStats();
-		stats.getHitPoints().setValue(100);
-		combatant.setStats(stats);
-
-		assertEquals(20, combatant.takeDamage(new PhysicalDamage(20)));
+		assertEquals(20, createCombatant().takeDamage(new PhysicalDamage(20)));
 	}
 
 	@Test
 	public void testTakePhysicalDamageArmor() {
-		final Combatant combatant = new Combatant();
+		final Combatant combatant = createCombatant();
+		combatant.getStats().getArmor().setValue(10);
+		assertEquals(1, new Integer(20).compareTo(combatant.takeDamage(new PhysicalDamage(20))));
+	}
+
+	private Combatant createCombatant() {
 		final CombatantStats stats = new CombatantStats();
 		stats.getHitPoints().setValue(100);
-		stats.getArmor().setValue(10);
-		combatant.setStats(stats);;
-		assertEquals(1, new Integer(20).compareTo(combatant.takeDamage(new PhysicalDamage(20))));
+		final Combatant combatant = new Combatant(new IsCombatant() {
+
+			@Override
+			public CombatantStats getCombatStats() {
+				return stats;
+			}
+		});
+
+		return combatant;
 	}
 
 }

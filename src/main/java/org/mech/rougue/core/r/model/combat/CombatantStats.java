@@ -6,7 +6,7 @@ import org.mech.rougue.core.r.model.stat.StatGroupImpl;
 
 public class CombatantStats {
 
-	private static final Integer BASE_HP = 100;
+	private static final Integer BASE_HP = 30;
 
 	private StatGroupContainerImpl statGroupContainer;
 

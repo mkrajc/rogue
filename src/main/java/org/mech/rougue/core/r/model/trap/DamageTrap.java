@@ -1,17 +1,20 @@
 package org.mech.rougue.core.r.model.trap;
 
 import org.mech.rougue.core.game.GameContext;
-import org.mech.rougue.core.r.model.stat.Stat;
+import org.mech.rougue.core.r.model.combat.dmg.Damage;
 
 public class DamageTrap extends Trap {
-
-	private final int dmg = 10;
+	
+	private Damage damage;
+	
+	public DamageTrap(final Damage damage) {
+		this.damage = damage;
+	}
 
 	@Override
 	protected void doActivateTrap(final GameContext context) {
-		final Stat<Integer> hitPoints = context.getData().getPlayer().getStats().getHitPoints();
-		hitPoints.setValue(hitPoints.getValue() - dmg);
-		
-		
+		// TODO chance to avoid trap
+		context.getData().getPlayer().combatant.takeDamage(damage);
+
 	}
 }

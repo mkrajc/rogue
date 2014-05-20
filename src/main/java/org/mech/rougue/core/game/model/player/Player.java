@@ -6,6 +6,9 @@ import org.mech.rougue.core.game.model.map.render.MapObject;
 import org.mech.rougue.core.game.model.map.render.RenderId;
 import org.mech.rougue.core.game.model.map.render.RenderOptions;
 import org.mech.rougue.core.r.handler.game.player.PlayerSight;
+import org.mech.rougue.core.r.model.combat.Combatant;
+import org.mech.rougue.core.r.model.combat.CombatantStats;
+import org.mech.rougue.core.r.model.combat.IsCombatant;
 import org.mech.rougue.core.r.model.inv.Inventory;
 import org.mech.rougue.core.r.model.player.stat.PlayerStats;
 import org.mech.rougue.core.r.object.GId;
@@ -13,7 +16,7 @@ import org.mech.rougue.core.r.object.GIdFactory;
 import org.mech.rougue.factory.Inject;
 import org.mech.terminator.geometry.Position;
 
-public class Player implements MapObject {
+public class Player implements MapObject, IsCombatant {
 
 	private final GId gId;
 	private final RenderId renderId;
@@ -22,6 +25,7 @@ public class Player implements MapObject {
 	private Position position;
 	
 	public Inventory inventory;
+	public Combatant combatant = new Combatant(this);
 	
 	private PlayerStats stats;
 
@@ -97,5 +101,11 @@ public class Player implements MapObject {
 	public void setStats(final PlayerStats stats) {
 		this.stats = stats;
 	}
+
+	@Override
+	public CombatantStats getCombatStats() {
+		return stats.combatantStats;
+	}
+	
 
 }

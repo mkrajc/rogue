@@ -1,6 +1,6 @@
 package org.mech.rougue.core.game.play.component.map;
 
-import org.mech.rougue.core.game.model.map.Map;
+import org.mech.rougue.core.r.model.map.Map;
 import org.mech.terminator.ITerminal;
 import org.mech.terminator.TerminalRectangleWrapper;
 import org.mech.terminator.geometry.Dimension;

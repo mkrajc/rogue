@@ -2,10 +2,10 @@ package org.mech.rougue.core.game.model.area;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.mech.rougue.core.game.model.map.Map;
 import org.mech.rougue.core.game.model.room.Room;
 import org.mech.rougue.core.r.model.area.AreaGate;
 import org.mech.rougue.core.r.model.door.Door;
+import org.mech.rougue.core.r.model.map.Map;
 
 public class Area {
 	private String areaId;

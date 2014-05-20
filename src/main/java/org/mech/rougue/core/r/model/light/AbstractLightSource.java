@@ -3,9 +3,9 @@ package org.mech.rougue.core.r.model.light;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
-import org.mech.rougue.core.game.model.map.Map;
 import org.mech.rougue.core.r.event.RebuildLightEvent;
 import org.mech.rougue.core.r.handler.game.light.LightMask;
+import org.mech.rougue.core.r.model.map.Map;
 import org.mech.terminator.geometry.GeometryUtils;
 import org.mech.terminator.geometry.Position;
 

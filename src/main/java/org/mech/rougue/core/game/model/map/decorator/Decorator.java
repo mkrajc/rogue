@@ -1,10 +1,10 @@
 package org.mech.rougue.core.game.model.map.decorator;
 
 import java.util.List;
-import org.mech.rougue.core.game.model.map.Map;
 import org.mech.rougue.core.game.model.map.render.RenderId;
 import org.mech.rougue.core.game.model.map.tile.NewMapTile;
 import org.mech.rougue.core.game.model.map.tile.TileTheme;
+import org.mech.rougue.core.r.model.map.Map;
 import org.mech.rougue.factory.Inject;
 import org.mech.terminator.geometry.Dimension;
 import org.mech.terminator.geometry.Position;

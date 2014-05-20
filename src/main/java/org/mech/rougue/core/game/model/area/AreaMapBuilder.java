@@ -1,7 +1,6 @@
 package org.mech.rougue.core.game.model.area;
 
 import java.util.List;
-import org.mech.rougue.core.game.model.map.Map;
 import org.mech.rougue.core.game.model.map.tile.GroundTile;
 import org.mech.rougue.core.game.model.map.tile.NewMapTile;
 import org.mech.rougue.core.game.model.map.tile.TileConfiguration;
@@ -12,6 +11,7 @@ import org.mech.rougue.core.r.model.door.Door;
 import org.mech.rougue.core.r.model.inv.Item;
 import org.mech.rougue.core.r.model.inv.ItemMapObject;
 import org.mech.rougue.core.r.model.inv.ItemType;
+import org.mech.rougue.core.r.model.map.Map;
 import org.mech.rougue.core.r.model.trap.DamageTrap;
 import org.mech.rougue.core.r.model.trap.Trap;
 import org.mech.rougue.core.r.object.GId;

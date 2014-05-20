@@ -1,6 +1,6 @@
 package org.mech.rougue.core.game.model.map.generator;
 
-import org.mech.rougue.core.game.model.map.Map;
+import org.mech.rougue.core.r.model.map.Map;
 import org.mech.terminator.geometry.Dimension;
 
 public class MapGenerator {

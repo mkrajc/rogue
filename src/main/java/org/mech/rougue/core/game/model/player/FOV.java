@@ -3,7 +3,7 @@ package org.mech.rougue.core.game.model.player;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
-import org.mech.rougue.core.game.model.map.Map;
+import org.mech.rougue.core.r.model.map.Map;
 import org.mech.terminator.geometry.GeometryUtils;
 import org.mech.terminator.geometry.Position;
 

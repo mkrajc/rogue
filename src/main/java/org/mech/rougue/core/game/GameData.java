@@ -2,8 +2,8 @@ package org.mech.rougue.core.game;
 
 import org.mech.rougue.core.game.model.area.Area;
 import org.mech.rougue.core.game.model.area.stat.AreaStats;
-import org.mech.rougue.core.game.model.map.Map;
 import org.mech.rougue.core.game.model.player.Player;
+import org.mech.rougue.core.r.model.map.Map;
 
 public class GameData {
 	private Area area;

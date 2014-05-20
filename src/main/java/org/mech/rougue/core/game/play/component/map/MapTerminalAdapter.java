@@ -20,7 +20,7 @@ public class MapTerminalAdapter {
 
 	private ITerminal terminal;
 
-	private org.mech.rougue.core.game.model.map.Map gameMap;
+	private org.mech.rougue.core.r.model.map.Map gameMap;
 	private Map<Position, RenderedMapTile> tiles;
 
 	public MapTerminalAdapter() {}

@@ -2,6 +2,7 @@ package org.mech.rougue.core.game.model.map;
 
 import static org.junit.Assert.*;
 import org.junit.Test;
+import org.mech.rougue.core.r.model.map.Map;
 import org.mech.terminator.geometry.Dimension;
 import org.mech.terminator.geometry.Position;
 

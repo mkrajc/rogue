@@ -23,7 +23,7 @@ public abstract class MoveAction extends DefaultAction {
 
 	@Override
 	protected void doInvoke() {
-		final org.mech.rougue.core.game.model.map.Map map = context.getData().getMap();
+		final org.mech.rougue.core.r.model.map.Map map = context.getData().getMap();
 		final Player player = context.getData().getPlayer();
 		final Position oldPosition = player.getPosition();
 		final boolean moved = mapMover.move(player, getMove(), map);

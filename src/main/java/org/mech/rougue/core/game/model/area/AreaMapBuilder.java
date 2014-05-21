@@ -54,10 +54,17 @@ public class AreaMapBuilder {
 				// TODO Auto-generated method stub
 				return null;
 			}
+			
+			 
 
 			@Override
 			public ItemType getType() {
 				return ItemType.JEWEL;
+			}
+
+			@Override
+			public String getName() {
+				return "test";
 			}};
 		final ItemMapObject m = new ItemMapObject(test);
 		m.setPosition(Position.at(7, 1));

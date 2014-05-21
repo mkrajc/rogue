@@ -10,8 +10,8 @@ public class Inventory {
 	private final static Logger LOG = LoggerFactory.getLogger(Inventory.class);
 
 	private final List<Item> items = new ArrayList<Item>();
-
-	public void take(final Item item) {
+	
+	public void take(final Item item){
 		items.add(item);
 		LOG.info("item added to inventory " + item);
 	}

@@ -2,7 +2,7 @@ package org.mech.rougue.core.game.ui.action;
 
 import org.mech.rougue.core.game.GameContext;
 import org.mech.rougue.core.game.play.action.DefaultAction;
-import org.mech.rougue.core.game.ui.InventoryPanel;
+import org.mech.rougue.core.game.ui.inventory.InventoryPanel;
 import org.mech.rougue.factory.Inject;
 import org.mech.rougue.ui.GameFrame;
 

@@ -1,5 +1,6 @@
 package org.mech.rougue.lang;
 
+import java.text.MessageFormat;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import javax.annotation.PostConstruct;
@@ -21,20 +22,24 @@ public class LocalizedResourceBundle {
 	}
 
 	private Locale getLocale() {
-		 return new Locale("sk");
-//		return Locale.ENGLISH;
+		return new Locale("sk");
+		//		return Locale.ENGLISH;
 	}
 
 	public String getMessage(final String key) {
-		if(key == null){
+		if (key == null) {
 			return "null";
 		}
 		final boolean containsKey = current.containsKey(key);
-		
-		if(!containsKey){
+
+		if (!containsKey) {
 			System.out.println(key);
 		}
-		
+
 		return current == null ? key : containsKey ? current.getString(key) : "% " + key + " %";
+	}
+
+	public String getMessage(final String key, final Object... params) {
+		return MessageFormat.format(getMessage(key), params);
 	}
 }

@@ -82,5 +82,10 @@ public class ItemMapObject implements MapObject, InteractiveObject, ContextAware
 	public GameContext getContext() {
 		return context;
 	}
+	
+	@Override
+	public String toString() {
+		return item.getName();
+	}
 
 }

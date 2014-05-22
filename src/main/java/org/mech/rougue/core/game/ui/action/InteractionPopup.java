@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 import javax.annotation.PostConstruct;
-import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import org.mech.rougue.core.game.GameContext;
@@ -54,10 +53,8 @@ public class InteractionPopup extends JPopupMenu implements ShowInteractionEvent
 		if (CollectionUtils.isNotEmpty(iObjects)) {
 			for (final InteractiveObject interactiveObject : iObjects) {
 				if (CollectionUtils.isNotEmpty(interactiveObject.getActions())) {
-					this.add(new JLabel(interactiveObject.toString()));
-					this.add(new Separator());
 					for (final ObjectAction a : interactiveObject.getActions()) {
-						final JMenuItem item = new JMenuItem(i18n.getMessage(a.getActionName()));
+						final JMenuItem item = new JMenuItem(i18n.getMessage(a.getActionName(), i18n.getMessage(interactiveObject.toString())));
 						item.addActionListener(new ActionListener() {
 
 							@Override

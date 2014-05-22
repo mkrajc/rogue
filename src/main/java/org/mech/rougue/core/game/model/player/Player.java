@@ -11,6 +11,7 @@ import org.mech.rougue.core.r.handler.game.player.PlayerSight;
 import org.mech.rougue.core.r.model.combat.Combatant;
 import org.mech.rougue.core.r.model.combat.CombatantStats;
 import org.mech.rougue.core.r.model.combat.IsCombatant;
+import org.mech.rougue.core.r.model.inv.Equipment;
 import org.mech.rougue.core.r.model.inv.Inventory;
 import org.mech.rougue.core.r.model.player.stat.PlayerStats;
 import org.mech.rougue.core.r.object.GId;
@@ -27,6 +28,7 @@ public class Player implements MapObject, IsCombatant, UpdateAwareGObject {
 	private Position position;
 
 	public Inventory inventory;
+	public Equipment equipment;
 	public Combatant combatant;
 
 	private PlayerStats stats;
@@ -42,6 +44,7 @@ public class Player implements MapObject, IsCombatant, UpdateAwareGObject {
 		gId = GIdFactory.next();
 
 		inventory = new Inventory();
+		equipment = new Equipment();
 		stats = new PlayerStats();
 		combatant = new Combatant(this);
 	}

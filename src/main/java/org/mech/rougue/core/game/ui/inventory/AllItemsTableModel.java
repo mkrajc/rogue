@@ -2,13 +2,14 @@ package org.mech.rougue.core.game.ui.inventory;
 
 import java.text.DecimalFormat;
 import javax.swing.table.AbstractTableModel;
+import org.mech.rougue.core.r.model.inv.Equipable;
 import org.mech.rougue.core.r.model.inv.Inventory;
 import org.mech.rougue.core.r.model.inv.Item;
 import org.mech.rougue.lang.LocalizedResourceBundle;
 
 public class AllItemsTableModel extends AbstractTableModel {
 	private static final long serialVersionUID = -6177303710744412444L;
-	private String[] columnNames = new String[] { "inv.item.name", "inv.item.type", "inv.item.weight" };
+	private String[] columnNames = new String[] { "inv.item.equip", "inv.item.name", "inv.item.type", "inv.item.weight" };
 	private Inventory inv;
 	private LocalizedResourceBundle bundle;
 	private DecimalFormat weightFormat = new DecimalFormat("#.#");
@@ -33,12 +34,18 @@ public class AllItemsTableModel extends AbstractTableModel {
 		final Item item = inv.getItem(rowIndex);
 		if (item != null) {
 			if (columnIndex == 0) {
-				return item.getName();
+				if (item instanceof Equipable) {
+					return toEquipString(((Equipable) item).isEquipped());
+				}
+				return toEquipString(false);
 			}
 			if (columnIndex == 1) {
-				return bundle.getMessage(item.getType().toKey());
+				return item.getName();
 			}
 			if (columnIndex == 2) {
+				return bundle.getMessage(item.getType().toKey());
+			}
+			if (columnIndex == 3) {
 				return weightFormat.format(item.getWeight());
 			}
 		}
@@ -53,6 +60,10 @@ public class AllItemsTableModel extends AbstractTableModel {
 	@Override
 	public Class getColumnClass(final int c) {
 		return getValueAt(0, c).getClass();
+	}
+
+	private String toEquipString(final boolean eq) {
+		return eq ? "\u2192" : "";
 	}
 
 }

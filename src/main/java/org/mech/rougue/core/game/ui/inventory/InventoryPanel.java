@@ -76,7 +76,8 @@ public class InventoryPanel extends ShowPanel {
 		} else {
 			final List<DropItemAction> actions = new ArrayList<DropItemAction>();
 			for (final int index : selectedRows) {
-				final Item item = inventory.getItem(index);
+				final int modelIndex = inventoryTable.convertRowIndexToModel(index);
+				final Item item = inventory.getItem(modelIndex);
 				actions.add(new DropItemAction(item, context));
 			}
 

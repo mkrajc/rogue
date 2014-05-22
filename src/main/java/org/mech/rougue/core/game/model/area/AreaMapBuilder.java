@@ -10,11 +10,11 @@ import org.mech.rougue.core.r.model.combat.dmg.PhysicalDamage;
 import org.mech.rougue.core.r.model.door.Door;
 import org.mech.rougue.core.r.model.inv.Item;
 import org.mech.rougue.core.r.model.inv.ItemMapObject;
-import org.mech.rougue.core.r.model.inv.ItemType;
+import org.mech.rougue.core.r.model.inv.item.Clothes;
+import org.mech.rougue.core.r.model.inv.item.Jewel;
 import org.mech.rougue.core.r.model.map.Map;
 import org.mech.rougue.core.r.model.trap.DamageTrap;
 import org.mech.rougue.core.r.model.trap.Trap;
-import org.mech.rougue.core.r.object.GId;
 import org.mech.terminator.geometry.Dimension;
 import org.mech.terminator.geometry.Line;
 import org.mech.terminator.geometry.Position;
@@ -47,35 +47,15 @@ public class AreaMapBuilder {
 		map.registerGameObject(t);
 		
 //		final Monster m = new Monster();
-		final Item test = new Item(){
-
-			@Override
-			public GId id() {
-				// TODO Auto-generated method stub
-				return null;
-			}
-			
-			 
-
-			@Override
-			public ItemType getType() {
-				return ItemType.JEWEL;
-			}
-
-			@Override
-			public String getName() {
-				return "test";
-			}
-
-
-
-			@Override
-			public float getWeight() {
-				return 0.35F;
-			}};
+		final Item test = new Jewel();
 		final ItemMapObject m = new ItemMapObject(test);
 		m.setPosition(Position.at(7, 1));
 		map.registerGameObject(m);
+		
+		final Item clothes = new Clothes();
+		final ItemMapObject w = new ItemMapObject(clothes);
+		w.setPosition(Position.at(6, 2));
+		map.registerGameObject(w);
 
 
 		area.map = map;

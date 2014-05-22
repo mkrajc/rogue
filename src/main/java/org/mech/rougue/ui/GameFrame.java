@@ -39,13 +39,13 @@ public class GameFrame extends TerminalFrame implements Handler {
 		startPanel = new StartPanel();
 		gamePanel = new JPanel(new MigLayout("ins 0, fill"));
 
-		leftPanel = new JPanel(new MigLayout());
+		leftPanel = new JPanel(new MigLayout("fill"));
 		rightPanel = new JPanel(new MigLayout());
 		leftPanel.setVisible(false);
 		rightPanel.setVisible(false);
 
-		gamePanel.add(leftPanel, "hidemode 3");
-		gamePanel.add(gameTerminal, "grow");
+		gamePanel.add(leftPanel, "hidemode 3, aligny top");
+		gamePanel.add(gameTerminal, "grow,push");
 		gamePanel.add(rightPanel, "hidemode 3");
 
 		startPanel.setHandler(this);

@@ -10,19 +10,38 @@ public class Inventory {
 	private final static Logger LOG = LoggerFactory.getLogger(Inventory.class);
 
 	private final List<Item> items = new ArrayList<Item>();
-	
-	public void take(final Item item){
+
+	private float weight = .0F;
+
+	public void take(final Item item) {
 		items.add(item);
-		LOG.info("item added to inventory " + item);
+		recountWeight();
+		LOG.info("item added to inventory [" + item.getName() + "]");
+	}
+
+	public void drop(final Item item) {
+		items.remove(item);
+		recountWeight();
+		LOG.info("item droped from inventory [" + item.getName() + "]");
 	}
 	
-	public void drop(final Item item) {
-		items.add(item);
-		LOG.info("item droped to inventory " + item);
+	public Item getItem(final int index) {
+		return index >= items.size() ? null : items.get(index);
 	}
 
 	public List<Item> getItems() {
 		return items;
+	}
+
+	public float getTotalWeight() {
+		return weight;
+	}
+
+	private void recountWeight() {
+		weight = 0;
+		for (final Item i : getItems()) {
+			weight += i.getWeight();
+		}
 	}
 
 }

@@ -65,6 +65,13 @@ public class AreaMapBuilder {
 			@Override
 			public String getName() {
 				return "test";
+			}
+
+
+
+			@Override
+			public float getWeight() {
+				return 0.35F;
 			}};
 		final ItemMapObject m = new ItemMapObject(test);
 		m.setPosition(Position.at(7, 1));

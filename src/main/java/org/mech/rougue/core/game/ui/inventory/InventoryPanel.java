@@ -5,9 +5,9 @@ import java.awt.event.FocusEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.event.ListSelectionEvent;
@@ -15,6 +15,7 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
+import net.miginfocom.swing.MigLayout;
 import org.mech.rougue.core.game.GameContext;
 import org.mech.rougue.core.game.ui.ShowPanel;
 import org.mech.rougue.core.r.action.object.ObjectAction;
@@ -43,7 +44,7 @@ public class InventoryPanel extends ShowPanel {
 	private AbstractTableModel inventoryTableModel;
 
 	private JLabel totalWeightLabel;
-	private JLabel actionsLabel;
+	private JPanel actionPanel = new JPanel(new MigLayout("wrap 2"));
 
 	public InventoryPanel() {
 		addFocusListener(this.new Focus());
@@ -70,7 +71,7 @@ public class InventoryPanel extends ShowPanel {
 				updateActions();
 			}
 		});
-		
+
 		inventoryTable.getColumnModel().getColumn(0).setCellRenderer(new EquipedItemRenderer());
 
 		inventoryTable.setFillsViewportHeight(true);
@@ -81,11 +82,9 @@ public class InventoryPanel extends ShowPanel {
 
 		final JScrollPane scrollPane = new JScrollPane(inventoryTable);
 
-		actionsLabel = new JLabel();
-
 		add(scrollPane, "wrap");
 		add(totalWeightLabel, "wrap");
-		add(actionsLabel);
+		add(actionPanel);
 	}
 
 	private String createTotalWeightLabel() {
@@ -93,26 +92,35 @@ public class InventoryPanel extends ShowPanel {
 	}
 
 	protected void updateActions() {
-		final List<String> actions = new ArrayList<String>();
+		actionPanel.removeAll();
 
 		final int selCount = inventoryTable.getSelectedRowCount();
 
 		if (selCount == 1) {
-			final Item item = inventory.getItem(inventoryTable.convertColumnIndexToModel(inventoryTable.getSelectedRow()));
+			final Item item = getJustSelectedItem();
+
+			final boolean equipped = isEquipped(item);
+
+			if (!equipped) {
+				actionPanel.add(new JLabel(bundle.getMessage("inv.action.drop", "D")));
+			}
+
 			if (item instanceof Equipable) {
-				if (((Equipable) item).isEquipped()) {
-					actions.add(bundle.getMessage("inv.action.unequip"));
+				if (equipped) {
+					actionPanel.add(new JLabel(bundle.getMessage("inv.action.unequip", "E")));
 				} else {
-					actions.add(bundle.getMessage("inv.action.equip"));
+					actionPanel.add(new JLabel(bundle.getMessage("inv.action.equip", "E")));
 				}
 			}
 		}
 
-		if (selCount >= 1) {
-			actions.add(bundle.getMessage("inv.action.drop"));
+		if (selCount > 1) {
+			actionPanel.add(new JLabel(bundle.getMessage("inv.action.drop", "D")));
 		}
 
-		actionsLabel.setText(Arrays.toString(actions.toArray()));
+		actionPanel.revalidate();
+		actionPanel.repaint();
+
 	}
 
 	protected void dropSelected() {
@@ -131,7 +139,7 @@ public class InventoryPanel extends ShowPanel {
 				action.invoke();
 			}
 
-			inventoryTableModel.fireTableDataChanged();
+			preserveSelection();
 		}
 	}
 
@@ -142,6 +150,14 @@ public class InventoryPanel extends ShowPanel {
 		return false;
 	}
 
+	protected void preserveSelection() {
+		final int selectedRow = inventoryTable.getSelectedRow();
+		inventoryTableModel.fireTableDataChanged();
+		if (inventoryTable.getRowCount() > selectedRow) {
+			inventoryTable.setRowSelectionInterval(selectedRow, selectedRow);
+		}
+	}
+
 	protected void swapEquipSelected() {
 		final Item item = getJustSelectedItem();
 		if (item != null) {
@@ -149,7 +165,8 @@ public class InventoryPanel extends ShowPanel {
 				final Equipable eItem = (Equipable) item;
 				final ObjectAction action = eItem.isEquipped() ? new UnequipItemAction(eItem, context) : new EquipItemAction(eItem, context);
 				action.invoke();
-				inventoryTableModel.fireTableDataChanged();
+
+				preserveSelection();
 			}
 		}
 	}

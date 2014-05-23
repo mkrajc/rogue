@@ -4,6 +4,7 @@ import java.awt.Component;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JTable;
+import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 
 public class EquipedItemRenderer extends DefaultTableCellRenderer {
@@ -16,6 +17,7 @@ public class EquipedItemRenderer extends DefaultTableCellRenderer {
 	public Component getTableCellRendererComponent(final JTable table, final Object value, final boolean isSelected, final boolean hasFocus,
 			final int row, final int column) {
 		final DefaultTableCellRenderer label = new DefaultTableCellRenderer();
+		label.setHorizontalAlignment(SwingConstants.CENTER);  
 		final JLabel currentLabel = (JLabel) label.getTableCellRendererComponent(table, "", isSelected, hasFocus, row, column);
 		
 		if ((Boolean) value) {

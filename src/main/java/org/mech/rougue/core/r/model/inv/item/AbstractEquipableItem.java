@@ -7,6 +7,7 @@ public class AbstractEquipableItem extends AbstractItem implements Equipable {
 	
 	private boolean equipped;
 	protected EquipmentType equipmentType;
+	protected int slots = 1;
 
 	@Override
 	public EquipmentType getEquipmentType() {
@@ -21,5 +22,12 @@ public class AbstractEquipableItem extends AbstractItem implements Equipable {
 	public void setEquipped(final boolean equipped) {
 		this.equipped = equipped;
 	}
+
+	@Override
+	public int slots() {
+		return 1;
+	}
+	
+	
 
 }

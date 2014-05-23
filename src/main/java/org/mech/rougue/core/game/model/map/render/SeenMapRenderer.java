@@ -31,6 +31,11 @@ public class SeenMapRenderer extends AbstractOrderedMapRenderer {
 				final Position at = Position.at(i, j);
 				final RenderedMapTile rTile = mapTerminal.get(at);
 
+				if (rTile == null) {
+					//propably terminal has changed in meantime and is not necessary to continue in rendering
+					break;
+				}
+
 				final boolean seen = seePosition(context, at);
 
 				if (seen) {

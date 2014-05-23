@@ -31,6 +31,12 @@ public class LightMaskRenderer extends AbstractOrderedMapRenderer {
 				final boolean lighten = lightMask.isLighten(at);
 
 				final RenderedMapTile rTile = mapTerminal.get(at);
+
+				if (rTile == null) {
+					//propably terminal has changed in meantime and is not necessary to continue in rendering
+					break;
+				}
+				
 				final Color bgColor = rTile.getBg();
 
 				Color newColor = bgColor == null ? Color.BLACK : ColorUtils.blend(bgColor, SHADOW, lightMask.getShadowIntensity(at));

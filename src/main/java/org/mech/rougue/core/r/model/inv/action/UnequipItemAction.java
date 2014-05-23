@@ -32,5 +32,10 @@ public class UnequipItemAction implements ObjectAction {
 	public boolean enabled() {
 		return !ctx.getData().getPlayer().equipment.canEquip(item);
 	}
+	
+	@Override
+	public String getObjectName() {
+		return item.getName();
+	}
 
 }

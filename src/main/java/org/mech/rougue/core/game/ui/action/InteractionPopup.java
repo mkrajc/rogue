@@ -2,13 +2,14 @@ package org.mech.rougue.core.game.ui.action;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
+import java.util.Collection;
+import java.util.Iterator;
 import javax.annotation.PostConstruct;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import org.mech.rougue.core.game.GameContext;
 import org.mech.rougue.core.r.action.object.Interaction;
-import org.mech.rougue.core.r.action.object.InteractiveObject;
+import org.mech.rougue.core.r.action.object.InteractionGroup;
 import org.mech.rougue.core.r.action.object.ObjectAction;
 import org.mech.rougue.core.r.event.EventBus;
 import org.mech.rougue.core.r.event.ShowInteractionEvent;
@@ -29,7 +30,7 @@ public class InteractionPopup extends JPopupMenu implements ShowInteractionEvent
 
 	@Inject
 	private Interaction interactions;
-	
+
 	@Inject
 	private LocalizedResourceBundle i18n;
 
@@ -48,27 +49,51 @@ public class InteractionPopup extends JPopupMenu implements ShowInteractionEvent
 	public void onShowInteraction() {
 		removeAll();
 
-		final List<InteractiveObject> iObjects = interactions.getObjects();
+		final Collection<InteractionGroup> iObjects = interactions.getInteractionGroups();
 
 		if (CollectionUtils.isNotEmpty(iObjects)) {
-			for (final InteractiveObject interactiveObject : iObjects) {
-				if (CollectionUtils.isNotEmpty(interactiveObject.getActions())) {
-					for (final ObjectAction a : interactiveObject.getActions()) {
-						final JMenuItem item = new JMenuItem(i18n.getMessage(a.getActionName(), i18n.getMessage(interactiveObject.toString())));
-						item.addActionListener(new ActionListener() {
 
-							@Override
-							public void actionPerformed(final ActionEvent event) {
-								a.invoke();
-							}
-						});
-						this.add(item);
+			final Iterator<InteractionGroup> iterator = iObjects.iterator();
+			while (iterator.hasNext()) {
+				final InteractionGroup group = iterator.next();
+				if (group.isGroup()) {
+					this.add(createActionMenuItem(group.getGroupAction()));
+					this.add(new Separator());
+				}
+
+				if (CollectionUtils.isNotEmpty(group.getInteractions())) {
+					for (final ObjectAction a : group.getInteractions()) {
+						this.add(createActionMenuItem(a));
 					}
 				}
+
+				if (iterator.hasNext()) {
+					this.add(new Separator());
+				}
+
 			}
 
 			this.requestFocus();
 			this.show(gameTerminalPanel, 10, 10);
+		}
+	}
+	protected JMenuItem createActionMenuItem(final ObjectAction action) {
+		final JMenuItem item = new JMenuItem(i18n.getMessage(action.getActionName(), i18n.getMessage(action.getObjectName())));
+		item.addActionListener(new ActionAdapter(action));
+		return item;
+	}
+
+	static class ActionAdapter implements ActionListener {
+
+		private ObjectAction action;
+
+		public ActionAdapter(final ObjectAction action) {
+			this.action = action;
+		}
+
+		@Override
+		public void actionPerformed(final ActionEvent e) {
+			action.invoke();
 		}
 
 	}

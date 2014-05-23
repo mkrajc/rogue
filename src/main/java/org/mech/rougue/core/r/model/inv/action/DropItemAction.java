@@ -36,5 +36,10 @@ public class DropItemAction implements ObjectAction {
 	public boolean enabled() {
 		return true;
 	}
+	
+	@Override
+	public String getObjectName() {
+		return item.getName();
+	}
 
 }

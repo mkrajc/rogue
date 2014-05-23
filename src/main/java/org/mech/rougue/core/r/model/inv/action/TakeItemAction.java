@@ -32,4 +32,9 @@ public class TakeItemAction implements ObjectAction {
 		return true;
 	}
 
+	@Override
+	public String getObjectName() {
+		return itemMapObject.getItem().getName();
+	}
+	
 }

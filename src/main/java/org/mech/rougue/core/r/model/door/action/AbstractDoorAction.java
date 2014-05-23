@@ -29,5 +29,10 @@ public abstract class AbstractDoorAction implements ObjectAction {
 	public String toString() {
 		return getActionName();
 	}
+	
+	@Override
+	public String getObjectName() {
+		return "door_name";
+	}
 
 }

@@ -35,9 +35,9 @@ public class AllItemsTableModel extends AbstractTableModel {
 		if (item != null) {
 			if (columnIndex == 0) {
 				if (item instanceof Equipable) {
-					return toEquipString(((Equipable) item).isEquipped());
+					return ((Equipable) item).isEquipped();
 				}
-				return toEquipString(false);
+				return false;
 			}
 			if (columnIndex == 1) {
 				return item.getName();
@@ -60,10 +60,6 @@ public class AllItemsTableModel extends AbstractTableModel {
 	@Override
 	public Class getColumnClass(final int c) {
 		return getValueAt(0, c).getClass();
-	}
-
-	private String toEquipString(final boolean eq) {
-		return eq ? "\u2192" : "";
 	}
 
 }

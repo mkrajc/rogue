@@ -36,4 +36,20 @@ public class AbstractItem implements Item {
 		return weight;
 	}
 
+	public void setId(final GId id) {
+		this.id = id;
+	}
+
+	public void setName(final String name) {
+		this.name = name;
+	}
+
+	public void setType(final ItemType type) {
+		this.type = type;
+	}
+
+	public void setWeight(final float weight) {
+		this.weight = weight;
+	}
+
 }

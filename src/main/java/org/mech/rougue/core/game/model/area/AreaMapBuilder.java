@@ -47,7 +47,8 @@ public class AreaMapBuilder {
 		map.registerGameObject(t);
 		
 //		final Monster m = new Monster();
-		final Item test = new Jewel();
+		final Jewel test = new Jewel();
+		test.setName("Nahrdelnik");
 		final ItemMapObject m = new ItemMapObject(test);
 		m.setPosition(Position.at(7, 1));
 		map.registerGameObject(m);

@@ -45,8 +45,6 @@ public class InventoryPanel extends ShowPanel {
 	private JLabel totalWeightLabel;
 	private JLabel actionsLabel;
 
-	private List<String> actions = new ArrayList<String>();
-
 	public InventoryPanel() {
 		addFocusListener(this.new Focus());
 	}
@@ -72,6 +70,8 @@ public class InventoryPanel extends ShowPanel {
 				updateActions();
 			}
 		});
+		
+		inventoryTable.getColumnModel().getColumn(0).setCellRenderer(new EquipedItemRenderer());
 
 		inventoryTable.setFillsViewportHeight(true);
 		inventoryTable.setAutoCreateRowSorter(true);
@@ -93,22 +93,23 @@ public class InventoryPanel extends ShowPanel {
 	}
 
 	protected void updateActions() {
-		actions.clear();
+		final List<String> actions = new ArrayList<String>();
+
 		final int selCount = inventoryTable.getSelectedRowCount();
 
 		if (selCount == 1) {
 			final Item item = inventory.getItem(inventoryTable.convertColumnIndexToModel(inventoryTable.getSelectedRow()));
 			if (item instanceof Equipable) {
 				if (((Equipable) item).isEquipped()) {
-					actions.add("equip");
+					actions.add(bundle.getMessage("inv.action.unequip"));
 				} else {
-					actions.add("unequip");
+					actions.add(bundle.getMessage("inv.action.equip"));
 				}
 			}
 		}
 
 		if (selCount >= 1) {
-			actions.add("drop");
+			actions.add(bundle.getMessage("inv.action.drop"));
 		}
 
 		actionsLabel.setText(Arrays.toString(actions.toArray()));

@@ -23,7 +23,7 @@ public class EquipItemAction implements ObjectAction {
 	@Override
 	public void invoke() {
 		final Player player = ctx.getData().getPlayer();
-		player.equipment.equip(item);
+		player.equipment.equip(item, ctx);
 
 		// TODO invoke item
 	}

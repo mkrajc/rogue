@@ -23,7 +23,7 @@ public class UnequipItemAction implements ObjectAction {
 	@Override
 	public void invoke() {
 		final Player player = ctx.getData().getPlayer();
-		player.equipment.unequip(item);
+		player.equipment.unequip(item, ctx);
 
 		// TODO turn off item
 	}
@@ -32,7 +32,7 @@ public class UnequipItemAction implements ObjectAction {
 	public boolean enabled() {
 		return !ctx.getData().getPlayer().equipment.canEquip(item);
 	}
-	
+
 	@Override
 	public String getObjectName() {
 		return item.getName();

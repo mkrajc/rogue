@@ -3,6 +3,7 @@ package org.mech.rougue.core.r.model.combat;
 import static org.junit.Assert.*;
 import org.junit.Test;
 import org.mech.rougue.core.r.model.combat.dmg.PhysicalDamage;
+import org.mech.terminator.geometry.Position;
 
 public class CombatantTest {
 
@@ -26,6 +27,18 @@ public class CombatantTest {
 			@Override
 			public CombatantStats getCombatStats() {
 				return stats;
+			}
+
+			@Override
+			public Position getPosition() {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+			@Override
+			public void setPosition(final Position position) {
+				// TODO Auto-generated method stub
+				
 			}
 		});
 

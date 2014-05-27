@@ -1,10 +1,11 @@
 package org.mech.rougue.core.r.model.inv.item;
 
+import org.mech.rougue.core.game.GameContext;
 import org.mech.rougue.core.r.model.inv.Equipable;
 import org.mech.rougue.core.r.model.inv.EquipmentType;
 
 public class AbstractEquipableItem extends AbstractItem implements Equipable {
-	
+
 	private boolean equipped;
 	protected EquipmentType equipmentType;
 	protected int slots = 1;
@@ -27,7 +28,15 @@ public class AbstractEquipableItem extends AbstractItem implements Equipable {
 	public int slots() {
 		return 1;
 	}
-	
-	
+
+	@Override
+	public void onEquip(final GameContext ctx) {
+		this.equipped = true;
+	}
+
+	@Override
+	public void onUnequip(final GameContext ctx) {
+		this.equipped = false;
+	}
 
 }

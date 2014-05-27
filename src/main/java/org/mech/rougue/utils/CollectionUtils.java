@@ -1,5 +1,6 @@
 package org.mech.rougue.utils;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
@@ -18,6 +19,15 @@ public class CollectionUtils {
 
 	public static <T> List<T> asList(final T... objects) {
 		return Arrays.asList(objects);
+	}
+
+	public static <T> List<T> flatten(final Collection<? extends Collection<T>> listOfLists) {
+		final List<T> list = new ArrayList<T>();
+		for (final Collection<T> collection : listOfLists) {
+			list.addAll(collection);
+		}
+
+		return list;
 	}
 
 	public static <T> Map<?, T> getDefaultMap(final T defValue) {

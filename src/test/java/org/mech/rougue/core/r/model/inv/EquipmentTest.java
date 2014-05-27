@@ -23,7 +23,7 @@ public class EquipmentTest {
 	@Test
 	public void testCanEquip2OnHead() {
 		final HeadEq head = new HeadEq();
-		equipment.equip(head);
+		equipment.equip(head, null);
 		assertFalse(equipment.canEquip(head));
 	}
 	

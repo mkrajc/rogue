@@ -1,14 +1,16 @@
 package org.mech.rougue.core.r.model.combat;
 
 import org.mech.rougue.core.r.model.combat.dmg.Damage;
+import org.mech.rougue.core.r.model.geom.Positionable;
+import org.mech.terminator.geometry.Position;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class Combatant {
+public class Combatant implements Positionable {
 	private final static Logger LOG = LoggerFactory.getLogger(Combatant.class);
 
 	private IsCombatant combatant;
-	
+
 	public Combatant(final IsCombatant combatStats) {
 		this.combatant = combatStats;
 	}
@@ -22,6 +24,16 @@ public class Combatant {
 
 	public CombatantStats getStats() {
 		return combatant.getCombatStats();
+	}
+
+	@Override
+	public Position getPosition() {
+		return combatant.getPosition();
+	}
+
+	@Override
+	public void setPosition(final Position position) {
+		combatant.setPosition(position);
 	}
 
 }

@@ -12,6 +12,8 @@ import org.mech.rougue.core.r.model.inv.Item;
 import org.mech.rougue.core.r.model.inv.ItemMapObject;
 import org.mech.rougue.core.r.model.inv.item.Clothes;
 import org.mech.rougue.core.r.model.inv.item.Jewel;
+import org.mech.rougue.core.r.model.inv.item.weapon.OneHandedWeapon;
+import org.mech.rougue.core.r.model.inv.item.weapon.TwoHandedWeapon;
 import org.mech.rougue.core.r.model.map.Map;
 import org.mech.rougue.core.r.model.trap.DamageTrap;
 import org.mech.rougue.core.r.model.trap.Trap;
@@ -30,34 +32,57 @@ public class AreaMapBuilder {
 		}
 
 		wallize(map);
-		
+
 		for (final Door door : area.doors) {
 			final NewMapTile newMapTile = map.get(door.getPosition());
 			newMapTile.setWall(null);
 			newMapTile.setPassable(door.isOpen());
 			newMapTile.setObstacle(door.isClosed());
-			
+
 			map.registerGameObject(door);
 		}
 
 		map.registerGameObjects((List) area.getGates());
-		
+
 		final Trap t = new DamageTrap(new PhysicalDamage(30));
 		t.setPosition(Position.at(7, 5));
 		map.registerGameObject(t);
-		
-//		final Monster m = new Monster();
+
+		//		final Monster m = new Monster();
 		final Jewel test = new Jewel();
 		test.setName("Nahrdelnik");
 		final ItemMapObject m = new ItemMapObject(test);
 		m.setPosition(Position.at(7, 1));
 		map.registerGameObject(m);
-		
+
 		final Item clothes = new Clothes();
 		final ItemMapObject w = new ItemMapObject(clothes);
 		w.setPosition(Position.at(6, 2));
 		map.registerGameObject(w);
 
+		final OneHandedWeapon dagger = new OneHandedWeapon();
+		dagger.setName("dagger");
+		dagger.setWeight(0.3F);
+
+		final ItemMapObject d = new ItemMapObject(dagger);
+		d.setPosition(Position.at(3, 3));
+		map.registerGameObject(d);
+
+		final OneHandedWeapon dagger2 = new OneHandedWeapon();
+		dagger2.setName("dagger2");
+		dagger2.setWeight(0.4F);
+
+		final ItemMapObject d2 = new ItemMapObject(dagger2);
+		d2.setPosition(Position.at(4, 3));
+		map.registerGameObject(d2);
+
+		final TwoHandedWeapon spear = new TwoHandedWeapon();
+		spear.setName("spear");
+		spear.setWeight(2.3F);
+
+		final ItemMapObject spearObj = new ItemMapObject(spear);
+		spearObj.setPosition(Position.at(2, 3));
+		map.registerGameObject(spearObj);
 
 		area.map = map;
 
@@ -82,24 +107,24 @@ public class AreaMapBuilder {
 				final Position at = Position.at(i, j);
 				final NewMapTile mapTile = map.get(at);
 
-//				boolean secretDoor = isSecretDoor(mapTile);
+				//				boolean secretDoor = isSecretDoor(mapTile);
 
 				if (isWall(mapTile)) {
-//
+					//
 					final String suff = computeWallId(map, mapTile, at);
 					mapTile.getWall().getRenderId().setSuffix(suff);
-//
-//					if (secretDoor) {
-//						mapTile.getId().setId(Tiles.ROOM_WALL_ID);
-//					}
+					//
+					//					if (secretDoor) {
+					//						mapTile.getId().setId(Tiles.ROOM_WALL_ID);
+					//					}
 				}
 			}
 		}
 	}
 
-//	private boolean isSecretDoor(NewMapTile mapTile) {
-//		return mapTile != null && Tiles.SECRET_ID.equals(mapTile.getId().getOrnament());
-//	}
+	//	private boolean isSecretDoor(NewMapTile mapTile) {
+	//		return mapTile != null && Tiles.SECRET_ID.equals(mapTile.getId().getOrnament());
+	//	}
 
 	private String computeWallId(final Map map, final NewMapTile mapTile, final Position at) {
 		final Position n = at.addY(-1);
@@ -160,7 +185,6 @@ public class AreaMapBuilder {
 		fillLine(map, roomRectangle.getLineRight(), Tiles.ROOM_WALL);
 
 	}
-
 
 	private void putTile(final Map map, final NewMapTile tile, final Position position) {
 		if (map.isPositionInMap(position)) {

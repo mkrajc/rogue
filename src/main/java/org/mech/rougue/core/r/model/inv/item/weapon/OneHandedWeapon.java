@@ -12,10 +12,10 @@ public class OneHandedWeapon extends Weapon {
 	@Override
 	protected void equip(final GameContext context, final Weapon weapon) {
 		final Equipment equipment = context.getData().getPlayer().equipment;
-		if (equipment.rightHandWeapon == null) {
-			equipment.rightHandWeapon = weapon;
-		} else if (equipment.leftHandWeapon == null) {
-			equipment.leftHandWeapon = weapon;
+		if (equipment.getRightHandWeapon() == null) {
+			equipment.setRightHandWeapon(weapon);
+		} else if (equipment.getLeftHandWeapon() == null) {
+			equipment.setLeftHandWeapon(weapon);
 		} else {
 			throw new IllegalArgumentException("Cannot equip one handed weapon. At least one hand must be free");
 		}

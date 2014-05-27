@@ -8,20 +8,20 @@ public class Attacks {
 
 	public static void onWeaponEquipChanged(final Player player, final Equipment equipment) {
 
-		final boolean rh = equipment.rightHandWeapon != null;
-		final boolean lh = equipment.leftHandWeapon != null;
+		final boolean rh = equipment.getRightHandWeapon() != null;
+		final boolean lh = equipment.getLeftHandWeapon() != null;
 
 		if (rh && lh) {
-			if (equipment.rightHandWeapon.equals(equipment.leftHandWeapon)) {
+			if (equipment.getRightHandWeapon().equals(equipment.getLeftHandWeapon())) {
 				//Two handed weapon
-				Attacks.action = new WeaponAttackAction(player, equipment.rightHandWeapon);
+				Attacks.action = new WeaponAttackAction(player, equipment.getRightHandWeapon());
 			} else {
 				//TODO dual wield action
 			}
 		} else if (rh) {
-			Attacks.action = new WeaponAttackAction(player, equipment.rightHandWeapon);
+			Attacks.action = new WeaponAttackAction(player, equipment.getRightHandWeapon());
 		} else if (lh) {
-			Attacks.action = new WeaponAttackAction(player, equipment.leftHandWeapon);
+			Attacks.action = new WeaponAttackAction(player, equipment.getLeftHandWeapon());
 		} else {
 			Attacks.action = null;
 		}

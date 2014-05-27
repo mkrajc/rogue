@@ -43,27 +43,33 @@ public abstract class Weapon extends AbstractEquipableItem implements CanDoDamag
 
 	@Override
 	public final void onEquip(final GameContext ctx) {
-		super.onEquip(ctx);
 		equip(ctx, this);
 		Attacks.onWeaponEquipChanged(ctx.getData().getPlayer(), ctx.getData().getPlayer().equipment);
+		// super called as last
+		super.onEquip(ctx);
 		LOG.info("Weapon Equipped " + this);
 	}
 
 	@Override
 	public void onUnequip(final GameContext ctx) {
-		super.onUnequip(ctx);
 		final Equipment equipment = ctx.getData().getPlayer().equipment;
 
-		if (equipment.rightHandWeapon != null && equals(equipment.rightHandWeapon)) {
-			equipment.rightHandWeapon = null;
+		if (equipment.getRightHandWeapon() != null && equals(equipment.getRightHandWeapon())) {
+			equipment.setRightHandWeapon(null);
 		}
 
-		if (equipment.leftHandWeapon != null && equals(equipment.leftHandWeapon)) {
-			equipment.leftHandWeapon = null;
+		if (equipment.getLeftHandWeapon() != null && equals(equipment.getLeftHandWeapon())) {
+			equipment.setLeftHandWeapon(null);
 		}
 
 		Attacks.onWeaponEquipChanged(ctx.getData().getPlayer(), equipment);
+		super.onUnequip(ctx);
 		LOG.info("Weapon Unequipped " + this);
+	}
+
+	@Override
+	public String getRenderType() {
+		return super.getRenderType() + "." + weaponType.name().toLowerCase();
 	}
 
 	public boolean isOneHanded() {
@@ -75,5 +81,17 @@ public abstract class Weapon extends AbstractEquipableItem implements CanDoDamag
 	}
 
 	protected abstract void equip(final GameContext ctx, final Weapon weapon);
+
+	public WeaponType getWeaponType() {
+		return weaponType;
+	}
+
+	public void setWeaponType(final WeaponType weaponType) {
+		this.weaponType = weaponType;
+	}
+
+	public void setMetaDamage(final MetaDamage metaDamage) {
+		this.metaDamage = metaDamage;
+	}
 
 }

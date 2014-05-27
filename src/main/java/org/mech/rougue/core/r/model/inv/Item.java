@@ -6,4 +6,5 @@ public interface Item extends GObject {
 	String getName();
 	ItemType getType();
 	float getWeight();
+	String getRenderType();
 }

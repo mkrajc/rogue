@@ -29,6 +29,7 @@ public class ItemMapObject implements MapObject, InteractiveObject, ContextAware
 		interaction = new PlayerMoveOnItemInteraction(this);
 	}
 
+
 	@Override
 	public Position getPosition() {
 		return position;
@@ -55,7 +56,7 @@ public class ItemMapObject implements MapObject, InteractiveObject, ContextAware
 	}
 	@Override
 	public String getType() {
-		return "item_" + item.getType().name().toLowerCase();
+		return "item." + item.getRenderType();
 	}
 
 	@Override

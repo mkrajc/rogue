@@ -14,8 +14,8 @@ import org.slf4j.LoggerFactory;
 public class Equipment {
 	private final static Logger LOG = LoggerFactory.getLogger(Equipment.class);
 
-	public Weapon rightHandWeapon;
-	public Weapon leftHandWeapon;
+	private Weapon rightHandWeapon;
+	private Weapon leftHandWeapon;
 
 	private Map<EquipmentType, List<Equipable>> equippedItems = CollectionUtils
 			.getSelfPopulatedMap(new SelfPopulate<EquipmentType, List<Equipable>>() {
@@ -47,7 +47,12 @@ public class Equipment {
 	}
 
 	public boolean canEquip(final Equipable eq) {
-		final int slotsAfterEquip = equippedItems.get(eq.getEquipmentType()).size() + eq.slots();
+		final List<Equipable> eqs = equippedItems.get(eq.getEquipmentType());
+		int currentSlots = 0;
+		for (final Equipable equipable : eqs) {
+			currentSlots += equipable.slots();
+		}
+		final int slotsAfterEquip = currentSlots + eq.slots();
 		return slotsAfterEquip <= eq.getEquipmentType().getSlots();
 	}
 
@@ -61,6 +66,32 @@ public class Equipment {
 		}
 
 		return list;
+	}
+
+	public Weapon getRightHandWeapon() {
+		return rightHandWeapon;
+	}
+
+	public void setRightHandWeapon(final Weapon rightHandWeapon) {
+		this.rightHandWeapon = rightHandWeapon;
+		if(rightHandWeapon == null){
+			LOG.info("Right hand free");
+		} else {
+			LOG.info("Right hand " + rightHandWeapon);
+		}
+	}
+
+	public Weapon getLeftHandWeapon() {
+		return leftHandWeapon;
+	}
+
+	public void setLeftHandWeapon(final Weapon leftHandWeapon) {
+		this.leftHandWeapon = leftHandWeapon;
+		if(leftHandWeapon == null){
+			LOG.info("Left hand free");
+		} else {
+			LOG.info("Left hand " + leftHandWeapon);
+		}
 	}
 
 }

@@ -51,5 +51,10 @@ public class AbstractItem implements Item {
 	public void setWeight(final float weight) {
 		this.weight = weight;
 	}
+	
+	@Override
+	public String getRenderType() {
+		return type.name().toLowerCase();
+	}
 
 }

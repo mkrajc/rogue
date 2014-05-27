@@ -14,6 +14,7 @@ import org.mech.rougue.core.r.model.inv.item.Clothes;
 import org.mech.rougue.core.r.model.inv.item.Jewel;
 import org.mech.rougue.core.r.model.inv.item.weapon.OneHandedWeapon;
 import org.mech.rougue.core.r.model.inv.item.weapon.TwoHandedWeapon;
+import org.mech.rougue.core.r.model.inv.item.weapon.WeaponType;
 import org.mech.rougue.core.r.model.map.Map;
 import org.mech.rougue.core.r.model.trap.DamageTrap;
 import org.mech.rougue.core.r.model.trap.Trap;
@@ -63,6 +64,7 @@ public class AreaMapBuilder {
 		final OneHandedWeapon dagger = new OneHandedWeapon();
 		dagger.setName("dagger");
 		dagger.setWeight(0.3F);
+		dagger.setWeaponType(WeaponType.DAGGER);
 
 		final ItemMapObject d = new ItemMapObject(dagger);
 		d.setPosition(Position.at(3, 3));
@@ -71,16 +73,18 @@ public class AreaMapBuilder {
 		final OneHandedWeapon dagger2 = new OneHandedWeapon();
 		dagger2.setName("dagger2");
 		dagger2.setWeight(0.4F);
+		dagger2.setWeaponType(WeaponType.DAGGER);
 
 		final ItemMapObject d2 = new ItemMapObject(dagger2);
 		d2.setPosition(Position.at(4, 3));
 		map.registerGameObject(d2);
 
-		final TwoHandedWeapon spear = new TwoHandedWeapon();
-		spear.setName("spear");
-		spear.setWeight(2.3F);
+		final TwoHandedWeapon axe = new TwoHandedWeapon();
+		axe.setName("axe");
+		axe.setWeight(2.3F);
+		axe.setWeaponType(WeaponType.GREAT_AXE);
 
-		final ItemMapObject spearObj = new ItemMapObject(spear);
+		final ItemMapObject spearObj = new ItemMapObject(axe);
 		spearObj.setPosition(Position.at(2, 3));
 		map.registerGameObject(spearObj);
 

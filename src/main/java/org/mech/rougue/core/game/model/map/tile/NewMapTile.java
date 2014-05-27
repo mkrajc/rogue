@@ -2,7 +2,7 @@ package org.mech.rougue.core.game.model.map.tile;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.mech.rougue.core.game.model.map.render.RenderId;
+import org.mech.rougue.core.r.render.RenderId;
 
 public class NewMapTile {
 	private GroundTile ground;

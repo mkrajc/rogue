@@ -1,4 +1,7 @@
-package org.mech.rougue.core.config.ui;
+package org.mech.rougue.core.r.render.terminal;
+
+import org.mech.rougue.core.config.ui.CharConfig;
+import org.mech.rougue.core.config.ui.ColorConfig;
 
 public class TerminalCharConfig {
 	private CharConfig charConfig;

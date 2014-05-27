@@ -3,7 +3,6 @@ package org.mech.rougue.core.r.model.door;
 import java.util.List;
 import org.mech.rougue.core.game.GameContext;
 import org.mech.rougue.core.game.model.map.render.MapObject;
-import org.mech.rougue.core.game.model.map.render.RenderId;
 import org.mech.rougue.core.game.model.map.render.RenderOptions;
 import org.mech.rougue.core.game.model.map.tile.Tiles;
 import org.mech.rougue.core.r.action.object.InteractiveObject;
@@ -16,6 +15,7 @@ import org.mech.rougue.core.r.model.door.action.OpenDoorAction;
 import org.mech.rougue.core.r.model.map.EnvironmentObject;
 import org.mech.rougue.core.r.object.GId;
 import org.mech.rougue.core.r.object.GIdFactory;
+import org.mech.rougue.core.r.render.RenderId;
 import org.mech.rougue.utils.CollectionUtils;
 import org.mech.terminator.geometry.Position;
 

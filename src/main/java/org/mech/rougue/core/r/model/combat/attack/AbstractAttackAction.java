@@ -7,14 +7,10 @@ public abstract class AbstractAttackAction implements AttackAction {
 
 	@Override
 	public void attack(final Combat combat) {
-		final Combatant attacker = getAttacker();
+		final Combatant attacker = getAttacker(combat);
 		final Combatant target = getTarget(combat);
 
 		attack(attacker, target, combat);
-	}
-
-	private Combatant getAttacker() {
-		return null;
 	}
 
 	public void attack(final Combatant attacker, final Combatant target, final Combat combat) {
@@ -30,9 +26,10 @@ public abstract class AbstractAttackAction implements AttackAction {
 	protected abstract void hitTarget(final Combatant attacker, final Combatant target);
 
 	private boolean isTargetHit(final Combatant attacker, final Combatant target) {
-		return false;
+		return true;
 	}
 
+	protected abstract Combatant getAttacker(final Combat combat);
 	protected abstract Combatant getTarget(final Combat combat);
 
 }

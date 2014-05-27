@@ -1,12 +1,12 @@
 package org.mech.rougue.core.r.model.area;
 
 import org.mech.rougue.core.game.model.map.render.MapObject;
-import org.mech.rougue.core.game.model.map.render.RenderId;
 import org.mech.rougue.core.r.event.EventBus;
 import org.mech.rougue.core.r.event.LoadAreaEvent;
 import org.mech.rougue.core.r.event.player.PlayerMoveEvent;
 import org.mech.rougue.core.r.object.GId;
 import org.mech.rougue.core.r.object.GIdFactory;
+import org.mech.rougue.core.r.render.RenderId;
 import org.mech.terminator.geometry.Position;
 
 public class AreaGate implements MapObject, PlayerMoveEvent.Handler  {

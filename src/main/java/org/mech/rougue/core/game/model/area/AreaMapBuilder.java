@@ -82,7 +82,7 @@ public class AreaMapBuilder {
 		final TwoHandedWeapon axe = new TwoHandedWeapon();
 		axe.setName("axe");
 		axe.setWeight(2.3F);
-		axe.setWeaponType(WeaponType.GREAT_AXE);
+		axe.setWeaponType(WeaponType.SWORD);
 
 		final ItemMapObject spearObj = new ItemMapObject(axe);
 		spearObj.setPosition(Position.at(2, 3));
@@ -116,7 +116,7 @@ public class AreaMapBuilder {
 				if (isWall(mapTile)) {
 					//
 					final String suff = computeWallId(map, mapTile, at);
-					mapTile.getWall().getRenderId().setSuffix(suff);
+					mapTile.getWall().getRenderId().append(suff);
 					//
 					//					if (secretDoor) {
 					//						mapTile.getId().setId(Tiles.ROOM_WALL_ID);

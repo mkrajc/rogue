@@ -1,11 +1,12 @@
 package org.mech.rougue.core.game.model.map.render;
 
-import org.mech.rougue.core.config.ui.provider.SimpleTerminalConfigProvider;
 import org.mech.rougue.core.game.GameContext;
 import org.mech.rougue.core.game.model.map.tile.TileConstants;
 import org.mech.rougue.core.game.play.component.map.MapTerminalAdapter;
 import org.mech.rougue.core.game.play.component.map.RenderedMapTile;
 import org.mech.rougue.core.game.state.GameState;
+import org.mech.rougue.core.r.render.RenderId;
+import org.mech.rougue.core.r.render.terminal.DefaultTerminalConfigProvider;
 import org.mech.rougue.factory.Inject;
 import org.mech.terminator.geometry.Position;
 import org.mech.terminator.geometry.Rectangle;
@@ -15,7 +16,7 @@ public class SeenMapRenderer extends AbstractOrderedMapRenderer {
 	public static final String SEE_ALL_SWITCH = "game.map.see.all";
 
 	@Inject
-	private SimpleTerminalConfigProvider configProvider;
+	private DefaultTerminalConfigProvider configProvider;
 
 	@Inject
 	private GameState state;

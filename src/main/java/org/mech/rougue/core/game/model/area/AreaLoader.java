@@ -6,8 +6,6 @@ import javax.annotation.PostConstruct;
 import org.mech.rougue.core.game.GameContext;
 import org.mech.rougue.core.game.model.area.converter.AreaPropertiesConverter;
 import org.mech.rougue.core.game.model.map.MapStats;
-import org.mech.rougue.core.game.model.map.decorator.Decorator;
-import org.mech.rougue.core.game.model.map.tile.TileTheme;
 import org.mech.rougue.core.r.event.EventBus;
 import org.mech.rougue.core.r.event.LoadAreaEvent;
 import org.mech.rougue.core.r.event.RebuildLightEvent;
@@ -18,6 +16,7 @@ import org.mech.rougue.core.r.handler.register.context.GObjectOnGameContextRegis
 import org.mech.rougue.core.r.model.common.GObject;
 import org.mech.rougue.core.r.object.GId;
 import org.mech.rougue.core.r.object.GIdFactory;
+import org.mech.rougue.core.r.render.tile.TileTheme;
 import org.mech.rougue.factory.Inject;
 
 public class AreaLoader implements GObject, LoadAreaEvent.Handler {
@@ -35,9 +34,6 @@ public class AreaLoader implements GObject, LoadAreaEvent.Handler {
 
 	@Inject
 	private TileTheme theme;
-
-	@Inject
-	private Decorator decorator;
 
 	Map<String, MapStats> cache = new HashMap<String, MapStats>();
 
@@ -101,7 +97,6 @@ public class AreaLoader implements GObject, LoadAreaEvent.Handler {
 
 	private void loadTheme(final GameContext context, final Area area) {
 		theme.setTheme(area.getTheme());
-		decorator.decorate(area.getMap());
 	}
 
 	@Override

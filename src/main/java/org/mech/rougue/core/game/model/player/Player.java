@@ -3,7 +3,6 @@ package org.mech.rougue.core.game.model.player;
 import javax.annotation.PostConstruct;
 import org.mech.rougue.core.game.GameContext;
 import org.mech.rougue.core.game.model.map.render.MapObject;
-import org.mech.rougue.core.game.model.map.render.RenderId;
 import org.mech.rougue.core.game.model.map.render.RenderOptions;
 import org.mech.rougue.core.r.event.player.PlayerDiedEvent;
 import org.mech.rougue.core.r.handler.game.UpdateAwareGObject;
@@ -16,6 +15,7 @@ import org.mech.rougue.core.r.model.inv.Inventory;
 import org.mech.rougue.core.r.model.player.stat.PlayerStats;
 import org.mech.rougue.core.r.object.GId;
 import org.mech.rougue.core.r.object.GIdFactory;
+import org.mech.rougue.core.r.render.RenderId;
 import org.mech.rougue.factory.Inject;
 import org.mech.terminator.geometry.Position;
 

@@ -1,7 +1,6 @@
 package org.mech.rougue.core.factory;
 
 import org.mech.rougue.Starter;
-import org.mech.rougue.core.config.ui.provider.SimpleTerminalConfigProvider;
 import org.mech.rougue.core.engine.Engine;
 import org.mech.rougue.core.game.GameContext;
 import org.mech.rougue.core.game.model.area.AreaLoader;
@@ -13,6 +12,7 @@ import org.mech.rougue.core.game.start.action.StartGameAction;
 import org.mech.rougue.core.game.state.GameState;
 import org.mech.rougue.core.game.state.impl.GameLoader;
 import org.mech.rougue.core.game.update.move.MapMover;
+import org.mech.rougue.core.r.render.terminal.DefaultTerminalConfigProvider;
 import org.mech.rougue.factory.AbstractDefinition;
 import org.mech.rougue.lang.LocalizedResourceBundle;
 import org.mech.rougue.ui.GameFrame;
@@ -28,7 +28,7 @@ public class CoreDefinition extends AbstractDefinition {
 
 		singleton(LocalizedResourceBundle.class);
 
-		singleton(SimpleTerminalConfigProvider.class);
+		singleton(DefaultTerminalConfigProvider.class);
 		singleton(GameLoader.class);
 
 		singleton(GameInput.class);

@@ -1,31 +1,23 @@
 package org.mech.rougue.core.game.model.map.render;
 
 import org.mech.rougue.core.config.ui.ColorConfigUtils;
-import org.mech.rougue.core.config.ui.TerminalCharConfig;
-import org.mech.rougue.core.config.ui.provider.SimpleTerminalConfigProvider;
-import org.mech.rougue.core.game.model.map.decorator.Decorator;
-import org.mech.rougue.core.game.model.map.decorator.Decorator.IdDecorator;
-import org.mech.rougue.core.game.model.map.tile.TileTheme;
 import org.mech.rougue.core.game.play.component.map.MapTerminalAdapter;
 import org.mech.rougue.core.game.play.component.map.RenderedMapTile;
+import org.mech.rougue.core.r.render.RenderId;
+import org.mech.rougue.core.r.render.terminal.DefaultTerminalConfigProvider;
+import org.mech.rougue.core.r.render.terminal.TerminalCharConfig;
 import org.mech.rougue.factory.Inject;
 import org.mech.terminator.geometry.Position;
 
 public abstract class AbstractMapRenderer implements MapRenderer {
 
 	@Inject
-	private SimpleTerminalConfigProvider configProvider;
-
-	@Inject
-	private TileTheme theme;
-
-	@Inject
-	private Decorator decorator;
+	private DefaultTerminalConfigProvider configProvider;
 
 	protected void render(final MapTerminalAdapter mapTerminal, final RenderedMapTile rTile, final RenderId id, final Position p) {
 		final RenderId finalId = check(id, p);
-		if (finalId != null && finalId.getFinalId() != null) {
-			final TerminalCharConfig config = configProvider.provide(finalId.getFinalId());
+		if (finalId != null && finalId.getGeneratedId() != null) {
+			final TerminalCharConfig config = configProvider.provide(finalId.getGeneratedId());
 			rTile.setChar(config.getCharConfig().get());
 			rTile.setFg(ColorConfigUtils.getFixedColor(config.getFgConfig()));
 			rTile.setBg(ColorConfigUtils.getFixedColor(config.getBgConfig()));
@@ -34,10 +26,8 @@ public abstract class AbstractMapRenderer implements MapRenderer {
 	}
 
 	protected RenderId check(final RenderId id, final Position p) {
-		if (id != null && id.getFinalId() == null) {
-			final IdDecorator idDecorator = decorator.getIdDecorator();
-			idDecorator.decorate(id, p);
-			theme.updateRenderId(id);
+		if (id != null) {
+			configProvider.regenerate(id, p);
 		}
 
 		return id;

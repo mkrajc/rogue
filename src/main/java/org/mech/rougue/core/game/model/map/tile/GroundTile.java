@@ -1,6 +1,6 @@
 package org.mech.rougue.core.game.model.map.tile;
 
-import org.mech.rougue.core.game.model.map.render.RenderId;
+import org.mech.rougue.core.r.render.RenderId;
 
 public class GroundTile {
 	String id;
@@ -9,11 +9,9 @@ public class GroundTile {
 	boolean passable;
 	boolean obstacle;
 	
-	public GroundTile(TileConfiguration configuration) {
+	public GroundTile(final TileConfiguration configuration) {
 		this.id = configuration.getId();
-		this.renderId = new RenderId();
-		this.renderId.setId(id);
-		
+		this.renderId = new RenderId(id);
 		this.passable = configuration.isPassable();
 		this.obstacle = configuration.isObstacle();
 	}
@@ -22,7 +20,7 @@ public class GroundTile {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(final String id) {
 		this.id = id;
 	}
 
@@ -30,7 +28,7 @@ public class GroundTile {
 		return renderId;
 	}
 
-	public void setRenderId(RenderId renderId) {
+	public void setRenderId(final RenderId renderId) {
 		this.renderId = renderId;
 	}
 
@@ -38,7 +36,7 @@ public class GroundTile {
 		return passable;
 	}
 
-	public void setPassable(boolean passable) {
+	public void setPassable(final boolean passable) {
 		this.passable = passable;
 	}
 
@@ -46,7 +44,7 @@ public class GroundTile {
 		return obstacle;
 	}
 
-	public void setObstacle(boolean obstacle) {
+	public void setObstacle(final boolean obstacle) {
 		this.obstacle = obstacle;
 	}
 }

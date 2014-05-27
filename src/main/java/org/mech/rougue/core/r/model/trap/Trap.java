@@ -2,7 +2,6 @@ package org.mech.rougue.core.r.model.trap;
 
 import org.mech.rougue.core.game.GameContext;
 import org.mech.rougue.core.game.model.map.render.MapObject;
-import org.mech.rougue.core.game.model.map.render.RenderId;
 import org.mech.rougue.core.game.model.map.render.RenderOptions;
 import org.mech.rougue.core.r.event.EventBus;
 import org.mech.rougue.core.r.event.player.PlayerMoveEvent;
@@ -10,6 +9,7 @@ import org.mech.rougue.core.r.handler.register.Registration;
 import org.mech.rougue.core.r.model.common.GObject;
 import org.mech.rougue.core.r.object.GId;
 import org.mech.rougue.core.r.object.GIdFactory;
+import org.mech.rougue.core.r.render.RenderId;
 import org.mech.terminator.geometry.Position;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -4,8 +4,8 @@ import org.mech.rougue.core.game.model.light.render.LightMaskRenderer;
 import org.mech.rougue.core.game.model.map.render.DefaultMapObjectRenderer;
 import org.mech.rougue.core.game.model.map.render.MapObjectOrdererRenderer;
 import org.mech.rougue.core.game.model.map.render.SeenMapRenderer;
-import org.mech.rougue.core.game.model.map.tile.TileTheme;
 import org.mech.rougue.core.game.model.player.render.PlayerRenderer;
+import org.mech.rougue.core.r.render.tile.TileTheme;
 import org.mech.rougue.factory.AbstractDefinition;
 import org.mech.rougue.playground.MonsterRenderer;
 

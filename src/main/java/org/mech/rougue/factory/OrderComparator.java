@@ -1,7 +1,6 @@
 package org.mech.rougue.factory;
 
 import java.util.Comparator;
-import org.mech.rougue.factory.Ordered;
 
 public class OrderComparator<T extends Ordered> implements Comparator<T> {
 

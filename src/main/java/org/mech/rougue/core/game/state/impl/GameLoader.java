@@ -3,7 +3,6 @@ package org.mech.rougue.core.game.state.impl;
 import org.mech.rougue.core.game.GameContext;
 import org.mech.rougue.core.game.GameData;
 import org.mech.rougue.core.game.model.area.AreaLoader;
-import org.mech.rougue.core.game.model.map.decorator.themes.IceTempleTileDecorator;
 import org.mech.rougue.core.game.model.player.Player;
 import org.mech.rougue.core.game.state.Loader;
 import org.mech.rougue.core.r.event.LoadAreaEvent;
@@ -14,9 +13,6 @@ public class GameLoader implements Loader {
 
 	@Inject
 	private GameContext context;
-
-	@Inject
-	private IceTempleTileDecorator tdecorator;
 
 	@Inject
 	private AreaLoader areaLoader;

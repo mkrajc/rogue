@@ -1,4 +1,4 @@
-package org.mech.rougue.core.config.ui.provider;
+package org.mech.rougue.core.r.render.tile;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;

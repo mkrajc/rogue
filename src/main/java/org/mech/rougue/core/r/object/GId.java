@@ -1,15 +1,19 @@
 package org.mech.rougue.core.r.object;
 
+import java.io.Serializable;
+
 /**
  * It is common game id. Contains hex representation of id.
  * 
  * @author martin.krajc
  *
  */
-public class GId {
+public class GId implements Serializable{
+	private static final long serialVersionUID = 8962058452076499360L;
+	
 	private int id;
 	
-	public GId(int id) {
+	public GId(final int id) {
 		this.id = id;
 	}
 

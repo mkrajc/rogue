@@ -1,14 +1,14 @@
 package org.mech.rougue.core.r.event;
 
-import org.mech.rougue.core.r.event.LoadAreaEvent.Handler;
+import org.mech.rougue.core.r.event.LoadMapEvent.Handler;
 
-public class LoadAreaEvent extends Event<Handler> {
+public class LoadMapEvent extends Event<Handler> {
 	public interface Handler extends Event.Handler {
-		void onAreaLoad(LoadAreaEvent event);
+		void onAreaLoad(LoadMapEvent event);
 	}
 	private final String areaId;
 
-	public LoadAreaEvent(final String areaId) {
+	public LoadMapEvent(final String areaId) {
 		this.areaId = areaId;
 	}
 

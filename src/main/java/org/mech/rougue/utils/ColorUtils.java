@@ -1,4 +1,4 @@
-package org.mech.rougue.ui.color;
+package org.mech.rougue.utils;
 
 import java.awt.Color;
 

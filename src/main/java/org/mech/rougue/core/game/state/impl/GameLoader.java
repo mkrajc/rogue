@@ -5,7 +5,7 @@ import org.mech.rougue.core.game.GameData;
 import org.mech.rougue.core.game.model.area.AreaLoader;
 import org.mech.rougue.core.game.model.player.Player;
 import org.mech.rougue.core.game.state.Loader;
-import org.mech.rougue.core.r.event.LoadAreaEvent;
+import org.mech.rougue.core.r.event.LoadMapEvent;
 import org.mech.rougue.factory.Inject;
 import org.mech.terminator.geometry.Position;
 
@@ -30,7 +30,7 @@ public class GameLoader implements Loader {
 		final GameData game = context.getData();
 		game.setPlayer(player);
 
-		new LoadAreaEvent("test_1").fire(context);
+		new LoadMapEvent("test_1").fire(context);
 
 		
 	}

@@ -7,7 +7,7 @@ import org.mech.rougue.core.game.model.map.render.RenderOrder;
 import org.mech.rougue.core.game.play.component.map.MapTerminalAdapter;
 import org.mech.rougue.core.game.play.component.map.RenderedMapTile;
 import org.mech.rougue.core.r.handler.game.light.LightMask;
-import org.mech.rougue.ui.color.ColorUtils;
+import org.mech.rougue.utils.ColorUtils;
 import org.mech.terminator.geometry.Position;
 import org.mech.terminator.geometry.Rectangle;
 

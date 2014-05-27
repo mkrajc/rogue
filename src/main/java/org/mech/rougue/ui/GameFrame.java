@@ -45,9 +45,14 @@ public class GameFrame extends TerminalFrame implements Handler {
 		rightPanel.setVisible(false);
 
 		gamePanel.add(leftPanel, "hidemode 3, aligny top");
-		gamePanel.add(gameTerminal, "grow,push");
+		gamePanel.add(gameTerminal, "grow, push");
 		gamePanel.add(rightPanel, "hidemode 3");
-
+		
+//		final JTextArea textArea = new JTextArea ();
+//		final JScrollPane scroll = new JScrollPane (textArea, 
+//		   JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+//		gamePanel.add(scroll, "height :50:");
+		
 		startPanel.setHandler(this);
 		setContentPane(startPanel);
 

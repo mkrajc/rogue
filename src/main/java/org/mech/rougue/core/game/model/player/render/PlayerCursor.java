@@ -2,7 +2,7 @@ package org.mech.rougue.core.game.model.player.render;
 
 import org.mech.rougue.core.game.play.component.map.RenderedMapTile;
 import org.mech.rougue.core.game.play.component.map.cursor.MapCursor;
-import org.mech.rougue.ui.color.ColorUtils;
+import org.mech.rougue.utils.ColorUtils;
 
 public class PlayerCursor extends MapCursor {
 

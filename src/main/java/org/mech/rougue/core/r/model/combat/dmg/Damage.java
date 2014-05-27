@@ -1,9 +1,10 @@
 package org.mech.rougue.core.r.model.combat.dmg;
 
+import java.io.Serializable;
 import org.mech.rougue.core.r.model.combat.CombatUtils;
 import org.mech.rougue.core.r.model.combat.Combatant;
 
-public abstract class Damage {
+public abstract class Damage implements Serializable{
 
 	private int value;
 	private DamageType type;

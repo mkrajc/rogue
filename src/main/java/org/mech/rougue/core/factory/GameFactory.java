@@ -6,7 +6,6 @@ public class GameFactory extends Factory {
 
 	public GameFactory() {
 		register(new CoreDefinition());
-		register(new ConvertersDefinition());
 		register(new ActionDefinition());
 		register(new RendererDefinition());
 		register(new ComponentDefinition());

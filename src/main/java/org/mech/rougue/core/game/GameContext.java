@@ -58,7 +58,7 @@ public class GameContext {
 	}
 
 	public void reset() {
-		this.data.reset();
+		//TODO
 	}
 
 	public void add(final GObject gObject) {

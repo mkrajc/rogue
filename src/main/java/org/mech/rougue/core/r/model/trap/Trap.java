@@ -16,6 +16,8 @@ import org.slf4j.LoggerFactory;
 
 public abstract class Trap implements GObject, PlayerMoveEvent.Handler, MapObject {
 
+	private static final long serialVersionUID = -3432038588851206027L;
+
 	private final static Logger LOG = LoggerFactory.getLogger(Trap.class);
 
 	private static int ACTIVATED_RENDER = 0 | RenderOptions.MEMORABLE;

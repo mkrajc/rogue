@@ -4,40 +4,36 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.annotation.PostConstruct;
 import org.mech.rougue.core.game.GameContext;
-import org.mech.rougue.core.game.model.area.converter.AreaPropertiesConverter;
 import org.mech.rougue.core.game.model.map.MapStats;
 import org.mech.rougue.core.r.event.EventBus;
-import org.mech.rougue.core.r.event.LoadAreaEvent;
+import org.mech.rougue.core.r.event.LoadMapEvent;
 import org.mech.rougue.core.r.event.RebuildLightEvent;
 import org.mech.rougue.core.r.handler.register.BulkRegistration;
 import org.mech.rougue.core.r.handler.register.NullRegistration;
 import org.mech.rougue.core.r.handler.register.Registration;
 import org.mech.rougue.core.r.handler.register.context.GObjectOnGameContextRegistrationHandler;
 import org.mech.rougue.core.r.model.common.GObject;
+import org.mech.rougue.core.r.model.map.loader.MapLoader;
 import org.mech.rougue.core.r.object.GId;
 import org.mech.rougue.core.r.object.GIdFactory;
 import org.mech.rougue.core.r.render.tile.TileTheme;
 import org.mech.rougue.factory.Inject;
 
-public class AreaLoader implements GObject, LoadAreaEvent.Handler {
+public class AreaLoader implements GObject, LoadMapEvent.Handler {
 
 	private final GId gid;
 
 	@Inject
 	private GameContext context;
-
+	
 	@Inject
-	private AreaPropertiesConverter areaConverter;
+	private TileTheme theme; 
 
-	@Inject
-	private AreaMapBuilder mapBuilder;
-
-	@Inject
-	private TileTheme theme;
-
-	Map<String, MapStats> cache = new HashMap<String, MapStats>();
+	private Map<String, MapStats> cache = new HashMap<String, MapStats>();
 
 	private Registration mapRegistration = new NullRegistration();
+
+	private MapLoader mapLoader = new MapLoader();
 
 	@PostConstruct
 	public void setup() {
@@ -53,59 +49,45 @@ public class AreaLoader implements GObject, LoadAreaEvent.Handler {
 		return gid;
 	}
 
-	public Area load(final GameContext context, final String id) {
+	public org.mech.rougue.core.r.model.map.Map load(final GameContext context, final String id) {
 		mapRegistration.unregister();
 
-		final Area old = context.getData().getArea();
+		final org.mech.rougue.core.r.model.map.Map old = context.getData().getMap();
 
-		if (old != null && old.getAreaId() != null && !old.getAreaId().equals(id)) {
-			cache.put(old.getAreaId(), context.getData().getMap().getStats());
+		if (old != null && old.getMapId() != null && !old.getMapId().equals(id)) {
+			cache.put(old.getMapId(), context.getData().getMap().getStats());
 		}
 
-		final Area area = doLoad(context, id);
+		final org.mech.rougue.core.r.model.map.Map map = mapLoader.load(id);
+		
+		context.getData().setMap(map);
 
 		// update stats
-		final MapStats mapStats = cache.get(area.getAreaId());
+		final MapStats mapStats = cache.get(map.getMapId());
 
 		if (mapStats != null) {
 			context.getData().getMap().setStats(mapStats);
 		}
+		
+		theme.setTheme(map.getArea().getTheme());
 
-		//		PlayerSight sight = context.getData().getPlayer().getSight();
-		//		context.registerObject(sight);
-
-		mapRegistration = new BulkRegistration<GameContext, GObject>(context, context.getData().getMap().getGameObjects(),
+		mapRegistration = new BulkRegistration<GameContext, GObject>(context, map.getGameObjects(),
 				new GObjectOnGameContextRegistrationHandler());
 
 		mapRegistration.register();
-		
+
 		new RebuildLightEvent().fire(context);
 
-		return area;
-	}
-
-	private Area doLoad(final GameContext context, final String id) {
-		final Area area = areaConverter.load("maps/testmap.properties", id);
-		mapBuilder.build(area);
-
-		context.getData().setArea(area);
-
-		loadTheme(context, area);
-		return area;
-
-	}
-
-	private void loadTheme(final GameContext context, final Area area) {
-		theme.setTheme(area.getTheme());
+		return map;
 	}
 
 	@Override
 	public void registerHandlers(final EventBus bus) {
-		bus.addHandler(LoadAreaEvent.class, this);
+		bus.addHandler(LoadMapEvent.class, this);
 	}
 
 	@Override
-	public void onAreaLoad(final LoadAreaEvent event) {
+	public void onAreaLoad(final LoadMapEvent event) {
 		final String areaId = event.getAreaId();
 		load(event.getContext(), areaId);
 	}

@@ -1,8 +1,9 @@
 package org.mech.rougue.core.game.model.map.tile;
 
+import java.io.Serializable;
 import org.mech.rougue.core.r.render.RenderId;
 
-public class GroundTile {
+public class GroundTile implements Serializable{
 	String id;
 	RenderId renderId;
 	

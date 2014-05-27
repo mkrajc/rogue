@@ -1,21 +1,28 @@
 package org.mech.rougue.core.r.model.map.loader;
 
-import java.util.List;
-import org.mech.rougue.core.r.model.common.GObject;
+import org.mech.rougue.core.r.export.Folders;
+import org.mech.rougue.core.r.export.ObjectExporter;
+import org.mech.rougue.core.r.export.ObjectImporter;
 import org.mech.rougue.core.r.model.map.Map;
-import org.mech.terminator.geometry.Dimension;
 
-public abstract class MapLoader {
+public class MapLoader {
 
-	public Map load(){
-		final Map m = new Map(getDimension()); 
-		m.registerGameObjects(getGameObjects());
-		
-		return m;
-		
+	private ObjectImporter defaultImporter = new ObjectImporter(Folders.MAP_DEFAULT_FOLDER);
+	private ObjectExporter exporter = new ObjectExporter(Folders.MAP_FOLDER);
+	private ObjectImporter importer = new ObjectImporter(Folders.MAP_FOLDER);
+
+	public Map load(final String mapId) {
+		Map map = null;
+		if (importer.fileExist(mapId)) {
+			map = importer.deserialize(mapId, Map.class);
+		} else if (defaultImporter.fileExist(mapId)) {
+			map = defaultImporter.deserialize(mapId, Map.class);
+		} else {
+			throw new IllegalArgumentException("Default file does not exist for " + defaultImporter.getFilename(mapId));
+		}
+
+		return map;
+
 	}
 
-	protected abstract List<GObject> getGameObjects();
-
-	protected abstract Dimension getDimension();
 }

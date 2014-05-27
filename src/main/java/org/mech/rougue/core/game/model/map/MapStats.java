@@ -1,25 +1,27 @@
 package org.mech.rougue.core.game.model.map;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import org.mech.rougue.core.r.model.map.Map;
 import org.mech.terminator.geometry.Position;
 
-public class MapStats {
+public class MapStats implements Serializable{
+	private static final long serialVersionUID = 1555882417119209425L;
 	//TODO redo to TIle itself
 	private Set<Position> seenTiles = new HashSet<Position>();
 	private Map map;
 
-	public MapStats(Map map) {
+	public MapStats(final Map map) {
 		this.map = map;
 	}
 
-	public boolean seen(Position position) {
+	public boolean seen(final Position position) {
 		return seenTiles.contains(position);
 	}
 
-	public void see(Position position) {
+	public void see(final Position position) {
 		if (map.isPositionInMap(position)) {
 			seenTiles.add(position);
 		}
@@ -33,8 +35,8 @@ public class MapStats {
 		seenTiles.clear();
 	}
 
-	public void seeAll(Collection<Position> positions) {
-		for (Position position : positions) {
+	public void seeAll(final Collection<Position> positions) {
+		for (final Position position : positions) {
 			see(position);
 		}
 	}

@@ -1,8 +1,12 @@
 package org.mech.rougue.core.r.render;
 
-public class RenderId {
+import java.io.Serializable;
+
+public class RenderId implements Serializable {
+	private static final long serialVersionUID = 626516869352450642L;
+	
 	private String id;
-	private String generatedId;
+	private transient String generatedId;
 
 	public RenderId(final String id) {
 		this.id = id;
@@ -11,7 +15,7 @@ public class RenderId {
 	public String getId() {
 		return id;
 	}
-	
+
 	public void setId(final String id) {
 		this.id = id;
 		this.generatedId = null;
@@ -26,7 +30,7 @@ public class RenderId {
 	public String getGeneratedId() {
 		return generatedId;
 	}
-	
+
 	public void setGeneratedId(final String generatedId) {
 		this.generatedId = generatedId;
 	}

@@ -2,38 +2,31 @@ package org.mech.rougue.core.r.model.area;
 
 import org.mech.rougue.core.game.model.map.render.MapObject;
 import org.mech.rougue.core.r.event.EventBus;
-import org.mech.rougue.core.r.event.LoadAreaEvent;
+import org.mech.rougue.core.r.event.LoadMapEvent;
 import org.mech.rougue.core.r.event.player.PlayerMoveEvent;
 import org.mech.rougue.core.r.object.GId;
 import org.mech.rougue.core.r.object.GIdFactory;
 import org.mech.rougue.core.r.render.RenderId;
 import org.mech.terminator.geometry.Position;
 
-public class AreaGate implements MapObject, PlayerMoveEvent.Handler  {
+public class MapGate implements MapObject, PlayerMoveEvent.Handler {
+	private static final long serialVersionUID = -530954101000740720L;
 	private final RenderId renderId;
 	private GId gId;
 
 	private Position position;
-	private String areaId;
+	private String mapId;
 	private Position destinationPosition;
 
-	public AreaGate(final int x, final int y, final String id) {
+	public MapGate(final int x, final int y, final String id) {
 		this();
 		this.position = Position.at(x, y);
-		this.areaId = id;
+		this.mapId = id;
 		this.gId = GIdFactory.next();
 	}
 
-	public AreaGate() {
+	public MapGate() {
 		this.renderId = new RenderId(getType());
-	}
-
-	public String getAreaId() {
-		return areaId;
-	}
-
-	public void setAreaId(final String areaId) {
-		this.areaId = areaId;
 	}
 
 	@Override
@@ -48,7 +41,7 @@ public class AreaGate implements MapObject, PlayerMoveEvent.Handler  {
 
 	@Override
 	public String toString() {
-		return "[" + position + "] -> " + areaId + " [" + destinationPosition + "]";
+		return "[" + position + "] -> " + mapId + " [" + destinationPosition + "]";
 	}
 	public Position getDestinationPosition() {
 		return destinationPosition;
@@ -65,7 +58,7 @@ public class AreaGate implements MapObject, PlayerMoveEvent.Handler  {
 
 	@Override
 	public String getType() {
-		return "GATE";
+		return "gate";
 	}
 
 	@Override
@@ -86,10 +79,16 @@ public class AreaGate implements MapObject, PlayerMoveEvent.Handler  {
 	@Override
 	public void onPlayerMove(final PlayerMoveEvent event) {
 		if (event.getContext().getData().getPlayer().getPosition().equals(getPosition())) {
-			new LoadAreaEvent(getAreaId()).fire(event.getContext());
+			new LoadMapEvent(getMapId()).fire(event.getContext());
 		}
 	}
-	
-	
+
+	public String getMapId() {
+		return mapId;
+	}
+
+	public void setMapId(final String mapId) {
+		this.mapId = mapId;
+	}
 
 }

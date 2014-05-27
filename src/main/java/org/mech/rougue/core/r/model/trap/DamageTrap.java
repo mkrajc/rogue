@@ -4,7 +4,7 @@ import org.mech.rougue.core.game.GameContext;
 import org.mech.rougue.core.r.model.combat.dmg.Damage;
 
 public class DamageTrap extends Trap {
-	
+	private static final long serialVersionUID = 764267023684321516L;
 	private Damage damage;
 	
 	public DamageTrap(final Damage damage) {

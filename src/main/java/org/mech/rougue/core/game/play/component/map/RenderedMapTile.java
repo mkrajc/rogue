@@ -1,8 +1,8 @@
 package org.mech.rougue.core.game.play.component.map;
 
 import java.awt.Color;
-import org.mech.rougue.core.config.ui.ColorConfigUtils;
 import org.mech.rougue.core.game.model.map.tile.NewMapTile;
+import org.mech.rougue.core.r.render.terminal.ColorConfigUtils;
 import org.mech.terminator.ITerminal;
 import org.mech.terminator.geometry.Position;
 

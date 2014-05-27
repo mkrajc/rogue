@@ -9,8 +9,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import org.mech.rougue.core.config.ui.CharConfig;
-import org.mech.rougue.core.config.ui.ColorConfig;
 import org.mech.rougue.core.r.render.RenderId;
 import org.mech.rougue.core.r.render.tile.TileTheme;
 import org.mech.rougue.core.r.render.tile.TilesProperties;

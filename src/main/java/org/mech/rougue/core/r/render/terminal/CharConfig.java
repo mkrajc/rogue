@@ -1,4 +1,4 @@
-package org.mech.rougue.core.config.ui;
+package org.mech.rougue.core.r.render.terminal;
 
 public class CharConfig {
 	private char c;

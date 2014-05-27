@@ -1,9 +1,9 @@
 package org.mech.rougue.core.game.model.map.render;
 
-import org.mech.rougue.core.config.ui.ColorConfigUtils;
 import org.mech.rougue.core.game.play.component.map.MapTerminalAdapter;
 import org.mech.rougue.core.game.play.component.map.RenderedMapTile;
 import org.mech.rougue.core.r.render.RenderId;
+import org.mech.rougue.core.r.render.terminal.ColorConfigUtils;
 import org.mech.rougue.core.r.render.terminal.DefaultTerminalConfigProvider;
 import org.mech.rougue.core.r.render.terminal.TerminalCharConfig;
 import org.mech.rougue.factory.Inject;

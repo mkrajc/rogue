@@ -1,4 +1,4 @@
-package org.mech.rougue.core.config.ui;
+package org.mech.rougue.core.r.render.terminal;
 
 import java.awt.Color;
 import java.util.Map;

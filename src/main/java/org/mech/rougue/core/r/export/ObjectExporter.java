@@ -7,6 +7,9 @@ import java.io.ObjectOutputStream;
 import org.mech.rougue.core.game.model.map.tile.Tiles;
 import org.mech.rougue.core.r.model.area.Area;
 import org.mech.rougue.core.r.model.combat.dmg.PhysicalDamage;
+import org.mech.rougue.core.r.model.inv.ItemMapObject;
+import org.mech.rougue.core.r.model.inv.item.weapon.OneHandedWeapon;
+import org.mech.rougue.core.r.model.inv.item.weapon.WeaponType;
 import org.mech.rougue.core.r.model.map.Map;
 import org.mech.rougue.core.r.model.map.gate.MapGate;
 import org.mech.rougue.core.r.model.trap.DamageTrap;
@@ -25,9 +28,13 @@ public class ObjectExporter<T extends Exportable> extends AbstractObjectManipula
 	}
 
 	public String serialize(final T obj) {
+		return serialize(obj, obj.getObjectId());
+	}
+	
+	public String serialize(final T obj, final String name) {
 		FileOutputStream fileOut = null;
 		ObjectOutputStream out = null;
-		final String filename = getFilename(obj.getObjectId());
+		final String filename = getFilename(name);
 		final File f = new File(filename);
 
 		f.getParentFile().mkdirs();
@@ -46,6 +53,7 @@ public class ObjectExporter<T extends Exportable> extends AbstractObjectManipula
 
 		return filename;
 	}
+	
 	public static void main(final String[] args) {
 		final Map map = new Map(Dimension.of(10), Tiles.ROOM_GROUND);
 		map.setMapId("test_2");
@@ -60,6 +68,15 @@ public class ObjectExporter<T extends Exportable> extends AbstractObjectManipula
 
 		final MapGate gate = new MapGate(Position.at(15, 14), Position.at(9, 9), "test_1", "test_2");
 		map.getGameObjects().add(gate.twoWay());
+		
+		final OneHandedWeapon dagger = new OneHandedWeapon();
+		dagger.setWeaponType(WeaponType.DAGGER);
+		dagger.setName("dagger");
+		
+		final ItemMapObject itemMapObject = new ItemMapObject(dagger);
+		itemMapObject.setPosition(Position.at(3, 3));
+		
+		map.getGameObjects().add(itemMapObject);
 
 		final ObjectExporter exporter = new ObjectExporter(Folders.MAP_DEFAULT_FOLDER);
 		exporter.serialize(map);

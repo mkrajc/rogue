@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import org.mech.rougue.core.game.model.map.MapStats;
 import org.mech.rougue.core.game.model.map.tile.GroundTile;
-import org.mech.rougue.core.game.model.map.tile.MapTile;
 import org.mech.rougue.core.game.model.map.tile.NewMapTile;
 import org.mech.rougue.core.game.model.map.tile.TileConfiguration;
 import org.mech.rougue.core.game.model.map.tile.Tiles;
@@ -33,8 +32,6 @@ public class Map implements Exportable {
 		this.mapSize = mapSize;
 		this.stats = new MapStats(this);
 		this.newArea = new NewMapTile[mapSize.width][mapSize.height];
-
-		final MapTile voidTile = new MapTile(Tiles.VOID);
 
 		for (int i = 0; i < mapSize.width; i++) {
 			for (int j = 0; j < mapSize.height; j++) {
@@ -70,29 +67,24 @@ public class Map implements Exportable {
 		return mapSize;
 	}
 
-	public List<GObject> getGameObjects() {
-		return gameObjects;
-	}
-
-	public void registerGameObject(final GObject gameObject) {
+	public void add(final GObject gameObject) {
 		this.gameObjects.add(gameObject);
 	}
 
-	public void registerGameObjects(final List<GObject> objects) {
+	public void remove(final GObject gameObject) {
+		this.gameObjects.remove(gameObject);
+	}
+
+	public void addAll(final List<GObject> objects) {
 		if (CollectionUtils.isNotEmpty(objects)) {
 			for (final GObject object : objects) {
-				registerGameObject(object);
+				add(object);
 			}
 		}
 	}
 
 	public MapStats getStats() {
 		return stats;
-	}
-
-	public void reset() {
-		stats.reset();
-		gameObjects.clear();
 	}
 
 	public boolean isPositionInMap(final Position position) {
@@ -128,6 +120,10 @@ public class Map implements Exportable {
 
 	public void setArea(final Area area) {
 		this.area = area;
+	}
+
+	public List<GObject> getGameObjects() {
+		return gameObjects;
 	}
 
 }

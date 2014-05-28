@@ -16,19 +16,18 @@ import org.mech.terminator.geometry.Position;
 
 public class ItemMapObject implements MapObject, InteractiveObject, ContextAwareGObject {
 
+	private static final long serialVersionUID = -7874765175139493785L;
 	private Position position;
 	private final Item item;
 	private final RenderId renderId;
-	private GameContext context;
 
-	private final PlayerMoveOnItemInteraction interaction;
+	private transient GameContext context;
+	private transient PlayerMoveOnItemInteraction interaction;
 
 	public ItemMapObject(final Item item) {
 		this.item = item;
 		renderId = new RenderId(getType());
-		interaction = new PlayerMoveOnItemInteraction(this);
 	}
-
 
 	@Override
 	public Position getPosition() {
@@ -67,6 +66,7 @@ public class ItemMapObject implements MapObject, InteractiveObject, ContextAware
 	@Override
 	public void onAdd(final GameContext context) {
 		this.context = context;
+		this.interaction = new PlayerMoveOnItemInteraction(this);
 		context.eventBus.addHandler(PlayerMoveEvent.class, interaction);
 	}
 
@@ -80,13 +80,17 @@ public class ItemMapObject implements MapObject, InteractiveObject, ContextAware
 		return item;
 	}
 
-	public GameContext getContext() {
-		return context;
-	}
-	
 	@Override
 	public String toString() {
 		return item.getName();
+	}
+
+	@Override
+	public boolean equals(final Object obj) {
+		if (obj instanceof ItemMapObject) {
+			return item.equals(((ItemMapObject) obj).getItem());
+		}
+		return false;
 	}
 
 }

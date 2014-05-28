@@ -1,11 +1,14 @@
 package org.mech.rougue.core.game.state;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class GameState {
+public class GameState implements Serializable{
+	private static final long serialVersionUID = -5553332920832912536L;
+
 	private static final Logger LOG = LoggerFactory.getLogger(GameState.class);
 
 	private boolean paused;

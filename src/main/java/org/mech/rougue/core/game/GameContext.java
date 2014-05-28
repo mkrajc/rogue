@@ -25,17 +25,12 @@ public class GameContext {
 	public ActionDispatcher actionDispatcher;
 
 	public final EventBus eventBus = new EventBus(this);
+	public GameData data = new GameData();
 
 	private final List<GObject> gameObjects = new ArrayList<GObject>();
 
-	private GameData data = new GameData();
-
 	public GameData getData() {
 		return data;
-	}
-
-	public void setData(final GameData data) {
-		this.data = data;
 	}
 
 	public GameState getState() {

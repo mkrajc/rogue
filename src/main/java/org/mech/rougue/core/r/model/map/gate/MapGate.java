@@ -5,7 +5,7 @@ import org.mech.rougue.core.game.model.map.render.MapObject;
 import org.mech.rougue.core.game.model.map.render.RenderOptions;
 import org.mech.rougue.core.game.model.player.Player;
 import org.mech.rougue.core.r.event.EventBus;
-import org.mech.rougue.core.r.event.LoadMapEvent;
+import org.mech.rougue.core.r.event.player.PlayerChangeMapRequestEvent;
 import org.mech.rougue.core.r.event.player.PlayerMoveEvent;
 import org.mech.rougue.core.r.model.player.move.PlayerMover;
 import org.mech.rougue.core.r.object.GId;
@@ -49,7 +49,7 @@ public class MapGate implements MapObject, PlayerMoveEvent.Handler {
 
 	@Override
 	public String toString() {
-		return "[from=" + fromMapId + ", pos=" + from + "] -> [from=" + toMapId + ", pos=" + to + "]";
+		return "[from=" + fromMapId + ", pos=" + from + "] -> [to=" + toMapId + ", pos=" + to + "]";
 	}
 
 	@Override
@@ -82,14 +82,10 @@ public class MapGate implements MapObject, PlayerMoveEvent.Handler {
 		final GameContext ctx = event.getContext();
 		final Player player = ctx.getData().getPlayer();
 		if (player.getPosition().equals(getPosition())) {
-			final PlayerMover playerMover = new PlayerMover();
-
 			if (!isOnSameMap()) {
-				playerMover.displacePlayer(player, ctx.getData().getMap());
-				new LoadMapEvent(toMapId).fire(ctx);
-				playerMover.placePlayer(ctx, player, to, ctx.getData().getMap(), true);
+				new PlayerChangeMapRequestEvent(fromMapId, toMapId, player, to).fire(ctx);
 			} else {
-				playerMover.movePlayer(ctx, player, to, ctx.getData().getMap());
+				new PlayerMover().movePlayer(ctx, player, to, ctx.data.map);
 			}
 
 		}

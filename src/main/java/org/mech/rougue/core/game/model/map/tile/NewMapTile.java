@@ -9,7 +9,6 @@ public class NewMapTile implements Serializable {
 	private static final long serialVersionUID = 4085817442356069248L;
 	private GroundTile ground;
 	private GroundTile wall;
-	private boolean occupied = false;
 	private boolean passable = true;
 	private boolean obstacle = false;
 
@@ -26,15 +25,8 @@ public class NewMapTile implements Serializable {
 		this.wall = wall;
 	}
 
-	public boolean isOccupied() {
-		return occupied;
-	}
-
-	public void setOccupied(final boolean occupied) {
-		this.occupied = occupied;
-	}
 	public boolean isFreeForMove() {
-		return !isOccupied() && isPassable();
+		return isPassable();
 	}
 	public List<RenderId> getRenderIds() {
 		final List<RenderId> ids = new ArrayList<RenderId>();

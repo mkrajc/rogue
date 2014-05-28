@@ -22,9 +22,9 @@ public class TakeItemAction implements ObjectAction {
 	@Override
 	public void invoke() {
 		ctx.getData().getPlayer().inventory.take(itemMapObject.getItem());
-		// remove wrapped item from map
+		// remove wrapped item from contenxt map
 		ctx.remove(itemMapObject);
-		
+		ctx.data.map.remove(itemMapObject);
 	}
 
 	@Override

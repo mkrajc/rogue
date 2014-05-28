@@ -6,6 +6,7 @@ import org.mech.rougue.core.r.object.GId;
 import org.mech.rougue.core.r.object.GIdFactory;
 
 public class AbstractItem implements Item {
+	private static final long serialVersionUID = -3920850363256719945L;
 
 	protected GId id;
 	protected String name = "UNDEF";
@@ -51,10 +52,15 @@ public class AbstractItem implements Item {
 	public void setWeight(final float weight) {
 		this.weight = weight;
 	}
-	
+
 	@Override
 	public String getRenderType() {
 		return type.name().toLowerCase();
+	}
+	
+	@Override
+	public boolean equals(final Object obj) {
+		return id.equals(((Item)obj).id());
 	}
 
 }

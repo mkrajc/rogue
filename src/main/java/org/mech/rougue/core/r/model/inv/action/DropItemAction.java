@@ -26,9 +26,10 @@ public class DropItemAction implements ObjectAction {
 	public void invoke() {
 		final Player player = ctx.getData().getPlayer();
 		player.inventory.drop(item);
-		final ItemMapObject gObject = new ItemMapObject(item);
-		gObject.setPosition(Position.clone(player.getPosition()));
-		ctx.add(gObject);
+		final ItemMapObject itemMapObject = new ItemMapObject(item);
+		itemMapObject.setPosition(Position.clone(player.getPosition()));
+		ctx.add(itemMapObject);
+		ctx.data.map.add(itemMapObject);
 		
 	}
 

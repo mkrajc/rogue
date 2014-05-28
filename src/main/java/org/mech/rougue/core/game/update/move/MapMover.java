@@ -41,10 +41,7 @@ public class MapMover {
 
 		final NewMapTile mapTile = map.get(destination);
 		if (mapTile != null && mapTile.isFreeForMove()) {
-			final NewMapTile old = map.get(moveable.getPosition());
-			old.setOccupied(false);
 			moveable.setPosition(destination);
-			mapTile.setOccupied(true);
 			return true;
 		} else {
 			LOG.trace("Cannot move [" + moveable + "] to position [" + destination + "]");
@@ -53,8 +50,6 @@ public class MapMover {
 	}
 
 	public void displace(final Positionable moveable, final Position destination, final Map map) {
-		final NewMapTile tile = map.get(moveable.getPosition());
-		tile.setOccupied(false);
 		moveable.setPosition(null);
 	}
 
@@ -63,7 +58,6 @@ public class MapMover {
 
 		if (mapTile != null && mapTile.isFreeForMove()) {
 			moveable.setPosition(destination);
-			mapTile.setOccupied(true);
 		} else {
 			throw new IllegalArgumentException("Cannot place on position [obj=" + moveable + ", position" + destination + "]");
 		}

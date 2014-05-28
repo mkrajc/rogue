@@ -3,7 +3,7 @@ package org.mech.rougue.core.r.export;
 public class AbstractObjectManipulator {
 	public final static String SUFFIX = ".data";
 
-	private String folder;
+	protected String folder;
 
 	public AbstractObjectManipulator(final String folder) {
 		this.folder = folder;

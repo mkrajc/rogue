@@ -1,11 +1,10 @@
 package org.mech.rougue.core.r.export;
 
-
 public class AbstractExporter<T extends Exportable> {
-	private ObjectImporter<T> defaultImporter;
-	private ObjectImporter<T> importer;
-	private ObjectExporter<T> defaultExporter;
-	private ObjectExporter<T> exporter;
+	protected ObjectImporter<T> defaultImporter;
+	protected ObjectImporter<T> importer;
+	protected ObjectExporter<T> defaultExporter;
+	protected ObjectExporter<T> exporter;
 
 	public AbstractExporter(final String folder, final String defFolder) {
 		defaultImporter = new ObjectImporter<T>(defFolder);
@@ -18,8 +17,8 @@ public class AbstractExporter<T extends Exportable> {
 		T object = null;
 		if (importer.fileExist(id)) {
 			object = importer.deserialize(id);
-		} else if (defaultImporter.fileExist(id)) {
-			object = defaultImporter.deserialize(id);
+		} else if (defaultExist(id)) {
+			object = loadDefault(id);
 		} else {
 			throw new IllegalArgumentException("Default file does not exist for " + defaultImporter.getFilename(id));
 		}
@@ -28,11 +27,23 @@ public class AbstractExporter<T extends Exportable> {
 
 	}
 
+	protected boolean defaultExist(final String id) {
+		return defaultImporter.fileExist(id);
+	}
+
+	protected T loadDefault(final String id) {
+		return defaultImporter.deserialize(id);
+	}
+
 	public void save(final T obj) {
 		exporter.serialize(obj);
 	}
-	
+
 	public void saveDefault(final T obj) {
 		defaultExporter.serialize(obj);
+	}
+
+	public void saveDefault(final T obj, final String name) {
+		defaultExporter.serialize(obj, name);
 	}
 }

@@ -1,4 +1,4 @@
-package org.mech.rougue.core.game.state.impl;
+package org.mech.rougue.core.r.export.state;
 
 import java.io.File;
 import org.mech.rougue.core.r.export.AbstractExporter;

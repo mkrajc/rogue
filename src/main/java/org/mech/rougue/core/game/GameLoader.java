@@ -1,12 +1,12 @@
-package org.mech.rougue.core.game.state.impl;
+package org.mech.rougue.core.game;
 
 import javax.annotation.PostConstruct;
-import org.mech.rougue.core.game.GameContext;
 import org.mech.rougue.core.game.model.player.Player;
-import org.mech.rougue.core.game.state.Loader;
 import org.mech.rougue.core.r.event.EventBus;
 import org.mech.rougue.core.r.event.LoadMapEvent;
 import org.mech.rougue.core.r.event.player.PlayerChangeMapRequestEvent;
+import org.mech.rougue.core.r.export.state.State;
+import org.mech.rougue.core.r.export.state.StateExporter;
 import org.mech.rougue.core.r.handler.register.BulkRegistration;
 import org.mech.rougue.core.r.handler.register.NullRegistration;
 import org.mech.rougue.core.r.handler.register.Registration;
@@ -21,7 +21,7 @@ import org.mech.rougue.core.r.object.GIdFactory;
 import org.mech.rougue.core.r.render.tile.TileTheme;
 import org.mech.rougue.factory.Inject;
 
-public class GameLoader implements GObject, Loader, LoadMapEvent.Handler, PlayerChangeMapRequestEvent.Handler {
+public class GameLoader implements GObject, LoadMapEvent.Handler, PlayerChangeMapRequestEvent.Handler {
 
 	private static final long serialVersionUID = -6235594730254161229L;
 
@@ -44,7 +44,6 @@ public class GameLoader implements GObject, Loader, LoadMapEvent.Handler, Player
 		context.add(this);
 	}
 
-	@Override
 	public void load() {
 		context.reset();
 		

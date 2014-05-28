@@ -4,6 +4,7 @@ import javax.annotation.PostConstruct;
 import org.mech.rougue.core.game.model.player.Player;
 import org.mech.rougue.core.r.event.EventBus;
 import org.mech.rougue.core.r.event.LoadMapEvent;
+import org.mech.rougue.core.r.event.RebuildLightEvent;
 import org.mech.rougue.core.r.event.player.PlayerChangeMapRequestEvent;
 import org.mech.rougue.core.r.export.state.State;
 import org.mech.rougue.core.r.export.state.StateExporter;
@@ -86,6 +87,8 @@ public class GameLoader implements GObject, LoadMapEvent.Handler, PlayerChangeMa
 		
 		final PlayerMover playerMover = new PlayerMover();
 		playerMover.placePlayer(context, player, player.getPosition(), context.data.map, false);
+		
+		new RebuildLightEvent().fire(context);
 		
 		return player;
 	}

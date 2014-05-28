@@ -4,7 +4,9 @@ import org.mech.rougue.core.game.GameContext;
 import org.mech.rougue.core.game.GameData;
 import org.mech.rougue.core.game.model.player.Player;
 import org.mech.rougue.core.game.state.Loader;
+import org.mech.rougue.core.r.model.map.Map;
 import org.mech.rougue.core.r.model.map.loader.GameMapLoader;
+import org.mech.rougue.core.r.model.player.loader.GamePlayerLoader;
 import org.mech.rougue.core.r.model.player.move.PlayerMover;
 import org.mech.rougue.factory.Inject;
 import org.mech.terminator.geometry.Position;
@@ -18,13 +20,14 @@ public class GameLoader implements Loader {
 	private GameMapLoader gameMapLoader;
 
 	@Inject
-	private Player player;
+	private GamePlayerLoader gamePlayerLoader;
 
 	@Override
 	public void load() {
 		context.reset();
 
-		gameMapLoader.load(context, "test_1");
+		final Map map = gameMapLoader.load(context, "test_1");
+		final Player player = gamePlayerLoader.load("player");
 		
 		final GameData game = context.getData();
 		player.setName("martin the best very long name pretty");

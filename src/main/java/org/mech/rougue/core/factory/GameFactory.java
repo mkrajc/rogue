@@ -9,8 +9,8 @@ public class GameFactory extends Factory {
 		register(new ActionDefinition());
 		register(new RendererDefinition());
 		register(new ComponentDefinition());
-		register(new UpdateAwareHandlersDefinition());
 		register(new DecoratorDefinition());
+		register(new LoaderDefinition());
 	}
 
 }

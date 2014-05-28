@@ -1,12 +1,15 @@
 package org.mech.rougue.core.r.model.combat;
 
+import java.io.Serializable;
 import org.mech.rougue.core.r.model.combat.dmg.Damage;
 import org.mech.rougue.core.r.model.geom.Positionable;
 import org.mech.terminator.geometry.Position;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class Combatant implements Positionable {
+public class Combatant implements Positionable, Serializable {
+	private static final long serialVersionUID = -5002535601409851671L;
+
 	private final static Logger LOG = LoggerFactory.getLogger(Combatant.class);
 
 	private IsCombatant combatant;

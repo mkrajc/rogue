@@ -8,7 +8,7 @@ import org.mech.rougue.utils.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ObjectImporter extends AbstractObjectManipulator {
+public class ObjectImporter<T> extends AbstractObjectManipulator {
 	private final static Logger LOG = LoggerFactory.getLogger(ObjectImporter.class);
 
 	public ObjectImporter(final String folder) {
@@ -16,7 +16,7 @@ public class ObjectImporter extends AbstractObjectManipulator {
 	}
 
 	@SuppressWarnings("unchecked")
-	public <T extends Exportable> T deserialize(final String objectId, final Class<T> clazz) {
+	public T deserialize(final String objectId) {
 		FileInputStream fileIn = null;
 		ObjectInputStream in = null;
 		Object o = null;

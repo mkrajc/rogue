@@ -1,10 +1,10 @@
 package org.mech.rougue.core.game.model.player;
 
-import javax.annotation.PostConstruct;
 import org.mech.rougue.core.game.GameContext;
 import org.mech.rougue.core.game.model.map.render.MapObject;
 import org.mech.rougue.core.game.model.map.render.RenderOptions;
 import org.mech.rougue.core.r.event.player.PlayerDiedEvent;
+import org.mech.rougue.core.r.export.Exportable;
 import org.mech.rougue.core.r.handler.game.UpdateAwareGObject;
 import org.mech.rougue.core.r.handler.game.player.PlayerSight;
 import org.mech.rougue.core.r.model.combat.Combatant;
@@ -16,11 +16,11 @@ import org.mech.rougue.core.r.model.player.stat.PlayerStats;
 import org.mech.rougue.core.r.object.GId;
 import org.mech.rougue.core.r.object.GIdFactory;
 import org.mech.rougue.core.r.render.RenderId;
-import org.mech.rougue.factory.Inject;
 import org.mech.terminator.geometry.Position;
 
-public class Player implements MapObject, IsCombatant, UpdateAwareGObject {
+public class Player implements MapObject, IsCombatant, UpdateAwareGObject, Exportable {
 
+	private static final long serialVersionUID = -1887109198236195102L;
 	private final GId gId;
 	private final RenderId renderId;
 
@@ -32,26 +32,22 @@ public class Player implements MapObject, IsCombatant, UpdateAwareGObject {
 	public Combatant combatant;
 
 	private PlayerStats stats;
-
-	@Inject
 	private PlayerSight sight;
-
-	@Inject
-	private GameContext gContext;
 
 	public Player() {
 		renderId = new RenderId(getType());
 		gId = GIdFactory.next();
 
+		sight = new PlayerSight(this);
 		inventory = new Inventory();
 		equipment = new Equipment();
 		stats = new PlayerStats();
 		combatant = new Combatant(this);
 	}
 
-	@PostConstruct
-	public void setup() {
+	public void setup(final GameContext gContext) {
 		gContext.add(this);
+		gContext.add(sight);
 	}
 
 	public String getName() {
@@ -120,6 +116,11 @@ public class Player implements MapObject, IsCombatant, UpdateAwareGObject {
 			// died
 			gameContext.eventBus.fire(new PlayerDiedEvent(this));
 		}
+	}
+
+	@Override
+	public String getObjectId() {
+		return "player";
 	}
 
 }

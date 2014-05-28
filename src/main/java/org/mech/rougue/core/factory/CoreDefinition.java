@@ -8,8 +8,6 @@ import org.mech.rougue.core.game.play.handler.GameInput;
 import org.mech.rougue.core.game.play.handler.GameUpdate;
 import org.mech.rougue.core.game.start.action.StartGameAction;
 import org.mech.rougue.core.game.state.GameState;
-import org.mech.rougue.core.game.state.impl.GameLoader;
-import org.mech.rougue.core.r.model.map.loader.GameMapLoader;
 import org.mech.rougue.core.r.render.terminal.DefaultTerminalConfigProvider;
 import org.mech.rougue.factory.AbstractDefinition;
 import org.mech.rougue.lang.LocalizedResourceBundle;
@@ -27,7 +25,6 @@ public class CoreDefinition extends AbstractDefinition {
 		singleton(LocalizedResourceBundle.class);
 
 		singleton(DefaultTerminalConfigProvider.class);
-		singleton(GameLoader.class);
 
 		singleton(GameInput.class);
 		singleton(GameUpdate.class);
@@ -37,7 +34,6 @@ public class CoreDefinition extends AbstractDefinition {
 		singleton(GameState.class);
 		singleton(GameContext.class);
 		
-		singleton(GameMapLoader.class);
 
 		factory(Monster.class);
 		

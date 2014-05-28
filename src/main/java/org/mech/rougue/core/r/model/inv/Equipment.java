@@ -1,5 +1,6 @@
 package org.mech.rougue.core.r.model.inv;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -11,21 +12,15 @@ import org.mech.rougue.utils.CollectionUtils.SelfPopulate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class Equipment {
+public class Equipment implements Serializable {
+	private static final long serialVersionUID = 4922475256738920971L;
+
 	private final static Logger LOG = LoggerFactory.getLogger(Equipment.class);
 
 	private Weapon rightHandWeapon;
 	private Weapon leftHandWeapon;
 
-	private Map<EquipmentType, List<Equipable>> equippedItems = CollectionUtils
-			.getSelfPopulatedMap(new SelfPopulate<EquipmentType, List<Equipable>>() {
-
-				@Override
-				public List<Equipable> create(final EquipmentType key) {
-					return new ArrayList<Equipable>();
-				}
-
-			});
+	private Map<EquipmentType, List<Equipable>> equippedItems = CollectionUtils.getSelfPopulatedMap(new EquipmentSelfPopulate());
 
 	public void equip(final Equipable eq, final GameContext ctx) {
 		if (canEquip(eq)) {
@@ -74,7 +69,7 @@ public class Equipment {
 
 	public void setRightHandWeapon(final Weapon rightHandWeapon) {
 		this.rightHandWeapon = rightHandWeapon;
-		if(rightHandWeapon == null){
+		if (rightHandWeapon == null) {
 			LOG.info("Right hand free");
 		} else {
 			LOG.info("Right hand " + rightHandWeapon);
@@ -87,11 +82,21 @@ public class Equipment {
 
 	public void setLeftHandWeapon(final Weapon leftHandWeapon) {
 		this.leftHandWeapon = leftHandWeapon;
-		if(leftHandWeapon == null){
+		if (leftHandWeapon == null) {
 			LOG.info("Left hand free");
 		} else {
 			LOG.info("Left hand " + leftHandWeapon);
 		}
+	}
+
+	protected static class EquipmentSelfPopulate implements SelfPopulate<EquipmentType, List<Equipable>>, Serializable {
+		private static final long serialVersionUID = 9070957973931502254L;
+
+		@Override
+		public List<Equipable> create(final EquipmentType key) {
+			return new ArrayList<Equipable>();
+		}
+
 	}
 
 }

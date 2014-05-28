@@ -1,11 +1,13 @@
 package org.mech.rougue.core.r.model.inv;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class Inventory {
+public class Inventory implements Serializable{
+	private static final long serialVersionUID = -5520478248994404893L;
 
 	private final static Logger LOG = LoggerFactory.getLogger(Inventory.class);
 

@@ -16,7 +16,7 @@ import org.mech.terminator.geometry.Position;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ObjectExporter extends AbstractObjectManipulator {
+public class ObjectExporter<T extends Exportable> extends AbstractObjectManipulator {
 
 	private final static Logger LOG = LoggerFactory.getLogger(ObjectExporter.class);
 
@@ -24,7 +24,7 @@ public class ObjectExporter extends AbstractObjectManipulator {
 		super(folder);
 	}
 
-	public String serialize(final Exportable obj) {
+	public String serialize(final T obj) {
 		FileOutputStream fileOut = null;
 		ObjectOutputStream out = null;
 		final String filename = getFilename(obj.getObjectId());

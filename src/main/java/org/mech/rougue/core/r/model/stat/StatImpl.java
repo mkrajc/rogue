@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class StatImpl<T> implements Stat<T> {
-
+	private static final long serialVersionUID = -3274192930933955146L;
 	private final static Logger LOG = LoggerFactory.getLogger(IntegerStat.class);
 
 	T stat;
@@ -27,7 +27,7 @@ public class StatImpl<T> implements Stat<T> {
 		this.stat = newVal;
 		LOG.debug(this + " set " + newVal);
 	}
-	
+
 	@Override
 	public String toString() {
 		return key + "=" + stat;

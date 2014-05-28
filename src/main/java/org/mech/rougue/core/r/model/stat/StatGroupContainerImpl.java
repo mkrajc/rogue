@@ -5,6 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class StatGroupContainerImpl implements StatGroupContainer {
+	private static final long serialVersionUID = -4875802698254366453L;
 	protected Map<String, StatGroup> groupMap = new LinkedHashMap<String, StatGroup>();
 
 	@Override

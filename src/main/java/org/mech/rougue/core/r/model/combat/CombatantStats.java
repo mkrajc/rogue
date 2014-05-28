@@ -1,10 +1,13 @@
 package org.mech.rougue.core.r.model.combat;
 
+import java.io.Serializable;
 import org.mech.rougue.core.r.model.stat.IntegerStat;
 import org.mech.rougue.core.r.model.stat.StatGroupContainerImpl;
 import org.mech.rougue.core.r.model.stat.StatGroupImpl;
 
-public class CombatantStats {
+public class CombatantStats implements Serializable {
+
+	private static final long serialVersionUID = -4916336409769765770L;
 
 	private static final Integer BASE_HP = 30;
 

@@ -5,6 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class StatGroupImpl implements StatGroup {
+	private static final long serialVersionUID = -7401472237643111202L;
 	String key;
 	private final Map<String, Stat<?>> statMap = new LinkedHashMap<String, Stat<?>>();
 
@@ -35,7 +36,7 @@ public class StatGroupImpl implements StatGroup {
 	public <T> Stat<T> createStat(final String key) {
 		return createStat(key, null, new StatImpl<T>());
 	}
-	
+
 	public IntegerStat createIntegerStat(final String key) {
 		return (IntegerStat) createStat(key, 0, new IntegerStat());
 	}

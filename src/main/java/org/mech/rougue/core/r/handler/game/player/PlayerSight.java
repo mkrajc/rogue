@@ -1,36 +1,25 @@
 package org.mech.rougue.core.r.handler.game.player;
 
 import java.util.Collection;
-import javax.annotation.PostConstruct;
-import org.mech.rougue.core.game.GameContext;
 import org.mech.rougue.core.game.model.player.Player;
 import org.mech.rougue.core.r.event.EventBus;
 import org.mech.rougue.core.r.event.RebuildLightEvent;
 import org.mech.rougue.core.r.event.player.PlayerMoveEvent;
 import org.mech.rougue.core.r.handler.game.light.LightMask;
 import org.mech.rougue.core.r.model.light.CircleLightSource;
-import org.mech.rougue.factory.Inject;
 import org.mech.terminator.geometry.Position;
 
 public class PlayerSight extends CircleLightSource implements PlayerMoveEvent.Handler {
 
+	private static final long serialVersionUID = -7023773998751749425L;
 	public final static int DEFAULT_PLAYER_SIGHT_RADIUS = 7;
 	public static final double DEFAULT_BORDER_INTENSITY = LightMask.DEFAULT_SHADOW_INTENSITY + 0.2;
 
-	@Inject
-	private GameContext gContext;
-
-	@Inject
 	private Player player;
-	
 
-	public PlayerSight() {
+	public PlayerSight(final Player player) {
 		super(DEFAULT_PLAYER_SIGHT_RADIUS);
-	}
-
-	@PostConstruct
-	public void setup() {
-		gContext.add(this);
+		this.player = player;
 	}
 
 	@Override

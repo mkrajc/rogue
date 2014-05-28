@@ -38,6 +38,11 @@ public class AbstractExporter<T extends Exportable> {
 	public void save(final T obj) {
 		exporter.serialize(obj);
 	}
+	
+
+	public void quicksave(final T obj) {
+		exporter.serialize(obj);
+	}
 
 	public void saveDefault(final T obj) {
 		defaultExporter.serialize(obj);

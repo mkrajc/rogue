@@ -46,8 +46,6 @@ public class GameLoader implements GObject, LoadMapEvent.Handler, PlayerChangeMa
 	}
 
 	public void load() {
-		context.reset();
-		
 		final State state = stateExporter.loadLast();
 
 		loadMap(state.getMapId());
@@ -81,9 +79,12 @@ public class GameLoader implements GObject, LoadMapEvent.Handler, PlayerChangeMa
 	}
 	
 	protected Player loadPlayer(final String id) {
+		context.remove(context.data.player);
+		
 		final Player player = playerExporter.load(id);
 		context.data.player = player;
-		player.setup(context);
+		
+		context.add(player);
 		
 		final PlayerMover playerMover = new PlayerMover();
 		playerMover.placePlayer(context, player, player.getPosition(), context.data.map, false);
@@ -107,6 +108,22 @@ public class GameLoader implements GObject, LoadMapEvent.Handler, PlayerChangeMa
 		stateExporter.save(state);
 
 	}
+	
+	public void quicksave(){
+		System.out.println("quicksave...");
+		
+		mapExporter.quicksave(context.data.map);
+		playerExporter.quicksave(context.data.player);
+		
+		final State state = new State();
+		state.setMapId(context.data.map.getMapId());
+		
+		// TODO player
+		state.setPlayerId("player");
+		stateExporter.quicksave(state);
+
+	}
+
 
 	@Override
 	public GId id() {
@@ -128,6 +145,11 @@ public class GameLoader implements GObject, LoadMapEvent.Handler, PlayerChangeMa
 		
 		// persist state
 		autosave();
+	}
+
+	public void quickload() {
+		System.out.println("quickload...");
+		load();
 	}
 
 }

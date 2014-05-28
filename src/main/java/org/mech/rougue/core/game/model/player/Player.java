@@ -3,6 +3,7 @@ package org.mech.rougue.core.game.model.player;
 import org.mech.rougue.core.game.GameContext;
 import org.mech.rougue.core.game.model.map.render.MapObject;
 import org.mech.rougue.core.game.model.map.render.RenderOptions;
+import org.mech.rougue.core.r.context.ContextAwareGObject;
 import org.mech.rougue.core.r.event.player.PlayerDiedEvent;
 import org.mech.rougue.core.r.export.Exportable;
 import org.mech.rougue.core.r.handler.game.UpdateAwareGObject;
@@ -18,7 +19,7 @@ import org.mech.rougue.core.r.object.GIdFactory;
 import org.mech.rougue.core.r.render.RenderId;
 import org.mech.terminator.geometry.Position;
 
-public class Player implements MapObject, IsCombatant, UpdateAwareGObject, Exportable {
+public class Player implements MapObject, IsCombatant, UpdateAwareGObject, Exportable, ContextAwareGObject {
 
 	private static final long serialVersionUID = -1887109198236195102L;
 	private final GId gId;
@@ -45,10 +46,6 @@ public class Player implements MapObject, IsCombatant, UpdateAwareGObject, Expor
 		combatant = new Combatant(this);
 	}
 
-	public void setup(final GameContext gContext) {
-		gContext.add(this);
-		gContext.add(sight);
-	}
 
 	public String getName() {
 		return name;
@@ -121,6 +118,18 @@ public class Player implements MapObject, IsCombatant, UpdateAwareGObject, Expor
 	@Override
 	public String getObjectId() {
 		return "player";
+	}
+
+
+	@Override
+	public void onAdd(final GameContext context) {
+		context.add(sight);
+	}
+
+
+	@Override
+	public void onRemove(final GameContext context) {
+		context.remove(sight);
 	}
 
 }

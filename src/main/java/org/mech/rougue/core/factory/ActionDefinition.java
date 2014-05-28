@@ -3,6 +3,8 @@ package org.mech.rougue.core.factory;
 import org.mech.rougue.core.game.play.action.ActionDispatcher;
 import org.mech.rougue.core.game.play.action.ActionMapping;
 import org.mech.rougue.core.game.play.action.AttackAction;
+import org.mech.rougue.core.game.play.action.QuickLoadAction;
+import org.mech.rougue.core.game.play.action.QuickSaveAction;
 import org.mech.rougue.core.game.play.action.UseAction;
 import org.mech.rougue.core.game.play.action.game.PauseAction;
 import org.mech.rougue.core.game.play.action.game.SeeMapAction;
@@ -29,6 +31,9 @@ public class ActionDefinition extends AbstractDefinition {
 		singleton(MoveSouthAction.class);
 		singleton(UseAction.class);
 		singleton(AttackAction.class);
+		
+		singleton(QuickSaveAction.class);
+		singleton(QuickLoadAction.class);
 
 		singleton(TurnFreezeAction.class);
 		

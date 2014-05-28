@@ -20,7 +20,7 @@ public class GameContext {
 
 	@Inject
 	public GameState state;
-	
+
 	@Inject
 	public ActionDispatcher actionDispatcher;
 
@@ -52,34 +52,34 @@ public class GameContext {
 		eventBus.stopUpdate();
 	}
 
-	public void reset() {
-		//TODO
-	}
-
 	public void add(final GObject gObject) {
-		gameObjects.add(gObject);
-		if (gObject instanceof ContextAwareGObject) {
-			((ContextAwareGObject) gObject).onAdd(this);
-		}
-		if (gObject instanceof Event.Handler) {
-			((Event.Handler) gObject).registerHandlers(eventBus);
+		if (gObject != null) {
+			gameObjects.add(gObject);
+			if (gObject instanceof ContextAwareGObject) {
+				((ContextAwareGObject) gObject).onAdd(this);
+			}
+			if (gObject instanceof Event.Handler) {
+				((Event.Handler) gObject).registerHandlers(eventBus);
+			}
 		}
 	}
 
 	public void remove(final GObject gObject) {
-		gameObjects.remove(gObject);
-		if (gObject instanceof ContextAwareGObject) {
-			((ContextAwareGObject) gObject).onRemove(this);
-		}
-		if (gObject instanceof Event.Handler) {
-			eventBus.removeHandler((Event.Handler) gObject);
+		if (gObject != null) {
+			gameObjects.remove(gObject);
+			if (gObject instanceof ContextAwareGObject) {
+				((ContextAwareGObject) gObject).onRemove(this);
+			}
+			if (gObject instanceof Event.Handler) {
+				eventBus.removeHandler((Event.Handler) gObject);
+			}
 		}
 	}
 
 	public <T> List<T> getGameObjects(final Class<T> clazz) {
 		return GObjectUtils.getObjectsOfType(gameObjects, clazz);
 	}
-	
+
 	public <T> T getGameObject(final Class<T> clazz) {
 		return GObjectUtils.getObjectOfType(gameObjects, clazz);
 	}

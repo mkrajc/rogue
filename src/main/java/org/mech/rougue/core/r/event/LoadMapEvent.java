@@ -4,21 +4,21 @@ import org.mech.rougue.core.r.event.LoadMapEvent.Handler;
 
 public class LoadMapEvent extends Event<Handler> {
 	public interface Handler extends Event.Handler {
-		void onAreaLoad(LoadMapEvent event);
+		void onMapLoad(LoadMapEvent event);
 	}
-	private final String areaId;
+	private final String mapId;
 
-	public LoadMapEvent(final String areaId) {
-		this.areaId = areaId;
+	public LoadMapEvent(final String mapId) {
+		this.mapId = mapId;
 	}
 
-	public String getAreaId() {
-		return areaId;
+	public String getMapId() {
+		return mapId;
 	}
 
 	@Override
 	protected void onDispatch(final Handler h) {
-		h.onAreaLoad(this);
+		h.onMapLoad(this);
 	}
 
 }

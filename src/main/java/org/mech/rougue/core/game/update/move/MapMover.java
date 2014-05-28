@@ -20,7 +20,7 @@ public class MapMover {
 	 * @param map
 	 * @return true if object changed position
 	 */
-	public boolean move(Positionable moveable, Move move, Map map) {
+	public boolean move(final Positionable moveable, final Move move, final Map map) {
 		final Position position = moveable.getPosition();
 		final Position shiftPosition = shiftPosition(position, move);
 		return move(moveable, shiftPosition, map);
@@ -33,7 +33,7 @@ public class MapMover {
 	 * @param map
 	 * @return true if object changed position, false if cannot move to that position
 	 */
-	public boolean move(Positionable moveable, Position destination, Map map) {
+	public boolean move(final Positionable moveable, final Position destination, final Map map) {
 		// if moveable already on destination
 		if (destination.equals(moveable.getPosition())) {
 			return false;
@@ -52,17 +52,34 @@ public class MapMover {
 		}
 	}
 
-	public final Position shiftPosition(Position p, Move move) {
+	public void displace(final Positionable moveable, final Position destination, final Map map) {
+		final NewMapTile tile = map.get(moveable.getPosition());
+		tile.setOccupied(false);
+		moveable.setPosition(null);
+	}
+
+	public void place(final Positionable moveable, final Position destination, final Map map) {
+		final NewMapTile mapTile = map.get(destination);
+
+		if (mapTile != null && mapTile.isFreeForMove()) {
+			moveable.setPosition(destination);
+			mapTile.setOccupied(true);
+		} else {
+			throw new IllegalArgumentException("Cannot place on position [obj=" + moveable + ", position" + destination + "]");
+		}
+	}
+
+	public final Position shiftPosition(final Position p, final Move move) {
 		return shiftPosition(p, move, 1);
 	}
 
-	public final Position shiftPosition(Position p, Move move, int n) {
+	public final Position shiftPosition(final Position p, final Move move, final int n) {
 		return shiftPosition(p, move, n, null);
 	}
 
-	public final Position shiftPosition(Position p, Move move, int n, Dimension dimension) {
-		int x = p.x + (move.x() * n);
-		int y = p.y + (move.y() * n);
+	public final Position shiftPosition(final Position p, final Move move, final int n, final Dimension dimension) {
+		final int x = p.x + (move.x() * n);
+		final int y = p.y + (move.y() * n);
 
 		// if (x < 0 || y < 0) {
 		// throw new IllegalArgumentException("cannot shift to negative index");

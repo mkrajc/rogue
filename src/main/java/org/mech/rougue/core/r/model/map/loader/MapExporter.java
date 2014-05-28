@@ -5,7 +5,7 @@ import org.mech.rougue.core.r.export.ObjectExporter;
 import org.mech.rougue.core.r.export.ObjectImporter;
 import org.mech.rougue.core.r.model.map.Map;
 
-public class MapLoader {
+public class MapExporter {
 
 	private ObjectImporter defaultImporter = new ObjectImporter(Folders.MAP_DEFAULT_FOLDER);
 	private ObjectExporter exporter = new ObjectExporter(Folders.MAP_FOLDER);
@@ -23,6 +23,10 @@ public class MapLoader {
 
 		return map;
 
+	}
+	
+	public void save(final Map map) {
+		exporter.serialize(map);
 	}
 
 }

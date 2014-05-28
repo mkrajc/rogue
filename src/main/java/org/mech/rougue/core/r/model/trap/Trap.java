@@ -30,7 +30,7 @@ public abstract class Trap implements GObject, PlayerMoveEvent.Handler, MapObjec
 
 	private int renderOptions = 0 | RenderOptions.INVISIBLE;
 
-	private Registration playerMoveListener;
+	private transient Registration playerMoveListener;
 
 	public Trap() {
 		this.gId = GIdFactory.next();

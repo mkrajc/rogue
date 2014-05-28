@@ -5,8 +5,11 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import org.mech.rougue.utils.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ObjectImporter extends AbstractObjectManipulator {
+	private final static Logger LOG = LoggerFactory.getLogger(ObjectImporter.class);
 
 	public ObjectImporter(final String folder) {
 		super(folder);
@@ -18,9 +21,11 @@ public class ObjectImporter extends AbstractObjectManipulator {
 		ObjectInputStream in = null;
 		Object o = null;
 		try {
-			fileIn = new FileInputStream(getFilename(objectId));
+			final String filename = getFilename(objectId);
+			fileIn = new FileInputStream(filename);
 			in = new ObjectInputStream(fileIn);
 			o = in.readObject();
+			LOG.info("Object deserialized from [" + filename + "]");
 		} catch (final IOException i) {
 			i.printStackTrace();
 		} catch (final ClassNotFoundException e) {

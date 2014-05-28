@@ -1,25 +1,22 @@
-package org.mech.rougue.core.game.model.area;
+package org.mech.rougue.core.r.model.map.loader;
 
-import java.util.HashMap;
-import java.util.Map;
 import javax.annotation.PostConstruct;
 import org.mech.rougue.core.game.GameContext;
-import org.mech.rougue.core.game.model.map.MapStats;
 import org.mech.rougue.core.r.event.EventBus;
 import org.mech.rougue.core.r.event.LoadMapEvent;
-import org.mech.rougue.core.r.event.RebuildLightEvent;
 import org.mech.rougue.core.r.handler.register.BulkRegistration;
 import org.mech.rougue.core.r.handler.register.NullRegistration;
 import org.mech.rougue.core.r.handler.register.Registration;
 import org.mech.rougue.core.r.handler.register.context.GObjectOnGameContextRegistrationHandler;
 import org.mech.rougue.core.r.model.common.GObject;
-import org.mech.rougue.core.r.model.map.loader.MapLoader;
 import org.mech.rougue.core.r.object.GId;
 import org.mech.rougue.core.r.object.GIdFactory;
 import org.mech.rougue.core.r.render.tile.TileTheme;
 import org.mech.rougue.factory.Inject;
 
-public class AreaLoader implements GObject, LoadMapEvent.Handler {
+public class GameMapLoader implements GObject, LoadMapEvent.Handler {
+
+	private static final long serialVersionUID = 876905982714781109L;
 
 	private final GId gid;
 
@@ -29,18 +26,15 @@ public class AreaLoader implements GObject, LoadMapEvent.Handler {
 	@Inject
 	private TileTheme theme; 
 
-	private Map<String, MapStats> cache = new HashMap<String, MapStats>();
-
 	private Registration mapRegistration = new NullRegistration();
-
-	private MapLoader mapLoader = new MapLoader();
+	private MapExporter mapLoader = new MapExporter();
 
 	@PostConstruct
 	public void setup() {
 		context.add(this);
 	}
 
-	public AreaLoader() {
+	public GameMapLoader() {
 		gid = GIdFactory.next();
 	}
 
@@ -53,30 +47,19 @@ public class AreaLoader implements GObject, LoadMapEvent.Handler {
 		mapRegistration.unregister();
 
 		final org.mech.rougue.core.r.model.map.Map old = context.getData().getMap();
-
-		if (old != null && old.getMapId() != null && !old.getMapId().equals(id)) {
-			cache.put(old.getMapId(), context.getData().getMap().getStats());
+		
+		if(old != null){
+			mapLoader.save(old);
 		}
 
 		final org.mech.rougue.core.r.model.map.Map map = mapLoader.load(id);
-		
+
 		context.getData().setMap(map);
-
-		// update stats
-		final MapStats mapStats = cache.get(map.getMapId());
-
-		if (mapStats != null) {
-			context.getData().getMap().setStats(mapStats);
-		}
-		
 		theme.setTheme(map.getArea().getTheme());
 
 		mapRegistration = new BulkRegistration<GameContext, GObject>(context, map.getGameObjects(),
 				new GObjectOnGameContextRegistrationHandler());
-
 		mapRegistration.register();
-
-		new RebuildLightEvent().fire(context);
 
 		return map;
 	}
@@ -87,9 +70,8 @@ public class AreaLoader implements GObject, LoadMapEvent.Handler {
 	}
 
 	@Override
-	public void onAreaLoad(final LoadMapEvent event) {
-		final String areaId = event.getAreaId();
-		load(event.getContext(), areaId);
+	public void onMapLoad(final LoadMapEvent event) {
+		load(event.getContext(), event.getMapId());
 	}
 
 	@Override

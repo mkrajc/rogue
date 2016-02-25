@@ -28,7 +28,6 @@ public class GameFrame extends TerminalFrame implements Handler {
 	@Inject
 	private StartGameAction startGameAction;
 
-	@Override
 	public void showWindow() {
 		pack();
 		setVisible(true);

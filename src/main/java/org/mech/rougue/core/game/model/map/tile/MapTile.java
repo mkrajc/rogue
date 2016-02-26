@@ -1,55 +1,59 @@
 package org.mech.rougue.core.game.model.map.tile;
 
+import org.mech.rogue.game.model.map.Free$;
+import org.mech.rogue.game.model.map.TileConfig;
+import org.mech.rogue.game.model.map.Void$;
+
 public class MapTile {
-	private TileConfiguration config;
-	private TileID id;
-	private boolean covered = true;
-	private boolean occupied = false;
+    private TileConfig config;
+    private TileID id;
+    private boolean covered = true;
+    private boolean occupied = false;
 
-	public MapTile(TileConfiguration t) {
-		this.config = t;
-		this.id = new TileID(t);
-	}
+    public MapTile(TileConfig t) {
+        this.config = t;
+        this.id = new TileID(t);
+    }
 
-	public boolean isCovered() {
-		return covered;
-	}
+    public boolean isCovered() {
+        return covered;
+    }
 
-	public void setCovered(boolean covered) {
-		this.covered = covered;
-	}
+    public void setCovered(boolean covered) {
+        this.covered = covered;
+    }
 
-	public boolean isOccupied() {
-		return occupied;
-	}
+    public boolean isOccupied() {
+        return occupied;
+    }
 
-	public void setOccupied(boolean occupied) {
-		this.occupied = occupied;
-	}
+    public void setOccupied(boolean occupied) {
+        this.occupied = occupied;
+    }
 
-	public boolean isFreeForMove() {
-		return !isOccupied() && getTileConfig().isPassable();
-	}
+    public boolean isFreeForMove() {
+        return !isOccupied() && isPassable();
+    }
 
-	public boolean isPassable() {
-		return getTileConfig().isPassable();
-	}
+    public boolean isPassable() {
+        return getTileConfig().moveType().equals(Free$.MODULE$);
+    }
 
-	public boolean isObstacle() {
-		return getTileConfig().isObstacle();
-	}
+    public boolean isObstacle() {
+        return getTileConfig().lightType().equals(Void$.MODULE$);
+    }
 
-	public TileConfiguration getTileConfig() {
-		return config;
-	}
+    public TileConfig getTileConfig() {
+        return config;
+    }
 
-	public TileID getId() {
-		return id;
-	}
+    public TileID getId() {
+        return id;
+    }
 
-	public void setTileConfig(TileConfiguration tileConfiguration) {
-		this.config = tileConfiguration;
-		this.id = new TileID(tileConfiguration);
-	}
+    public void setTileConfig(TileConfig tileConfiguration) {
+        this.config = tileConfiguration;
+        this.id = new TileID(tileConfiguration);
+    }
 
 }

@@ -1,14 +1,16 @@
 package org.mech.rougue.core.game.model.map.tile;
 
 
+import org.mech.rogue.game.model.map.TileConfig;
+
 public class TileID {
 
 	private String id;
 	private String finalId;
 	private String ornament;
 
-	public TileID(TileConfiguration configuration) {
-		this.id = configuration.getId();
+	public TileID(TileConfig configuration) {
+		this.id = configuration.id();
 	}
 
 	public TileID(String id) {

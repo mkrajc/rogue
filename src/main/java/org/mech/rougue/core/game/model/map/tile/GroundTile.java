@@ -1,6 +1,8 @@
 package org.mech.rougue.core.game.model.map.tile;
 
 import java.io.Serializable;
+
+import org.mech.rogue.game.model.map.TileConfig;
 import org.mech.rougue.core.r.render.RenderId;
 
 public class GroundTile implements Serializable{
@@ -10,8 +12,8 @@ public class GroundTile implements Serializable{
 	boolean passable;
 	boolean obstacle;
 	
-	public GroundTile(final TileConfiguration configuration) {
-		this.id = configuration.getId();
+	public GroundTile(final TileConfig configuration) {
+		this.id = configuration.id();
 		this.renderId = new RenderId(id);
 		this.passable = configuration.isPassable();
 		this.obstacle = configuration.isObstacle();

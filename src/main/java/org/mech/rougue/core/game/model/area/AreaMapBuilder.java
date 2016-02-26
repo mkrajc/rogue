@@ -1,9 +1,10 @@
 package org.mech.rougue.core.game.model.area;
 
 import java.util.List;
+
+import org.mech.rogue.game.model.map.TileConfig;
 import org.mech.rougue.core.game.model.map.tile.GroundTile;
 import org.mech.rougue.core.game.model.map.tile.NewMapTile;
-import org.mech.rougue.core.game.model.map.tile.TileConfiguration;
 import org.mech.rougue.core.game.model.map.tile.Tiles;
 import org.mech.rougue.core.r.model.map.Map;
 import org.mech.terminator.geometry.Line;
@@ -80,7 +81,7 @@ public class AreaMapBuilder {
 		}
 	}
 
-	private void fillLine(final Map map, final Line line, final TileConfiguration tile) {
+	private void fillLine(final Map map, final Line line, final TileConfig tile) {
 		final List<Position> linePos = line.getPoints();
 		for (final Position position : linePos) {
 			final NewMapTile newMapTile = map.get(position);

@@ -2,10 +2,11 @@ package org.mech.rougue.core.r.model.map;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.mech.rogue.game.model.map.TileConfig;
 import org.mech.rougue.core.game.model.map.MapStats;
 import org.mech.rougue.core.game.model.map.tile.GroundTile;
 import org.mech.rougue.core.game.model.map.tile.NewMapTile;
-import org.mech.rougue.core.game.model.map.tile.TileConfiguration;
 import org.mech.rougue.core.game.model.map.tile.Tiles;
 import org.mech.rougue.core.r.export.Exportable;
 import org.mech.rougue.core.r.model.area.Area;
@@ -28,7 +29,7 @@ public class Map implements Exportable {
 		this(mapSize, Tiles.VOID);
 	}
 
-	public Map(final Dimension mapSize, final TileConfiguration defaultTileGround) {
+	public Map(final Dimension mapSize, final TileConfig defaultTileGround) {
 		this.mapSize = mapSize;
 		this.stats = new MapStats(this);
 		this.newArea = new NewMapTile[mapSize.width][mapSize.height];

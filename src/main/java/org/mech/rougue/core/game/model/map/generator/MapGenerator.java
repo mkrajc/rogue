@@ -18,7 +18,7 @@ public class MapGenerator {
             for (int j = 0; j < height; j++) {
                 NewMapTile tile = new NewMapTile();
                 GroundTile groundTile = new GroundTile(Tiles.ROOM_GROUND);
-                if (i == 0 || j == 0 || i == width - 1 || j == height - 1) {
+                if ((i == 2 && j % 3 == 0) || j == 0 || i == width - 1 || j == height - 1) {
                     groundTile = new GroundTile(Tiles.ROOM_WALL);
                 }
                 tile.setGround(groundTile);

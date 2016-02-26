@@ -98,10 +98,10 @@ public class MapTerminalAdapter {
 		final Dimension termSize = terminal.getSize().toDimension();
 
 		final Position playerPosition = game.getPlayer().getPosition();
-		final Position terminalMapShifPosition = getTerminalPosition(mapSize, termSize, playerPosition);
+		final Position terminalMapShiftPosition = getTerminalPosition(mapSize, termSize, playerPosition);
 
 		// todo map boundary could be different
-		terminalToMap = new NestedRectangle(terminalMapShifPosition, termSize, gameMap.getSize().toRectangle());
+		terminalToMap = new NestedRectangle(terminalMapShiftPosition, termSize, gameMap.getSize().toRectangle());
 		mapBoundary = terminalToMap.intersect();
 	}
 }

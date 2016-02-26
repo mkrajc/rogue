@@ -105,8 +105,7 @@ public class TickTimer {
 				// to this and then factor in the current time to give
 				// us our final value to wait for
 				// remember this is in ms, whereas our lastLoopTime etc. vars
-				// are in
-				// ns.
+				// are in ns.
 				try {
 					Thread.sleep((lastLoopTime - System.nanoTime() + optimalTime) / 1000000);
 				} catch (final Exception e) {}

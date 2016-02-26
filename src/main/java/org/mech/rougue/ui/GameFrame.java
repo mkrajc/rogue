@@ -16,6 +16,10 @@ public class GameFrame extends TerminalFrame implements Handler {
 
 	private static final long serialVersionUID = 1L;
 
+	public void setGameTerminal(GameTerminalPanel gameTerminal) {
+		this.gameTerminal = gameTerminal;
+	}
+
 	@Inject
 	private GameTerminalPanel gameTerminal;
 

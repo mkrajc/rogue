@@ -83,11 +83,20 @@ public class ObjectExporter<T extends Exportable> extends AbstractObjectManipula
 		final MapGate gate = new MapGate(Position.at(15, 14), Position.at(9, 9), "test_1", "test_2");
 		map.add(gate.twoWay());
 
-		final Door door = new Door();
-		door.setPosition(Position.at(0,0));
-		door.setOpen(false);
+		final Door door1 = new Door();
+		door1.setPosition(Position.at(7,0));
+		door1.setOpen(false);
+		map.add(door1);
 
-		map.add(door);
+		final Door door2 = new Door();
+		door2.setPosition(Position.at(7,1));
+		door2.setOpen(false);
+		map.add(door2);
+
+		final Door door3 = new Door();
+		door3.setPosition(Position.at(7,2));
+		door3.setOpen(false);
+		map.add(door3);
 
 		final OneHandedWeapon dagger = new OneHandedWeapon();
 		dagger.setWeaponType(WeaponType.DAGGER);

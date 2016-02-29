@@ -8,9 +8,15 @@ case object Void extends LightType
 case object Light extends LightType
 
 // represents move characteristic of tile
-sealed trait Type
-case object Ground extends Type
-case object Wall extends Type
+sealed trait Type {
+  def isFree: Boolean
+}
+case object Ground extends Type {
+  override def isFree: Boolean = true
+}
+case object Wall extends Type {
+  override def isFree: Boolean = false
+}
 
 /**
   * Tile configuration represent defined characteristic of tile

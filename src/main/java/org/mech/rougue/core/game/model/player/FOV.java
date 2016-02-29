@@ -4,13 +4,15 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.mech.rogue.game.model.map.Light$;
 import org.mech.rogue.game.model.map.Map;
-import org.mech.rogue.game.model.map.MapTile;
 import org.mech.rogue.game.model.map.Void$;
+import org.mech.rougue.core.game.model.map.render.EnvironmentObject;
 import org.mech.terminator.geometry.GeometryUtils;
 import org.mech.terminator.geometry.Position;
 
-import scala.Option;
+import scala.collection.JavaConversions;
+import scala.collection.immutable.List;
 
 public class FOV {
 
@@ -50,16 +52,15 @@ public class FOV {
 					lightMapx.add(Position.at(ax, ay));
 				}
 
-				MapTile mapTile = map.get(ax, ay).getOrElse(null);
 				if (blocked) {
-					if (Void$.MODULE$.equals(mapTile.config().lightType())) {
+					if (isObstacle(Position.at(ax,ay), map)) {
 						next_start_slope = r_slope;
 						continue;
 					} else {
 						blocked = false;
 						start_slope = next_start_slope;
 					}
-				} else if (Void$.MODULE$.equals(mapTile.config().lightType())) {
+				} else if (isObstacle(Position.at(ax,ay), map)) {
 					blocked = true;
 					next_start_slope = r_slope;
 					cast_light(map, x, y, radius, i + 1, start_slope, l_slope, xx, xy, yx, yy, lightMapx);
@@ -69,6 +70,23 @@ public class FOV {
 				break;
 			}
 		}
+	}
+
+	private static boolean isObstacle(Position dest, Map map){
+		// maybe later better grouping of object that can change this property
+		List<EnvironmentObject> objects = Map.getObjects(map,dest, EnvironmentObject.class);
+
+		// if tile exist allow only ground type
+		boolean tileIsObstacle = map.get(dest).get().config().lightType().equals(Void$.MODULE$);
+
+		for(EnvironmentObject eo : JavaConversions.asJavaIterable(objects)){
+			if(eo.getConfig().lightType().equals(Void$.MODULE$)){
+				return true;
+			}
+		}
+
+		return tileIsObstacle;
+
 	}
 
 	public static Collection<Position> doFov(Map map, Position p, int radius) {

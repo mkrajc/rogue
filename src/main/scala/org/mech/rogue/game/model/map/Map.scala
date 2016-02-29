@@ -2,6 +2,8 @@ package org.mech.rogue.game.model.map
 
 import org.mech.rogue.game.export.Exportable
 import org.mech.rougue.core.game.model.map.MapStats
+import org.mech.rougue.core.game.model.map.render.MapObject
+import org.mech.rougue.core.r.`object`.GObjectUtils
 import org.mech.rougue.core.r.model.area.Area
 import org.mech.rougue.core.r.model.common.GObject
 import org.mech.terminator.geometry.{Dimension, Position}
@@ -34,4 +36,15 @@ class Map(val mapId: String, val size: Dimension, val area: Area, defaultTile: T
   def put(tile: MapTile, pos: Position): Unit = put(tile, pos.x, pos.y)
 
   def put(tile: MapTile, x: Int, y: Int): Unit = tiles(x)(y) = tile
+}
+
+object Map {
+  def getObjects[T <: MapObject](map: Map, pos: Position, clazz: Class[T]): List[T] = {
+    // TODO map maybe should store objects better way
+    import scala.collection.JavaConverters._
+    GObjectUtils.getObjectsOfType(map.objects().asJava, clazz)
+      .asScala.filter(obj => obj.getPosition == pos).toList
+  }
+
+
 }

@@ -3,14 +3,14 @@ package org.mech.rougue.core.r.model.map;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.mech.rogue.game.model.map.MapTile;
 import org.mech.rogue.game.model.map.TileConfig;
 import org.mech.rougue.core.game.model.map.MapStats;
-import org.mech.rougue.core.game.model.map.tile.GroundTile;
-import org.mech.rougue.core.game.model.map.tile.NewMapTile;
 import org.mech.rougue.core.game.model.map.tile.Tiles;
 import org.mech.rougue.core.r.export.Exportable;
 import org.mech.rougue.core.r.model.area.Area;
 import org.mech.rougue.core.r.model.common.GObject;
+import org.mech.rougue.core.r.render.RenderId;
 import org.mech.rougue.utils.CollectionUtils;
 import org.mech.terminator.geometry.Dimension;
 import org.mech.terminator.geometry.Position;
@@ -20,7 +20,7 @@ public class Map implements Exportable {
 
 	private List<GObject> gameObjects;
 	private String mapId;
-	private NewMapTile[][] newArea;
+	private MapTile[][] newArea;
 	private Dimension mapSize;
 	private MapStats stats;
 	private Area area;
@@ -32,12 +32,12 @@ public class Map implements Exportable {
 	public Map(final Dimension mapSize, final TileConfig defaultTileGround) {
 		this.mapSize = mapSize;
 		this.stats = new MapStats(this);
-		this.newArea = new NewMapTile[mapSize.width][mapSize.height];
+		this.newArea = new MapTile[mapSize.width][mapSize.height];
 
 		for (int i = 0; i < mapSize.width; i++) {
 			for (int j = 0; j < mapSize.height; j++) {
-				final NewMapTile newMapTile = new NewMapTile();
-				newMapTile.setGround(new GroundTile(defaultTileGround));
+				//TODO renderId
+				final MapTile newMapTile = new MapTile(defaultTileGround);
 				newArea[i][j] = newMapTile;
 			}
 		}
@@ -45,22 +45,22 @@ public class Map implements Exportable {
 		gameObjects = new ArrayList<GObject>();
 	}
 
-	public NewMapTile get(final int x, final int y) {
+	public MapTile get(final int x, final int y) {
 		if (x < 0 || y < 0 || x >= mapSize.width || y >= mapSize.height) {
 			return null;
 		}
 		return newArea[x][y];
 	}
 
-	public NewMapTile get(final Position p) {
+	public MapTile get(final Position p) {
 		return get(p.x, p.y);
 	}
 
-	public void put(final NewMapTile tile, final int x, final int y) {
+	public void put(final MapTile tile, final int x, final int y) {
 		newArea[x][y] = tile;
 	}
 
-	public void put(final NewMapTile tile, final Position p) {
+	public void put(final MapTile tile, final Position p) {
 		put(tile, p.x, p.y);
 	}
 
@@ -97,9 +97,10 @@ public class Map implements Exportable {
 	}
 
 	public void handleEnvironmentChange(final EnvironmentObject eObject) {
-		final NewMapTile tile = get(eObject.getPosition());
-		tile.setPassable(eObject.isPassable());
-		tile.setObstacle(eObject.isLightObstacle());
+		final MapTile tile = get(eObject.getPosition());
+		// TODO
+		// tile.setPassable(eObject.isPassable());
+		// tile.setObstacle(eObject.isLightObstacle());
 	}
 
 	@Override

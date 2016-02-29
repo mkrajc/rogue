@@ -3,9 +3,10 @@ package org.mech.rougue.core.game.play.component.map;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+
+import org.mech.rogue.game.model.map.MapTile;
 import org.mech.rougue.core.game.GameContext;
 import org.mech.rougue.core.game.GameData;
-import org.mech.rougue.core.game.model.map.tile.NewMapTile;
 import org.mech.terminator.ITerminal;
 import org.mech.terminator.Terminal;
 import org.mech.terminator.geometry.Dimension;
@@ -68,7 +69,7 @@ public class MapTerminalAdapter {
 		RenderedMapTile mapTile = tiles.get(termPosition);
 
 		if (mapTile == null) {
-			final NewMapTile t = gameMap.get(mapPosition);
+			final MapTile t = gameMap.get(mapPosition);
 			mapTile = new RenderedMapTile(termPosition, terminal, t);
 			tiles.put(termPosition, mapTile);
 		}

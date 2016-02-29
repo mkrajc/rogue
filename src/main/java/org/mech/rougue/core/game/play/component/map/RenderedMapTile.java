@@ -1,7 +1,8 @@
 package org.mech.rougue.core.game.play.component.map;
 
 import java.awt.Color;
-import org.mech.rougue.core.game.model.map.tile.NewMapTile;
+
+import org.mech.rogue.game.model.map.MapTile;
 import org.mech.rougue.core.r.render.terminal.ColorConfigUtils;
 import org.mech.terminator.ITerminal;
 import org.mech.terminator.geometry.Position;
@@ -17,9 +18,9 @@ public class RenderedMapTile {
 	private boolean bold = false;
 	
 	private final Position terminalPosition;
-	private final NewMapTile tile;
+	private final MapTile tile;
 
-	public RenderedMapTile(final Position termPosition, final ITerminal terminal, final NewMapTile tile) {
+	public RenderedMapTile(final Position termPosition, final ITerminal terminal, final MapTile tile) {
 		if (termPosition == null) {
 			System.out.println("help");
 		}
@@ -89,7 +90,7 @@ public class RenderedMapTile {
 		return terminalPosition.x;
 	}
 
-	public NewMapTile getTile() {
+	public MapTile getTile() {
 		return tile;
 	}
 

@@ -1,5 +1,7 @@
 package org.mech.rougue.core.game.model.map.render;
 
+import org.mech.rogue.game.model.map.Ground;
+import org.mech.rogue.game.model.map.Ground$;
 import org.mech.rougue.core.game.GameContext;
 import org.mech.rougue.core.game.model.map.tile.TileConstants;
 import org.mech.rougue.core.game.play.component.map.MapTerminalAdapter;
@@ -40,10 +42,7 @@ public class SeenMapRenderer extends AbstractOrderedMapRenderer {
 				final boolean seen = seePosition(context, at);
 
 				if (seen) {
-					render(mapTerminal, rTile, rTile.getTile().getGround().getRenderId(), at);
-					if (rTile.getTile().getWall() != null) {
-						render(mapTerminal, rTile, rTile.getTile().getWall().getRenderId(), at);
-					}
+					render(mapTerminal, rTile, rTile.getTile().renderId(), at);
 				} else {
 					render(mapTerminal, rTile, getCoveredId(at), at);
 				}

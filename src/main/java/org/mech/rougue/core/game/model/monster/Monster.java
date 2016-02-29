@@ -4,7 +4,6 @@ import org.mech.rogue.game.action.map.MapMovement;
 import org.mech.rogue.game.action.map.NormalMapMovement;
 import org.mech.rougue.core.game.GameContext;
 import org.mech.rougue.core.game.model.map.render.MapObject;
-import org.mech.rougue.core.game.update.move.MapMover;
 import org.mech.rougue.core.r.model.common.LiveObject;
 import org.mech.rougue.core.r.object.GId;
 import org.mech.rougue.core.r.render.RenderId;

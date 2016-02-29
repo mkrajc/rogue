@@ -55,7 +55,7 @@ public class ObjectExporter<T extends Exportable> extends AbstractObjectManipula
 	}
 	
 	public static void main(final String[] args) {
-		final Map map = new Map(Dimension.of(50), Tiles.ROOM_GROUND);
+		final Map map = new Map(Dimension.of(15), Tiles.ROOM_GROUND);
 		map.setMapId("test_2");
 		final Area area = new Area();
 		area.setAreaId("north.forest");

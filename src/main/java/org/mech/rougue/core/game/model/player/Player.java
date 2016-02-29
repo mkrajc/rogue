@@ -1,11 +1,11 @@
 package org.mech.rougue.core.game.model.player;
 
+import org.mech.rogue.game.export.Exportable;
 import org.mech.rougue.core.game.GameContext;
 import org.mech.rougue.core.game.model.map.render.MapObject;
 import org.mech.rougue.core.game.model.map.render.RenderOptions;
 import org.mech.rougue.core.r.context.ContextAwareGObject;
 import org.mech.rougue.core.r.event.player.PlayerDiedEvent;
-import org.mech.rougue.core.r.export.Exportable;
 import org.mech.rougue.core.r.handler.game.UpdateAwareGObject;
 import org.mech.rougue.core.r.handler.game.player.PlayerSight;
 import org.mech.rougue.core.r.model.combat.Combatant;
@@ -116,12 +116,6 @@ public class Player implements MapObject, IsCombatant, UpdateAwareGObject, Expor
 	}
 
 	@Override
-	public String getObjectId() {
-		return "player";
-	}
-
-
-	@Override
 	public void onAdd(final GameContext context) {
 		context.add(sight);
 	}
@@ -132,4 +126,8 @@ public class Player implements MapObject, IsCombatant, UpdateAwareGObject, Expor
 		context.remove(sight);
 	}
 
+	@Override
+	public String objectId() {
+		return "player";
+	}
 }

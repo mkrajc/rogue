@@ -3,14 +3,13 @@ package org.mech.rougue.core.r.model.map;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.mech.rogue.game.export.Exportable;
 import org.mech.rogue.game.model.map.MapTile;
 import org.mech.rogue.game.model.map.TileConfig;
 import org.mech.rougue.core.game.model.map.MapStats;
 import org.mech.rougue.core.game.model.map.tile.Tiles;
-import org.mech.rougue.core.r.export.Exportable;
 import org.mech.rougue.core.r.model.area.Area;
 import org.mech.rougue.core.r.model.common.GObject;
-import org.mech.rougue.core.r.render.RenderId;
 import org.mech.rougue.utils.CollectionUtils;
 import org.mech.terminator.geometry.Dimension;
 import org.mech.terminator.geometry.Position;
@@ -103,11 +102,6 @@ public class Map implements Exportable {
 		// tile.setObstacle(eObject.isLightObstacle());
 	}
 
-	@Override
-	public String getObjectId() {
-		return mapId;
-	}
-
 	public String getMapId() {
 		return mapId;
 	}
@@ -128,4 +122,8 @@ public class Map implements Exportable {
 		return gameObjects;
 	}
 
+	@Override
+	public String objectId() {
+		return mapId;
+	}
 }

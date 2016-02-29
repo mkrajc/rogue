@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+
+import org.mech.rogue.game.export.Exportable;
 import org.mech.rougue.core.game.model.map.tile.Tiles;
 import org.mech.rougue.core.r.model.area.Area;
 import org.mech.rougue.core.r.model.combat.dmg.PhysicalDamage;
@@ -28,7 +30,7 @@ public class ObjectExporter<T extends Exportable> extends AbstractObjectManipula
 	}
 
 	public String serialize(final T obj) {
-		return serialize(obj, obj.getObjectId());
+		return serialize(obj, obj.objectId());
 	}
 	
 	public String serialize(final T obj, final String name) {

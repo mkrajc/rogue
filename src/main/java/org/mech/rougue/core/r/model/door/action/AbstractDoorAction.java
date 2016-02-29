@@ -19,7 +19,7 @@ public abstract class AbstractDoorAction implements ObjectAction {
 	@Override
 	public void invoke() {
 		doInvoke(door);
-		ctx.getData().getMap().handleEnvironmentChange(door);
+		//ctx.getData().getMap().handleEnvironmentChange(door);
 		new RebuildLightEvent().fire(ctx);
 	}
 

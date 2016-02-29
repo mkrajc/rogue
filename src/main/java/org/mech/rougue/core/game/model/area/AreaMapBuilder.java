@@ -2,28 +2,31 @@ package org.mech.rougue.core.game.model.area;
 
 import java.util.List;
 
+import org.mech.rogue.game.model.map.Map;
 import org.mech.rogue.game.model.map.MapTile;
 import org.mech.rogue.game.model.map.TileConfig;
 import org.mech.rogue.game.model.map.Wall$;
 import org.mech.rougue.core.game.model.map.tile.Tiles;
-import org.mech.rougue.core.r.model.map.Map;
+
 import org.mech.terminator.geometry.Line;
 import org.mech.terminator.geometry.Position;
+
+import scala.Option;
 
 public class AreaMapBuilder {
 
 
     private void wallize(final Map map) {
-        for (int i = 0; i < map.getSize().width; i++) {
-            for (int j = 0; j < map.getSize().height; j++) {
+        for (int i = 0; i < map.size().width; i++) {
+            for (int j = 0; j < map.size().height; j++) {
                 final Position at = Position.at(i, j);
-                final MapTile mapTile = map.get(at);
+                final Option<MapTile> mapTile = map.get(at);
 
                 //				boolean secretDoor = isSecretDoor(mapTile);
 
                 if (isWall(mapTile)) {
                     //
-                    final String suff = computeWallId(map, mapTile, at);
+                    //final String suff = computeWallId(map, mapTile, at);
                     //mapTile.getWall().getRenderId().append(suff);
                     //
                     //					if (secretDoor) {
@@ -70,14 +73,15 @@ public class AreaMapBuilder {
         return wallIdOrnament;
     }
 
-    private boolean isWall(final MapTile mapTile) {
+    private boolean isWall(final Option<MapTile> oMapTile) {
+        MapTile mapTile = oMapTile.getOrElse(null);
         return mapTile != null && mapTile.config().tileType().equals(Wall$.MODULE$) && Tiles.ROOM_WALL_ID.contains(mapTile.config().id());
     }
 
 
     private void putTile(final Map map, final MapTile tile, final Position position) {
-        if (map.isPositionInMap(position)) {
-            map.put(tile, position);
+        if (map.size().isIn(position)) {
+           // map.put(tile, position);
         }
     }
 

@@ -37,13 +37,13 @@ public class PlayerSight extends CircleLightSource implements PlayerMoveEvent.Ha
 	@Override
 	public void onPlayerMove(final PlayerMoveEvent event) {
 		rebuildLights(event.getContext().getData().getMap());
-		event.getContext().getData().getMap().getStats().seeAll((Collection) getLights());
+		event.getContext().getData().getMap().stats().seeAll((Collection) getLights());
 	}
 	
 	@Override
 	public void onLightRebuild(final RebuildLightEvent event) {
 		super.onLightRebuild(event);
-		event.getContext().getData().getMap().getStats().seeAll((Collection) getLights());
+		event.getContext().getData().getMap().stats().seeAll((Collection) getLights());
 	}
 	
 	@Override

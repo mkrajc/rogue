@@ -4,7 +4,8 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
-import org.mech.rougue.core.r.model.map.Map;
+
+import org.mech.rogue.game.model.map.Map;
 import org.mech.terminator.geometry.Position;
 
 public class MapStats implements Serializable{
@@ -22,7 +23,7 @@ public class MapStats implements Serializable{
 	}
 
 	public void see(final Position position) {
-		if (map.isPositionInMap(position)) {
+		if (map.size().isIn(position)) {
 			seenTiles.add(position);
 		}
 	}

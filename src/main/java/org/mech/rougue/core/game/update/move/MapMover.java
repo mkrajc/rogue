@@ -1,14 +1,16 @@
 package org.mech.rougue.core.game.update.move;
 
 import org.mech.rogue.game.model.map.Ground$;
+import org.mech.rogue.game.model.map.Map;
 import org.mech.rogue.game.model.map.MapTile;
 import org.mech.rougue.core.r.model.geom.Move;
 import org.mech.rougue.core.r.model.geom.Positionable;
-import org.mech.rougue.core.r.model.map.Map;
 import org.mech.terminator.geometry.Dimension;
 import org.mech.terminator.geometry.Position;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import scala.Option;
 
 public class MapMover {
 
@@ -39,7 +41,7 @@ public class MapMover {
 			return false;
 		}
 
-		final MapTile mapTile = map.get(destination);
+		final MapTile mapTile = map.get(destination).getOrElse(null);
 		if (mapTile != null && Ground$.MODULE$.equals(mapTile.config().tileType())){
 			moveable.setPosition(destination);
 			return true;
@@ -54,7 +56,7 @@ public class MapMover {
 	}
 
 	public void place(final Positionable moveable, final Position destination, final Map map) {
-		final MapTile mapTile = map.get(destination);
+		final MapTile mapTile = map.get(destination).getOrElse(null);
 
 		if (mapTile != null && Ground$.MODULE$.equals(mapTile.config().tileType())) {
 			moveable.setPosition(destination);

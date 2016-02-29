@@ -52,7 +52,7 @@ public class SeenMapRenderer extends AbstractOrderedMapRenderer {
 	}
 
 	private boolean seePosition(final GameContext context, final Position position) {
-		return state.getSwitch(SEE_ALL_SWITCH) || context.getData().getMap().getStats().seen(position);
+		return state.getSwitch(SEE_ALL_SWITCH) || context.getData().getMap().stats().seen(position);
 	}
 
 	private RenderId getCoveredId(final Position p) {

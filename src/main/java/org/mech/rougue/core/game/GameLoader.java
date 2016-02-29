@@ -1,6 +1,8 @@
 package org.mech.rougue.core.game;
 
 import javax.annotation.PostConstruct;
+
+import org.mech.rogue.game.model.map.Map;
 import org.mech.rougue.core.game.model.player.Player;
 import org.mech.rougue.core.r.event.EventBus;
 import org.mech.rougue.core.r.event.LoadMapEvent;
@@ -13,7 +15,7 @@ import org.mech.rougue.core.r.handler.register.NullRegistration;
 import org.mech.rougue.core.r.handler.register.Registration;
 import org.mech.rougue.core.r.handler.register.context.GObjectOnGameContextRegistrationHandler;
 import org.mech.rougue.core.r.model.common.GObject;
-import org.mech.rougue.core.r.model.map.Map;
+
 import org.mech.rougue.core.r.model.map.loader.MapExporter;
 import org.mech.rougue.core.r.model.player.loader.PlayerExporter;
 import org.mech.rougue.core.r.model.player.move.PlayerMover;
@@ -21,6 +23,8 @@ import org.mech.rougue.core.r.object.GId;
 import org.mech.rougue.core.r.object.GIdFactory;
 import org.mech.rougue.core.r.render.tile.TileTheme;
 import org.mech.rougue.factory.Inject;
+
+import scala.collection.JavaConversions$;
 
 public class GameLoader implements GObject, LoadMapEvent.Handler, PlayerChangeMapRequestEvent.Handler {
 
@@ -67,12 +71,12 @@ public class GameLoader implements GObject, LoadMapEvent.Handler, PlayerChangeMa
 	protected Map loadMap(final String id) {
 		mapRegistration.unregister();
 
-		final org.mech.rougue.core.r.model.map.Map map = mapExporter.load(id);
+		final org.mech.rogue.game.model.map.Map map = mapExporter.load(id);
 
 		context.data.map = map;
-		theme.setTheme(map.getArea().getTheme());
+		theme.setTheme(map.area().getTheme());
 
-		mapRegistration = new BulkRegistration<GameContext, GObject>(context, map.getGameObjects(), new GObjectOnGameContextRegistrationHandler());
+		mapRegistration = new BulkRegistration<GameContext, GObject>(context, JavaConversions$.MODULE$.asJavaCollection(map.objects()), new GObjectOnGameContextRegistrationHandler());
 		mapRegistration.register();
 
 		return map;
@@ -101,7 +105,7 @@ public class GameLoader implements GObject, LoadMapEvent.Handler, PlayerChangeMa
 		playerExporter.save(context.data.player);
 		
 		final State state = new State();
-		state.setMapId(context.data.map.getMapId());
+		state.setMapId(context.data.map.mapId());
 		
 		// TODO player
 		state.setPlayerId("player");
@@ -116,7 +120,7 @@ public class GameLoader implements GObject, LoadMapEvent.Handler, PlayerChangeMa
 		playerExporter.quicksave(context.data.player);
 		
 		final State state = new State();
-		state.setMapId(context.data.map.getMapId());
+		state.setMapId(context.data.map.mapId());
 		
 		// TODO player
 		state.setPlayerId("player");

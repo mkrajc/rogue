@@ -1,15 +1,15 @@
 package org.mech.rougue.core.game.model.map.render;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import javax.annotation.PostConstruct;
+
+import org.mech.rogue.game.model.map.Map;
 import org.mech.rougue.core.game.GameContext;
 import org.mech.rougue.core.game.model.player.Player;
 import org.mech.rougue.core.game.play.component.map.MapTerminalAdapter;
 import org.mech.rougue.core.r.handler.game.light.LightMask;
-import org.mech.rougue.core.r.model.map.Map;
 import org.mech.rougue.core.r.object.GObjectUtils;
 import org.mech.rougue.factory.Inject;
 import org.mech.terminator.geometry.Position;
@@ -68,7 +68,7 @@ public class MapObjectOrdererRenderer extends AbstractOrderedMapRenderer {
 			}
 
 			if (memorable) {
-				if (cMap.getStats().seen(at)) {
+				if (cMap.stats().seen(at)) {
 					dispatch(mapObject, context, mapTerminal);
 					render = true;
 				}
@@ -102,7 +102,7 @@ public class MapObjectOrdererRenderer extends AbstractOrderedMapRenderer {
 	}
 
 	private boolean isOnScreen(final GameContext context, final MapObject mapObject, final MapTerminalAdapter mapTerminal) {
-		return mapTerminal.toTerminal(mapObject.getPosition()) != null && context.getData().getMap().getStats().seen(mapObject.getPosition());
+		return mapTerminal.toTerminal(mapObject.getPosition()) != null && context.getData().getMap().stats().seen(mapObject.getPosition());
 	}
 
 	@Override

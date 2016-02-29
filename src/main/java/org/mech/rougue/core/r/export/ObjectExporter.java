@@ -6,13 +6,13 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 
 import org.mech.rogue.game.export.Exportable;
+import org.mech.rogue.game.model.map.Map;
 import org.mech.rougue.core.game.model.map.tile.Tiles;
 import org.mech.rougue.core.r.model.area.Area;
 import org.mech.rougue.core.r.model.combat.dmg.PhysicalDamage;
 import org.mech.rougue.core.r.model.inv.ItemMapObject;
 import org.mech.rougue.core.r.model.inv.item.weapon.OneHandedWeapon;
 import org.mech.rougue.core.r.model.inv.item.weapon.WeaponType;
-import org.mech.rougue.core.r.model.map.Map;
 import org.mech.rougue.core.r.model.map.gate.MapGate;
 import org.mech.rougue.core.r.model.trap.DamageTrap;
 import org.mech.rougue.utils.IOUtils;
@@ -57,19 +57,19 @@ public class ObjectExporter<T extends Exportable> extends AbstractObjectManipula
 	}
 	
 	public static void main(final String[] args) {
-		final Map map = new Map(Dimension.of(15), Tiles.ROOM_GROUND);
-		map.setMapId("test_2");
+
 		final Area area = new Area();
 		area.setAreaId("north.forest");
 		area.setTheme("north.forest");
-		map.setArea(area);
+		final Map map = new Map("test_2", Dimension.of(15), area, Tiles.ROOM_GROUND);
+
 
 		final DamageTrap damageTrap = new DamageTrap(new PhysicalDamage(10));
 		damageTrap.setPosition(Position.at(2, 2));
-		map.getGameObjects().add(damageTrap);
+		map.add(damageTrap);
 
 		final MapGate gate = new MapGate(Position.at(15, 14), Position.at(9, 9), "test_1", "test_2");
-		map.getGameObjects().add(gate.twoWay());
+		map.add(gate.twoWay());
 		
 		final OneHandedWeapon dagger = new OneHandedWeapon();
 		dagger.setWeaponType(WeaponType.DAGGER);
@@ -78,7 +78,7 @@ public class ObjectExporter<T extends Exportable> extends AbstractObjectManipula
 		final ItemMapObject itemMapObject = new ItemMapObject(dagger);
 		itemMapObject.setPosition(Position.at(3, 3));
 		
-		map.getGameObjects().add(itemMapObject);
+		map.add(itemMapObject);
 
 		final ObjectExporter exporter = new ObjectExporter(Folders.MAP_DEFAULT_FOLDER);
 		exporter.serialize(map);

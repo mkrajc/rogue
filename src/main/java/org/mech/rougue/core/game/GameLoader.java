@@ -8,6 +8,7 @@ import org.mech.rougue.core.r.event.EventBus;
 import org.mech.rougue.core.r.event.LoadMapEvent;
 import org.mech.rougue.core.r.event.RebuildLightEvent;
 import org.mech.rougue.core.r.event.player.PlayerChangeMapRequestEvent;
+import org.mech.rougue.core.r.export.ObjectExporter;
 import org.mech.rougue.core.r.export.state.State;
 import org.mech.rougue.core.r.export.state.StateExporter;
 import org.mech.rougue.core.r.handler.register.BulkRegistration;
@@ -71,7 +72,7 @@ public class GameLoader implements GObject, LoadMapEvent.Handler, PlayerChangeMa
 	protected Map loadMap(final String id) {
 		mapRegistration.unregister();
 
-		final org.mech.rogue.game.model.map.Map map = mapExporter.load(id);
+		final org.mech.rogue.game.model.map.Map map = ObjectExporter.getMap(); //mapExporter.load(id);
 
 		context.data.map = map;
 		theme.setTheme(map.area().getTheme());

@@ -1,5 +1,7 @@
 package org.mech.rougue.core.game.model.monster;
 
+import org.mech.rogue.game.action.map.MapMovement;
+import org.mech.rogue.game.action.map.NormalMapMovement;
 import org.mech.rougue.core.game.GameContext;
 import org.mech.rougue.core.game.model.map.render.MapObject;
 import org.mech.rougue.core.game.update.move.MapMover;
@@ -8,6 +10,8 @@ import org.mech.rougue.core.r.object.GId;
 import org.mech.rougue.core.r.render.RenderId;
 import org.mech.terminator.geometry.Position;
 
+import scala.Option;
+
 public class Monster extends LiveObject implements MapObject {
 
 	private GId gId;
@@ -15,7 +19,7 @@ public class Monster extends LiveObject implements MapObject {
 	private Position position;
 	private boolean updated;
 
-	private final MapMover mapMoveVisitor = new MapMover();
+	private final MapMovement mapMoveVisitor = new NormalMapMovement();
 
 
 	@Override
@@ -40,8 +44,8 @@ public class Monster extends LiveObject implements MapObject {
 
 		final Position newMonsterPosition = getPosition().addXY(x, y);
 
-		mapMoveVisitor.move(this, newMonsterPosition, context.getData().getMap());
-		System.out.println("new position " + newMonsterPosition);
+		Option<Position> newPosition = mapMoveVisitor.move(getPosition(), newMonsterPosition, context.getData().getMap());
+		System.out.println("new position " + newPosition);
 
 		if (getPosition().equals(playerPosition)) {
 			System.err.println("GAME OVER from Monster " + this);

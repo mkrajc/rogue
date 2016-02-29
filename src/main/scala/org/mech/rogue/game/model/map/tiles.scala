@@ -19,11 +19,7 @@ case object Wall extends Type
   * @param tileType move type of configuration
   * @param lightType light type of configuration
   */
-case class TileConfig(id: String, tileType: Type, lightType: LightType){
-  @deprecated
-  def isPassable: Boolean = tileType == Ground
-
-}
+case class TileConfig(id: String, tileType: Type, lightType: LightType)
 
 case class MapTile(config: TileConfig){
   lazy val renderId: RenderId = new RenderId(config.id)

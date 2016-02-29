@@ -12,7 +12,7 @@ public class DefaultMapObjectRenderer extends AbstractMapObjectRenderer<MapObjec
 
 	@Override
 	public String getType() {
-		return null;
+		return "default";
 	}
 
 

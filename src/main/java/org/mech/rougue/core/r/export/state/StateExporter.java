@@ -28,7 +28,7 @@ public class StateExporter extends AbstractExporter<State> {
 	public static void main(final String[] args) {
 		final State state = new State();
 
-		state.setMapId("initial");
+		state.setMapId("test_2");
 		state.setPlayerId("player");
 
 		new StateExporter().saveDefault(state);

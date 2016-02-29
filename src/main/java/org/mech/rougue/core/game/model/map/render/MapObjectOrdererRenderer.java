@@ -1,13 +1,16 @@
 package org.mech.rougue.core.game.model.map.render;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import org.mech.rougue.core.game.GameContext;
+import org.mech.rougue.core.game.model.player.Player;
 import org.mech.rougue.core.game.play.component.map.MapTerminalAdapter;
 import org.mech.rougue.core.r.handler.game.light.LightMask;
 import org.mech.rougue.core.r.model.map.Map;
+import org.mech.rougue.core.r.object.GObjectUtils;
 import org.mech.rougue.factory.Inject;
 import org.mech.terminator.geometry.Position;
 import org.slf4j.Logger;
@@ -25,7 +28,9 @@ public class MapObjectOrdererRenderer extends AbstractOrderedMapRenderer {
 
 	@PostConstruct
 	public void setup() {
+		System.out.println("renderers: " + renderers.size());
 		for (final MapObjectRenderer objectRenderer : renderers) {
+			System.out.println("renderer add: " + objectRenderer);
 			map.put(objectRenderer.getType(), objectRenderer);
 		}
 	}
@@ -37,9 +42,14 @@ public class MapObjectOrdererRenderer extends AbstractOrderedMapRenderer {
 		// player must go last
 		Collections.reverse(mapObjects);
 
+		final Player player = GObjectUtils.getObjectOfType(mapObjects, Player.class);
+		mapObjects.remove(player);
+
 		for (final MapObject mapObject : mapObjects) {
 			renderMapObject(mapObject, context, mapTerminal);
 		}
+
+		renderMapObject(player,context,mapTerminal);
 	}
 	
 	private void renderMapObject(final MapObject mapObject, final GameContext context, final MapTerminalAdapter mapTerminal){
@@ -81,14 +91,13 @@ public class MapObjectOrdererRenderer extends AbstractOrderedMapRenderer {
 		MapObjectRenderer mapObjectRenderer = map.get(mapObject.getType());
 
 		if (mapObjectRenderer == null) {
-			mapObjectRenderer = map.get(null);
+			mapObjectRenderer = map.get("default");
 		}
 
 		if (mapObjectRenderer == null) {
 			throw new IllegalArgumentException("No renderer found for id=" + mapObject.getType());
 		}
 
-		LOG.trace("dispatching to [" + mapObjectRenderer + "]");
 		mapObjectRenderer.render(mapObject, context, mapTerminal);
 	}
 

@@ -12,7 +12,7 @@ public class MapExporterTest01 {
     public static void main(String[] args) {
         MapExporter me = new MapExporter();
 
-        Map map = MapGenerator.generateRoom(Dimension.of(10));
+        Map map = MapGenerator.generateRoom(Dimension.of(15));
         Area area = new Area();
         area.setAreaId("areaId");
         map.setArea(area);

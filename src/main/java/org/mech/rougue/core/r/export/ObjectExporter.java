@@ -98,6 +98,16 @@ public class ObjectExporter<T extends Exportable> extends AbstractObjectManipula
 		door3.setOpen(false);
 		map.add(door3);
 
+		final Door door4 = new Door();
+		door4.setPosition(Position.at(7,3));
+		door4.setOpen(false);
+		map.add(door4);
+
+		final Door door5 = new Door();
+		door5.setPosition(Position.at(7,4));
+		door5.setOpen(false);
+		map.add(door5);
+
 		final OneHandedWeapon dagger = new OneHandedWeapon();
 		dagger.setWeaponType(WeaponType.DAGGER);
 		dagger.setName("dagger");

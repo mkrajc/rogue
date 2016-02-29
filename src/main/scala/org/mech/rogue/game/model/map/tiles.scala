@@ -2,20 +2,19 @@ package org.mech.rogue.game.model.map
 
 import org.mech.rougue.core.r.render.RenderId
 
-// represents light characteristic of tile
-sealed trait LightType
-case object Void extends LightType
-case object Light extends LightType
 
-// represents move characteristic of tile
+// represents characteristic of tile
 sealed trait Type {
-  def isFree: Boolean
+  def isFreeToMove: Boolean
+  def isTransparent: Boolean
 }
 case object Ground extends Type {
-  override def isFree: Boolean = true
+  override def isFreeToMove: Boolean = true
+  override def isTransparent: Boolean = true
 }
 case object Wall extends Type {
-  override def isFree: Boolean = false
+  override def isFreeToMove: Boolean = false
+  override def isTransparent: Boolean = false
 }
 
 /**
@@ -23,9 +22,9 @@ case object Wall extends Type {
   *
   * @param id id of configuration
   * @param tileType move type of configuration
-  * @param lightType light type of configuration
   */
-case class TileConfig(id: String, tileType: Type, lightType: LightType)
+case class TileConfig(id: String, tileType: Type)
+
 
 case class MapTile(config: TileConfig){
   lazy val renderId: RenderId = new RenderId(config.id)

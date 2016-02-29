@@ -4,9 +4,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.mech.rogue.game.model.map.Light$;
 import org.mech.rogue.game.model.map.Map;
-import org.mech.rogue.game.model.map.Void$;
 import org.mech.rougue.core.game.model.map.render.EnvironmentObject;
 import org.mech.terminator.geometry.GeometryUtils;
 import org.mech.terminator.geometry.Position;
@@ -77,10 +75,10 @@ public class FOV {
 		List<EnvironmentObject> objects = Map.getObjects(map,dest, EnvironmentObject.class);
 
 		// if tile exist allow only ground type
-		boolean tileIsObstacle = map.get(dest).get().config().lightType().equals(Void$.MODULE$);
+		boolean tileIsObstacle = !map.get(dest).get().config().tileType().isTransparent();
 
 		for(EnvironmentObject eo : JavaConversions.asJavaIterable(objects)){
-			if(eo.getConfig().lightType().equals(Void$.MODULE$)){
+			if(!eo.getTileType().isTransparent()){
 				return true;
 			}
 		}

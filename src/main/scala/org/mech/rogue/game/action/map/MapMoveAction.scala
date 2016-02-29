@@ -1,8 +1,7 @@
 package org.mech.rogue.game.action.map
 
 import org.mech.rogue.game.model.map.{Ground, Map, MapTile}
-import org.mech.rougue.core.game.model.map.render.{EnvironmentObject, MapObject}
-import org.mech.rougue.core.r.model.door.Door
+import org.mech.rougue.core.game.model.map.render.EnvironmentObject
 import org.mech.rougue.core.r.model.geom.Move
 import org.mech.terminator.geometry.Position
 
@@ -32,7 +31,7 @@ class NormalMapMovement extends MapMovement {
 
     // if tile exist allow only ground type
     val tileOk = map.get(dest).exists(canMove)
-    val objectsOk = objects.forall(_.getConfig.tileType.isFree)
+    val objectsOk = objects.forall(_.getTileType.isFreeToMove)
 
     if(tileOk && objectsOk) Some(dest)
     else None

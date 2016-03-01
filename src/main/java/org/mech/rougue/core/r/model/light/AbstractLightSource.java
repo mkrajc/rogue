@@ -15,7 +15,7 @@ public abstract class AbstractLightSource implements LightSource {
 
 	public static final double DEFAULT_BORDER_INTENSITY = LightMask.DEFAULT_SHADOW_INTENSITY + 0.2;
 
-	private final Set<LightPosition> lightPositions = new HashSet<LightPosition>();
+	private final Set<Light> lightPositions = new HashSet<Light>();
 	private Position position;
 
 	@Override
@@ -39,13 +39,13 @@ public abstract class AbstractLightSource implements LightSource {
 	}
 
 	@Override
-	public Collection<LightPosition> getLights() {
+	public Collection<Light> getLights() {
 		return lightPositions;
 	}
 
 	protected void addLights(final Collection<Position> positions) {
 		for (final Position p : positions) {
-			final LightPosition lightPosition = new LightPosition(p);
+			final Light lightPosition = new Light(p);
 			final double shadowIntensity = getShadowIntensity(GeometryUtils.distPyth(getPosition(), p));
 			lightPosition.setShadowIntensity(shadowIntensity);
 			lightPosition.setLightIntensity(Math.max(0, shadowIntensity - DEFAULT_BORDER_INTENSITY));

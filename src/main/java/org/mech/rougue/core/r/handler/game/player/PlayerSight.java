@@ -1,13 +1,19 @@
 package org.mech.rougue.core.r.handler.game.player;
 
+import java.util.ArrayList;
 import java.util.Collection;
+
 import org.mech.rougue.core.game.model.player.Player;
 import org.mech.rougue.core.r.event.EventBus;
 import org.mech.rougue.core.r.event.RebuildLightEvent;
 import org.mech.rougue.core.r.event.player.PlayerMoveEvent;
 import org.mech.rougue.core.r.handler.game.light.LightMask;
 import org.mech.rougue.core.r.model.light.CircleLightSource;
+import org.mech.rougue.core.r.model.light.Light;
 import org.mech.terminator.geometry.Position;
+
+import scala.collection.Iterable;
+import scala.collection.JavaConversions;
 
 public class PlayerSight extends CircleLightSource implements PlayerMoveEvent.Handler {
 
@@ -31,19 +37,28 @@ public class PlayerSight extends CircleLightSource implements PlayerMoveEvent.Ha
 	public Position getPosition() {
 		return player.getPosition();
 	}
+
+	private Iterable<Position> getLightsPositions(){
+		Collection<Light> lights = getLights();
+		ArrayList<Position> positions = new ArrayList<>(lights.size());
+		for(Light l : lights){
+			positions.add(l.getPosition());
+		}
+		return JavaConversions.collectionAsScalaIterable(positions);
+	}
 	
 	// TODO improve stats
 	
 	@Override
 	public void onPlayerMove(final PlayerMoveEvent event) {
 		rebuildLights(event.getContext().getData().getMap());
-		event.getContext().getData().getMap().stats().seeAll((Collection) getLights());
+		event.getContext().getData().getMap().stats().seeAll(getLightsPositions());
 	}
 	
 	@Override
 	public void onLightRebuild(final RebuildLightEvent event) {
 		super.onLightRebuild(event);
-		event.getContext().getData().getMap().stats().seeAll((Collection) getLights());
+		event.getContext().getData().getMap().stats().seeAll(getLightsPositions());
 	}
 	
 	@Override

@@ -1,7 +1,6 @@
 package org.mech.rogue.game.model.map
 
 import org.mech.rogue.game.export.Exportable
-import org.mech.rougue.core.game.model.map.MapStats
 import org.mech.rougue.core.game.model.map.render.MapObject
 import org.mech.rougue.core.r.`object`.GObjectUtils
 import org.mech.rougue.core.r.model.area.Area
@@ -13,7 +12,7 @@ import scala.collection.mutable.ListBuffer
 class Map(val mapId: String, val size: Dimension, val area: Area, defaultTile: TileConfig) extends Exportable {
   private val gameObjects: ListBuffer[GObject] = new ListBuffer[GObject]
   val tiles: Array[Array[MapTile]] = Array.fill(size.width, size.height)(new MapTile(defaultTile))
-  val stats: MapStats = new MapStats(this)
+  val stats = new Stats(this)
 
   override def objectId: String = mapId
 

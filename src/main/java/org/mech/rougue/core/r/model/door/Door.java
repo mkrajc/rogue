@@ -3,13 +3,13 @@ package org.mech.rougue.core.r.model.door;
 import java.util.List;
 
 import org.mech.rogue.game.model.map.Ground$;
-import org.mech.rogue.game.model.map.TileConfig;
 import org.mech.rogue.game.model.map.Type;
 import org.mech.rogue.game.model.map.Wall$;
+import org.mech.rogue.game.render.map.Fixed$;
+import org.mech.rogue.game.render.map.RenderOption;
 import org.mech.rougue.core.game.GameContext;
 import org.mech.rougue.core.game.model.map.render.EnvironmentObject;
 import org.mech.rougue.core.game.model.map.render.MapObject;
-import org.mech.rougue.core.game.model.map.render.RenderOptions;
 import org.mech.rougue.core.game.model.map.tile.Tiles;
 import org.mech.rougue.core.r.action.object.InteractiveObject;
 import org.mech.rougue.core.r.action.object.PlayerMoveInFrontOfItemInteraction;
@@ -78,8 +78,8 @@ public class Door implements MapObject, EnvironmentObject, InteractiveObject, Co
     }
 
     @Override
-    public int getRenderOptions() {
-        return 0 | RenderOptions.FIXED;
+    public RenderOption getRenderOptions() {
+        return Fixed$.MODULE$;
     }
 
     @Override

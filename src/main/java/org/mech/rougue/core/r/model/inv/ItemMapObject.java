@@ -1,9 +1,11 @@
 package org.mech.rougue.core.r.model.inv;
 
 import java.util.List;
+
+import org.mech.rogue.game.render.map.Memorable$;
+import org.mech.rogue.game.render.map.RenderOption;
 import org.mech.rougue.core.game.GameContext;
 import org.mech.rougue.core.game.model.map.render.MapObject;
-import org.mech.rougue.core.game.model.map.render.RenderOptions;
 import org.mech.rougue.core.r.action.object.InteractiveObject;
 import org.mech.rougue.core.r.action.object.PlayerMoveOnItemInteraction;
 import org.mech.rougue.core.r.context.ContextAwareGObject;
@@ -45,8 +47,8 @@ public class ItemMapObject implements MapObject, InteractiveObject, ContextAware
 	}
 
 	@Override
-	public int getRenderOptions() {
-		return 0 | RenderOptions.MEMORABLE;
+	public RenderOption getRenderOptions() {
+		return Memorable$.MODULE$;
 	}
 
 	@Override

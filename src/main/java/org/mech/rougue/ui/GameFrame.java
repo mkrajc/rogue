@@ -16,6 +16,10 @@ public class GameFrame extends TerminalFrame implements Handler {
 
 	private static final long serialVersionUID = 1L;
 
+	public void setGameTerminal(GameTerminalPanel gameTerminal) {
+		this.gameTerminal = gameTerminal;
+	}
+
 	@Inject
 	private GameTerminalPanel gameTerminal;
 
@@ -28,7 +32,6 @@ public class GameFrame extends TerminalFrame implements Handler {
 	@Inject
 	private StartGameAction startGameAction;
 
-	@Override
 	public void showWindow() {
 		pack();
 		setVisible(true);

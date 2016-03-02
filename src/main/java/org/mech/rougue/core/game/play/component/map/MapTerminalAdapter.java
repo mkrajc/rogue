@@ -3,9 +3,10 @@ package org.mech.rougue.core.game.play.component.map;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+
+import org.mech.rogue.game.model.map.MapTile;
 import org.mech.rougue.core.game.GameContext;
 import org.mech.rougue.core.game.GameData;
-import org.mech.rougue.core.game.model.map.tile.NewMapTile;
 import org.mech.terminator.ITerminal;
 import org.mech.terminator.Terminal;
 import org.mech.terminator.geometry.Dimension;
@@ -20,7 +21,7 @@ public class MapTerminalAdapter {
 
 	private ITerminal terminal;
 
-	private org.mech.rougue.core.r.model.map.Map gameMap;
+	private org.mech.rogue.game.model.map.Map gameMap;
 	private Map<Position, RenderedMapTile> tiles;
 
 	public MapTerminalAdapter() {}
@@ -68,7 +69,7 @@ public class MapTerminalAdapter {
 		RenderedMapTile mapTile = tiles.get(termPosition);
 
 		if (mapTile == null) {
-			final NewMapTile t = gameMap.get(mapPosition);
+			final MapTile t = gameMap.get(mapPosition).getOrElse(null);
 			mapTile = new RenderedMapTile(termPosition, terminal, t);
 			tiles.put(termPosition, mapTile);
 		}
@@ -94,14 +95,14 @@ public class MapTerminalAdapter {
 		this.gameMap = game.getMap();
 		this.terminal = Terminal.getInstance();
 
-		final Dimension mapSize = gameMap.getSize();
+		final Dimension mapSize = gameMap.size();
 		final Dimension termSize = terminal.getSize().toDimension();
 
 		final Position playerPosition = game.getPlayer().getPosition();
-		final Position terminalMapShifPosition = getTerminalPosition(mapSize, termSize, playerPosition);
+		final Position terminalMapShiftPosition = getTerminalPosition(mapSize, termSize, playerPosition);
 
 		// todo map boundary could be different
-		terminalToMap = new NestedRectangle(terminalMapShifPosition, termSize, gameMap.getSize().toRectangle());
+		terminalToMap = new NestedRectangle(terminalMapShiftPosition, termSize, gameMap.size().toRectangle());
 		mapBoundary = terminalToMap.intersect();
 	}
 }

@@ -74,6 +74,10 @@ public class TickTimer {
 			// keep looping round til the game ends
 			while (running) {
 				if (paused) {
+					// wait a little for pausing
+					try {
+						Thread.sleep(100);
+					} catch (InterruptedException e) {}
 					continue;
 				}
 				// work out how long its been since the last update, this
@@ -105,8 +109,7 @@ public class TickTimer {
 				// to this and then factor in the current time to give
 				// us our final value to wait for
 				// remember this is in ms, whereas our lastLoopTime etc. vars
-				// are in
-				// ns.
+				// are in ns.
 				try {
 					Thread.sleep((lastLoopTime - System.nanoTime() + optimalTime) / 1000000);
 				} catch (final Exception e) {}

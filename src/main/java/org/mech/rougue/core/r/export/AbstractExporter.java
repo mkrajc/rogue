@@ -1,5 +1,7 @@
 package org.mech.rougue.core.r.export;
 
+import org.mech.rogue.game.export.Exportable;
+
 public class AbstractExporter<T extends Exportable> {
 	protected ObjectImporter<T> defaultImporter;
 	protected ObjectImporter<T> importer;

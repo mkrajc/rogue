@@ -1,11 +1,13 @@
 package org.mech.rougue.core.r.model.light;
 
 import java.util.Collection;
+
+import org.mech.rogue.game.model.map.Map;
 import org.mech.rougue.core.game.model.light.LightType;
 import org.mech.rougue.core.game.model.player.FOV;
 import org.mech.rougue.core.r.event.EventBus;
 import org.mech.rougue.core.r.event.RebuildLightEvent;
-import org.mech.rougue.core.r.model.map.Map;
+
 import org.mech.rougue.core.r.object.GId;
 import org.mech.rougue.core.r.object.GIdFactory;
 import org.mech.terminator.geometry.Position;

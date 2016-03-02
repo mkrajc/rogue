@@ -1,6 +1,6 @@
 package org.mech.rougue.core.r.export.state;
 
-import org.mech.rougue.core.r.export.Exportable;
+import org.mech.rogue.game.export.Exportable;
 
 public class State implements Exportable {
 	private static final long serialVersionUID = 5455310750758637040L;
@@ -18,8 +18,9 @@ public class State implements Exportable {
 	public void setMapId(final String mapId) {
 		this.mapId = mapId;
 	}
+
 	@Override
-	public String getObjectId() {
+	public String objectId() {
 		return "state";
 	}
 }

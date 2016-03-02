@@ -4,10 +4,19 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import javax.annotation.PostConstruct;
+
+import org.mech.rogue.game.model.map.Map;
+import org.mech.rogue.game.render.map.Fixed$;
+import org.mech.rogue.game.render.map.Invisible$;
+import org.mech.rogue.game.render.map.Memorable$;
+import org.mech.rogue.game.render.map.Normal$;
+import org.mech.rogue.game.render.map.RenderObject;
+import org.mech.rogue.game.render.map.RenderOption;
 import org.mech.rougue.core.game.GameContext;
+import org.mech.rougue.core.game.model.player.Player;
 import org.mech.rougue.core.game.play.component.map.MapTerminalAdapter;
 import org.mech.rougue.core.r.handler.game.light.LightMask;
-import org.mech.rougue.core.r.model.map.Map;
+import org.mech.rougue.core.r.object.GObjectUtils;
 import org.mech.rougue.factory.Inject;
 import org.mech.terminator.geometry.Position;
 import org.slf4j.Logger;
@@ -16,88 +25,114 @@ import org.slf4j.LoggerFactory;
 @SuppressWarnings("rawtypes")
 public class MapObjectOrdererRenderer extends AbstractOrderedMapRenderer {
 
-	private static final Logger LOG = LoggerFactory.getLogger(AbstractOrderedMapRenderer.class);
+    private static final Logger LOG = LoggerFactory.getLogger(AbstractOrderedMapRenderer.class);
 
-	@Inject
-	private List<MapObjectRenderer> renderers;
+    @Inject
+    private List<MapObjectRenderer> renderers;
 
-	private final java.util.Map<String, MapObjectRenderer> map = new HashMap<String, MapObjectRenderer>();
+    private final java.util.Map<Class<?>, MapObjectRenderer> map = new HashMap<Class<?>, MapObjectRenderer>();
+    private final java.util.Map<RenderOption, RenderStrategy> renderStrategyMap = new HashMap<>();
 
-	@PostConstruct
-	public void setup() {
-		for (final MapObjectRenderer objectRenderer : renderers) {
-			map.put(objectRenderer.getType(), objectRenderer);
-		}
-	}
+    @PostConstruct
+    public void setup() {
+        System.out.println("renderers: " + renderers.size());
+        for (final MapObjectRenderer objectRenderer : renderers) {
+            System.out.println("renderer add: " + objectRenderer);
+            map.put(objectRenderer.getClass(), objectRenderer);
+        }
 
-	@Override
-	public void render(final GameContext context, final MapTerminalAdapter mapTerminal) {
-		final List<MapObject> mapObjects = context.getGameObjects(MapObject.class);
-		
-		// player must go last
-		Collections.reverse(mapObjects);
+        renderStrategyMap.put(Normal$.MODULE$, new Normal());
+        renderStrategyMap.put(Memorable$.MODULE$, new Memo());
+        renderStrategyMap.put(Fixed$.MODULE$, new Fixed());
+        renderStrategyMap.put(Invisible$.MODULE$, new Invisible());
+    }
 
-		for (final MapObject mapObject : mapObjects) {
-			renderMapObject(mapObject, context, mapTerminal);
-		}
-	}
-	
-	private void renderMapObject(final MapObject mapObject, final GameContext context, final MapTerminalAdapter mapTerminal){
-		final Map cMap = context.getData().getMap();
-		final LightMask lightMask = context.getGameObject(LightMask.class);
-		if (isOnScreen(context, mapObject, mapTerminal)) {
-			final Position at = mapObject.getPosition();
-			final boolean memorable = (mapObject.getRenderOptions() & RenderOptions.MEMORABLE) == RenderOptions.MEMORABLE;
-			final boolean fixed = (mapObject.getRenderOptions() & RenderOptions.FIXED) == RenderOptions.FIXED;
-			final boolean invisible = (mapObject.getRenderOptions() & RenderOptions.INVISIBLE) == RenderOptions.INVISIBLE;
+    @Override
+    public void render(final GameContext context, final MapTerminalAdapter mapTerminal) {
+        final List<RenderObject> mapObjects = context.getGameObjects(RenderObject.class);
 
-			boolean render = false;
-			
-			if(invisible){
-				return;
-			}
+        // player must go last
+        Collections.reverse(mapObjects);
 
-			if (memorable) {
-				if (cMap.getStats().seen(at)) {
-					dispatch(mapObject, context, mapTerminal);
-					render = true;
-				}
-			}
+        final Player player = GObjectUtils.getObjectOfType(mapObjects, Player.class);
+        mapObjects.remove(player);
 
-			if (!render && fixed) {
-				dispatch(mapObject, context, mapTerminal);
-				render = true;
-			}
+        for (final RenderObject mapObject : mapObjects) {
+            renderMapObject(mapObject, context, mapTerminal);
+        }
 
-			if (!render && lightMask.isLighten(at)) {
-				dispatch(mapObject, context, mapTerminal);
-				render = true;
-			}
-		}
-	}
+        renderMapObject(player, context, mapTerminal);
+    }
 
-	@SuppressWarnings("unchecked")
-	private void dispatch(final MapObject mapObject, final GameContext context, final MapTerminalAdapter mapTerminal) {
-		MapObjectRenderer mapObjectRenderer = map.get(mapObject.getType());
+    private void renderMapObject(final RenderObject mapObject, final GameContext context, final MapTerminalAdapter mapTerminal) {
+        if (isOnScreen(context, mapObject, mapTerminal)) {
+            renderStrategyMap.get(mapObject.getRenderOptions()).render(mapObject, context, mapTerminal);
+        }
+    }
 
-		if (mapObjectRenderer == null) {
-			mapObjectRenderer = map.get(null);
-		}
+    private interface RenderStrategy {
+        boolean render(RenderObject obj, GameContext context, MapTerminalAdapter mapTerminal);
+    }
 
-		if (mapObjectRenderer == null) {
-			throw new IllegalArgumentException("No renderer found for id=" + mapObject.getType());
-		}
+    private class Memo implements RenderStrategy {
+        public boolean render(RenderObject obj, GameContext context, MapTerminalAdapter mapTerminal) {
+            final Map cMap = context.getData().getMap();
+            final Position at = obj.getPosition();
+            if (cMap.stats().seen(at)) {
+                dispatch(obj, context, mapTerminal);
+                return true;
+            }
+            return false;
+        }
+    }
 
-		LOG.trace("dispatching to [" + mapObjectRenderer + "]");
-		mapObjectRenderer.render(mapObject, context, mapTerminal);
-	}
+    private class Normal implements RenderStrategy {
+        public boolean render(RenderObject obj, GameContext context, MapTerminalAdapter mapTerminal) {
+            final LightMask lightMask = context.getLightMask();
+            final Position at = obj.getPosition();
+            if (lightMask.isLighten(at)) {
+                dispatch(obj, context, mapTerminal);
+                return true;
+            }
+            return false;
+        }
+    }
 
-	private boolean isOnScreen(final GameContext context, final MapObject mapObject, final MapTerminalAdapter mapTerminal) {
-		return mapTerminal.toTerminal(mapObject.getPosition()) != null && context.getData().getMap().getStats().seen(mapObject.getPosition());
-	}
+    private class Fixed implements RenderStrategy {
+        public boolean render(RenderObject obj, GameContext context, MapTerminalAdapter mapTerminal) {
+            dispatch(obj, context, mapTerminal);
+            return true;
+        }
+    }
 
-	@Override
-	public int getOrder() {
-		return RenderOrder.OBJECTS.ordinal();
-	}
+    private class Invisible implements RenderStrategy {
+        public boolean render(RenderObject obj, GameContext context, MapTerminalAdapter mapTerminal) {
+            return false;
+        }
+    }
+
+
+    @SuppressWarnings("unchecked")
+    private void dispatch(final RenderObject mapObject, final GameContext context, final MapTerminalAdapter mapTerminal) {
+        MapObjectRenderer mapObjectRenderer = map.get(mapObject.getClass());
+
+        if (mapObjectRenderer == null) {
+            mapObjectRenderer = map.get(DefaultMapObjectRenderer.class);
+        }
+
+        if (mapObjectRenderer == null) {
+            throw new IllegalArgumentException("No renderer found for id=" + mapObject);
+        }
+
+        mapObjectRenderer.render(mapObject, context, mapTerminal);
+    }
+
+    private boolean isOnScreen(final GameContext context, final RenderObject mapObject, final MapTerminalAdapter mapTerminal) {
+        return mapTerminal.toTerminal(mapObject.getPosition()) != null && context.getData().getMap().stats().seen(mapObject.getPosition());
+    }
+
+    @Override
+    public int getOrder() {
+        return RenderOrder.OBJECTS.ordinal();
+    }
 }

@@ -1,6 +1,7 @@
 package org.mech.rougue.core.game.play.component.map;
 
-import org.mech.rougue.core.r.model.map.Map;
+
+import org.mech.rogue.game.model.map.Map;
 import org.mech.terminator.ITerminal;
 import org.mech.terminator.TerminalRectangleWrapper;
 import org.mech.terminator.geometry.Dimension;
@@ -19,7 +20,7 @@ public class GameMapScaler {
 
 	public ITerminal upscaleIfNeeded(Map map, ITerminal iTerminal) {
 		Dimension terminalDimension = iTerminal.getSize().toDimension();
-		Dimension mapDimension = map.getSize();
+		Dimension mapDimension = map.size();
 		if (rebuildNeeded) {
 			lastMapSize = Dimension.clone(mapDimension);
 			lastTerminalSize = Dimension.clone(terminalDimension);

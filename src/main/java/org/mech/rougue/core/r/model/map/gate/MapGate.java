@@ -1,8 +1,9 @@
 package org.mech.rougue.core.r.model.map.gate;
 
+import org.mech.rogue.game.render.map.Fixed$;
+import org.mech.rogue.game.render.map.RenderObject;
+import org.mech.rogue.game.render.map.RenderOption;
 import org.mech.rougue.core.game.GameContext;
-import org.mech.rougue.core.game.model.map.render.MapObject;
-import org.mech.rougue.core.game.model.map.render.RenderOptions;
 import org.mech.rougue.core.game.model.player.Player;
 import org.mech.rougue.core.r.event.EventBus;
 import org.mech.rougue.core.r.event.player.PlayerChangeMapRequestEvent;
@@ -13,7 +14,7 @@ import org.mech.rougue.core.r.object.GIdFactory;
 import org.mech.rougue.core.r.render.RenderId;
 import org.mech.terminator.geometry.Position;
 
-public class MapGate implements MapObject, PlayerMoveEvent.Handler {
+public class MapGate implements RenderObject, PlayerMoveEvent.Handler {
 	private static final long serialVersionUID = -530954101000740720L;
 	private final RenderId renderId;
 	private GId gId;
@@ -53,11 +54,10 @@ public class MapGate implements MapObject, PlayerMoveEvent.Handler {
 	}
 
 	@Override
-	public int getRenderOptions() {
-		return 0 | RenderOptions.FIXED;
+	public RenderOption getRenderOptions() {
+		return Fixed$.MODULE$;
 	}
 
-	@Override
 	public String getType() {
 		return "gate";
 	}

@@ -1,8 +1,10 @@
 package org.mech.rougue.core.r.model.trap;
 
+import org.mech.rogue.game.render.map.Invisible$;
+import org.mech.rogue.game.render.map.Memorable$;
+import org.mech.rogue.game.render.map.RenderObject;
+import org.mech.rogue.game.render.map.RenderOption;
 import org.mech.rougue.core.game.GameContext;
-import org.mech.rougue.core.game.model.map.render.MapObject;
-import org.mech.rougue.core.game.model.map.render.RenderOptions;
 import org.mech.rougue.core.r.event.EventBus;
 import org.mech.rougue.core.r.event.player.PlayerMoveEvent;
 import org.mech.rougue.core.r.handler.register.Registration;
@@ -14,13 +16,13 @@ import org.mech.terminator.geometry.Position;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public abstract class Trap implements GObject, PlayerMoveEvent.Handler, MapObject {
+public abstract class Trap implements GObject, PlayerMoveEvent.Handler, RenderObject {
 
 	private static final long serialVersionUID = -3432038588851206027L;
 
 	private final static Logger LOG = LoggerFactory.getLogger(Trap.class);
 
-	private static int ACTIVATED_RENDER = 0 | RenderOptions.MEMORABLE;
+	private static RenderOption ACTIVATED_RENDER = Memorable$.MODULE$;
 
 	private final GId gId;
 	private final RenderId rId;
@@ -28,7 +30,7 @@ public abstract class Trap implements GObject, PlayerMoveEvent.Handler, MapObjec
 	private Position position;
 	private boolean activated = false;
 
-	private int renderOptions = 0 | RenderOptions.INVISIBLE;
+	private RenderOption renderOptions = Invisible$.MODULE$;
 
 	private transient Registration playerMoveListener;
 
@@ -87,7 +89,7 @@ public abstract class Trap implements GObject, PlayerMoveEvent.Handler, MapObjec
 	}
 
 	@Override
-	public int getRenderOptions() {
+	public RenderOption getRenderOptions() {
 		return renderOptions;
 	}
 
@@ -96,7 +98,6 @@ public abstract class Trap implements GObject, PlayerMoveEvent.Handler, MapObjec
 		return rId;
 	}
 
-	@Override
 	public String getType() {
 		return "trap";
 	}

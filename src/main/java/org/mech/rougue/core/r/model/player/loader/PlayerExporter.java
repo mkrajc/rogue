@@ -14,7 +14,7 @@ public class PlayerExporter extends AbstractExporter<Player>{
 	
 	public static void main(final String[] args) {
 		final Player base = new Player();
-		base.setPosition(Position.at(0, 0));
+		base.setPosition(Position.at(1, 1));
 		new PlayerExporter().saveDefault(base);
 	}
 }

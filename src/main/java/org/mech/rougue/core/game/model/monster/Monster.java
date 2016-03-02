@@ -1,21 +1,26 @@
 package org.mech.rougue.core.game.model.monster;
 
+import org.mech.rogue.game.action.map.MapMovement;
+import org.mech.rogue.game.action.map.NormalMapMovement;
+import org.mech.rogue.game.render.map.Normal$;
+import org.mech.rogue.game.render.map.RenderObject;
+import org.mech.rogue.game.render.map.RenderOption;
 import org.mech.rougue.core.game.GameContext;
-import org.mech.rougue.core.game.model.map.render.MapObject;
-import org.mech.rougue.core.game.update.move.MapMover;
 import org.mech.rougue.core.r.model.common.LiveObject;
 import org.mech.rougue.core.r.object.GId;
 import org.mech.rougue.core.r.render.RenderId;
 import org.mech.terminator.geometry.Position;
 
-public class Monster extends LiveObject implements MapObject {
+import scala.Option;
+
+public class Monster extends LiveObject implements RenderObject {
 
 	private GId gId;
 	private final RenderId id = new RenderId(getType());
 	private Position position;
 	private boolean updated;
 
-	private final MapMover mapMoveVisitor = new MapMover();
+	private final MapMovement mapMoveVisitor = new NormalMapMovement();
 
 
 	@Override
@@ -40,8 +45,8 @@ public class Monster extends LiveObject implements MapObject {
 
 		final Position newMonsterPosition = getPosition().addXY(x, y);
 
-		mapMoveVisitor.move(this, newMonsterPosition, context.getData().getMap());
-		System.out.println("new position " + newMonsterPosition);
+		Option<Position> newPosition = mapMoveVisitor.move(getPosition(), newMonsterPosition, context.getData().getMap());
+		System.out.println("new position " + newPosition);
 
 		if (getPosition().equals(playerPosition)) {
 			System.err.println("GAME OVER from Monster " + this);
@@ -61,11 +66,10 @@ public class Monster extends LiveObject implements MapObject {
 	}
 
 	@Override
-	public int getRenderOptions() {
-		return 0;
+	public RenderOption getRenderOptions() {
+		return Normal$.MODULE$;
 	}
 
-	@Override
 	public String getType() {
 		return "monster";
 	}

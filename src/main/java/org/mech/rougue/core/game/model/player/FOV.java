@@ -3,9 +3,14 @@ package org.mech.rougue.core.game.model.player;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
-import org.mech.rougue.core.r.model.map.Map;
+
+import org.mech.rogue.game.model.map.Map;
+import org.mech.rougue.core.game.model.map.render.EnvironmentObject;
 import org.mech.terminator.geometry.GeometryUtils;
 import org.mech.terminator.geometry.Position;
+
+import scala.collection.JavaConversions;
+import scala.collection.immutable.List;
 
 public class FOV {
 
@@ -13,7 +18,7 @@ public class FOV {
 			{ 1, 0, 0, 1, -1, 0, 0, -1 } };
 
 	static void cast_light(Map map, int x, int y, int radius, int row, float start_slope, float end_slope, int xx, int xy, int yx, int yy,
-			Set<Position> lightMapx) {
+						   Set<Position> lightMapx) {
 		if (start_slope < end_slope) {
 			return;
 		}
@@ -36,7 +41,7 @@ public class FOV {
 				}
 				int ax = x + sax;
 				int ay = y + say;
-				if (ax >= map.getSize().getWidth() || ay >= map.getSize().getHeight()) {
+				if (ax >= map.size().width || ay >= map.size().getHeight()) {
 					continue;
 				}
 
@@ -46,14 +51,14 @@ public class FOV {
 				}
 
 				if (blocked) {
-					if (map.get(ax, ay).isObstacle()) {
+					if (isObstacle(Position.at(ax,ay), map)) {
 						next_start_slope = r_slope;
 						continue;
 					} else {
 						blocked = false;
 						start_slope = next_start_slope;
 					}
-				} else if (map.get(ax, ay).isObstacle()) {
+				} else if (isObstacle(Position.at(ax,ay), map)) {
 					blocked = true;
 					next_start_slope = r_slope;
 					cast_light(map, x, y, radius, i + 1, start_slope, l_slope, xx, xy, yx, yy, lightMapx);
@@ -63,6 +68,23 @@ public class FOV {
 				break;
 			}
 		}
+	}
+
+	private static boolean isObstacle(Position dest, Map map){
+		// maybe later better grouping of object that can change this property
+		List<EnvironmentObject> objects = Map.getObjects(map,dest, EnvironmentObject.class);
+
+		// if tile exist allow only ground type
+		boolean tileIsObstacle = !map.get(dest).get().config().tileType().isTransparent();
+
+		for(EnvironmentObject eo : JavaConversions.asJavaIterable(objects)){
+			if(!eo.getTileType().isTransparent()){
+				return true;
+			}
+		}
+
+		return tileIsObstacle;
+
 	}
 
 	public static Collection<Position> doFov(Map map, Position p, int radius) {

@@ -15,15 +15,8 @@ public class RendererDefinition extends AbstractDefinition {
 	@Override
 	public void definitions() {
 		singleton(LightMask.class);
-		singleton(LightMaskRenderer.class);
 		singleton(SeenMapRenderer.class);
-		singleton(MapObjectOrdererRenderer.class);
-
-		singleton(PlayerRenderer.class);
-		singleton(MonsterRenderer.class);
-		
 		singleton(TileTheme.class);
-				
 		singleton(DefaultMapObjectRenderer.class);
 	}
 

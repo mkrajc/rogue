@@ -1,9 +1,10 @@
 package org.mech.rougue.core.game.model.map.render;
 
+import org.mech.rogue.game.render.map.RenderObject;
 import org.mech.rougue.core.game.GameContext;
 import org.mech.rougue.core.game.play.component.map.MapTerminalAdapter;
 
-public abstract class AbstractMapObjectRenderer<M extends MapObject> extends AbstractMapRenderer implements MapObjectRenderer<M> {
+public abstract class AbstractMapObjectRenderer<M extends RenderObject> extends AbstractMapRenderer implements MapObjectRenderer<M> {
 
 	@Override
 	public final void render(M mapObject, GameContext context, MapTerminalAdapter mapTerminal) {

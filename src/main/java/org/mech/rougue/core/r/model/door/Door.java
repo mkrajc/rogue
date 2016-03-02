@@ -6,10 +6,10 @@ import org.mech.rogue.game.model.map.Ground$;
 import org.mech.rogue.game.model.map.Type;
 import org.mech.rogue.game.model.map.Wall$;
 import org.mech.rogue.game.render.map.Fixed$;
+import org.mech.rogue.game.render.map.RenderObject;
 import org.mech.rogue.game.render.map.RenderOption;
 import org.mech.rougue.core.game.GameContext;
 import org.mech.rougue.core.game.model.map.render.EnvironmentObject;
-import org.mech.rougue.core.game.model.map.render.MapObject;
 import org.mech.rougue.core.game.model.map.tile.Tiles;
 import org.mech.rougue.core.r.action.object.InteractiveObject;
 import org.mech.rougue.core.r.action.object.PlayerMoveInFrontOfItemInteraction;
@@ -24,7 +24,7 @@ import org.mech.rougue.core.r.render.RenderId;
 import org.mech.rougue.utils.CollectionUtils;
 import org.mech.terminator.geometry.Position;
 
-public class Door implements MapObject, EnvironmentObject, InteractiveObject, ContextAwareGObject {
+public class Door implements RenderObject, EnvironmentObject, InteractiveObject, ContextAwareGObject {
 
     public static final String TYPE = "DOOR";
 
@@ -82,7 +82,6 @@ public class Door implements MapObject, EnvironmentObject, InteractiveObject, Co
         return Fixed$.MODULE$;
     }
 
-    @Override
     public String getType() {
         return TYPE;
     }

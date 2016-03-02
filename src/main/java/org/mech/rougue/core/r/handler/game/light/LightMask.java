@@ -31,7 +31,7 @@ public class LightMask implements UpdateAwareGObject {
 
 	@PostConstruct
 	public void setup() {
-		gContext.add(this);
+		gContext.setLightMask(this);
 	}
 
 	public boolean isLighten(Position position) {

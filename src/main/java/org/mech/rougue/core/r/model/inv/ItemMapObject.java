@@ -3,9 +3,9 @@ package org.mech.rougue.core.r.model.inv;
 import java.util.List;
 
 import org.mech.rogue.game.render.map.Memorable$;
+import org.mech.rogue.game.render.map.RenderObject;
 import org.mech.rogue.game.render.map.RenderOption;
 import org.mech.rougue.core.game.GameContext;
-import org.mech.rougue.core.game.model.map.render.MapObject;
 import org.mech.rougue.core.r.action.object.InteractiveObject;
 import org.mech.rougue.core.r.action.object.PlayerMoveOnItemInteraction;
 import org.mech.rougue.core.r.context.ContextAwareGObject;
@@ -16,7 +16,7 @@ import org.mech.rougue.core.r.render.RenderId;
 import org.mech.rougue.utils.CollectionUtils;
 import org.mech.terminator.geometry.Position;
 
-public class ItemMapObject implements MapObject, InteractiveObject, ContextAwareGObject {
+public class ItemMapObject implements RenderObject, InteractiveObject, ContextAwareGObject {
 
 	private static final long serialVersionUID = -7874765175139493785L;
 	private Position position;
@@ -55,7 +55,7 @@ public class ItemMapObject implements MapObject, InteractiveObject, ContextAware
 	public RenderId getRenderId() {
 		return renderId;
 	}
-	@Override
+
 	public String getType() {
 		return "item." + item.getRenderType();
 	}

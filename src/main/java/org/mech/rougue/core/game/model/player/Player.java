@@ -2,9 +2,9 @@ package org.mech.rougue.core.game.model.player;
 
 import org.mech.rogue.game.export.Exportable;
 import org.mech.rogue.game.render.map.Fixed$;
+import org.mech.rogue.game.render.map.RenderObject;
 import org.mech.rogue.game.render.map.RenderOption;
 import org.mech.rougue.core.game.GameContext;
-import org.mech.rougue.core.game.model.map.render.MapObject;
 import org.mech.rougue.core.r.context.ContextAwareGObject;
 import org.mech.rougue.core.r.event.player.PlayerDiedEvent;
 import org.mech.rougue.core.r.handler.game.UpdateAwareGObject;
@@ -20,7 +20,7 @@ import org.mech.rougue.core.r.object.GIdFactory;
 import org.mech.rougue.core.r.render.RenderId;
 import org.mech.terminator.geometry.Position;
 
-public class Player implements MapObject, IsCombatant, UpdateAwareGObject, Exportable, ContextAwareGObject {
+public class Player implements RenderObject, IsCombatant, UpdateAwareGObject, Exportable, ContextAwareGObject {
 
 	private static final long serialVersionUID = -1887109198236195102L;
 	private final GId gId;
@@ -79,7 +79,6 @@ public class Player implements MapObject, IsCombatant, UpdateAwareGObject, Expor
 		return Fixed$.MODULE$;
 	}
 
-	@Override
 	public String getType() {
 		return "player";
 	}

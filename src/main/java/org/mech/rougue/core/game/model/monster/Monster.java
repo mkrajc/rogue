@@ -2,11 +2,10 @@ package org.mech.rougue.core.game.model.monster;
 
 import org.mech.rogue.game.action.map.MapMovement;
 import org.mech.rogue.game.action.map.NormalMapMovement;
-import org.mech.rogue.game.render.map.Normal;
 import org.mech.rogue.game.render.map.Normal$;
+import org.mech.rogue.game.render.map.RenderObject;
 import org.mech.rogue.game.render.map.RenderOption;
 import org.mech.rougue.core.game.GameContext;
-import org.mech.rougue.core.game.model.map.render.MapObject;
 import org.mech.rougue.core.r.model.common.LiveObject;
 import org.mech.rougue.core.r.object.GId;
 import org.mech.rougue.core.r.render.RenderId;
@@ -14,7 +13,7 @@ import org.mech.terminator.geometry.Position;
 
 import scala.Option;
 
-public class Monster extends LiveObject implements MapObject {
+public class Monster extends LiveObject implements RenderObject {
 
 	private GId gId;
 	private final RenderId id = new RenderId(getType());
@@ -71,7 +70,6 @@ public class Monster extends LiveObject implements MapObject {
 		return Normal$.MODULE$;
 	}
 
-	@Override
 	public String getType() {
 		return "monster";
 	}

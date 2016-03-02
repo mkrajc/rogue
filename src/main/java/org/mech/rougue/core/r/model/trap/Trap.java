@@ -2,9 +2,9 @@ package org.mech.rougue.core.r.model.trap;
 
 import org.mech.rogue.game.render.map.Invisible$;
 import org.mech.rogue.game.render.map.Memorable$;
+import org.mech.rogue.game.render.map.RenderObject;
 import org.mech.rogue.game.render.map.RenderOption;
 import org.mech.rougue.core.game.GameContext;
-import org.mech.rougue.core.game.model.map.render.MapObject;
 import org.mech.rougue.core.r.event.EventBus;
 import org.mech.rougue.core.r.event.player.PlayerMoveEvent;
 import org.mech.rougue.core.r.handler.register.Registration;
@@ -16,7 +16,7 @@ import org.mech.terminator.geometry.Position;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public abstract class Trap implements GObject, PlayerMoveEvent.Handler, MapObject {
+public abstract class Trap implements GObject, PlayerMoveEvent.Handler, RenderObject {
 
 	private static final long serialVersionUID = -3432038588851206027L;
 
@@ -98,7 +98,6 @@ public abstract class Trap implements GObject, PlayerMoveEvent.Handler, MapObjec
 		return rId;
 	}
 
-	@Override
 	public String getType() {
 		return "trap";
 	}

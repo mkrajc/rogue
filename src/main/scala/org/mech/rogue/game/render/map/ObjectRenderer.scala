@@ -41,7 +41,7 @@ private class MemorableStrategy extends ObjectRenderStrategy {
     val cMap: Map = context.getData.getMap
     val at: Position = obj.getPosition
     if (cMap.stats.seen(at)) {
-      defRenderer.doRender(obj, context, mapTerminal)
+      defRenderer.render(obj, context, mapTerminal)
       return true
     }
     return false
@@ -53,7 +53,7 @@ private class NormalStrategy extends ObjectRenderStrategy {
     val lightMask: LightMask = context.getLightMask
     val at: Position = obj.getPosition
     if (lightMask.isLighten(at)) {
-      defRenderer.doRender(obj, context, mapTerminal)
+      defRenderer.render(obj, context, mapTerminal)
       return true
     }
     return false
@@ -64,7 +64,7 @@ private class NormalStrategy extends ObjectRenderStrategy {
 private class FixedStrategy extends ObjectRenderStrategy {
 
   override def render(defRenderer: DefaultMapObjectRenderer, obj: RenderObject, context: GameContext, mapTerminal: MapTerminalAdapter): Boolean = {
-    defRenderer.doRender(obj, context, mapTerminal)
+    defRenderer.render(obj, context, mapTerminal)
     true
   }
 }

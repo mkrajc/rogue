@@ -31,7 +31,7 @@ public class ColorConfigUtils {
 		gShift = Math.max(gShift, 0);
 		bShift = Math.max(bShift, 0);
 
-		return config == null ? null : new Color(rShift, gShift, bShift);
+		return new Color(rShift, gShift, bShift);
 	}
 
 	private static int shift(int shift, int line, int column) {

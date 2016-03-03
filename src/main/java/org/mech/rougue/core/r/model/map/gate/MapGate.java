@@ -1,6 +1,7 @@
 package org.mech.rougue.core.r.model.map.gate;
 
 import org.mech.rogue.game.render.map.Fixed$;
+import org.mech.rogue.game.render.map.Memorable$;
 import org.mech.rogue.game.render.map.RenderObject;
 import org.mech.rogue.game.render.map.RenderOption;
 import org.mech.rougue.core.game.GameContext;
@@ -55,7 +56,7 @@ public class MapGate implements RenderObject, PlayerMoveEvent.Handler {
 
 	@Override
 	public RenderOption getRenderOptions() {
-		return Fixed$.MODULE$;
+		return Memorable$.MODULE$;
 	}
 
 	public String getType() {

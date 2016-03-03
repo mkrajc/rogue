@@ -6,6 +6,7 @@ import org.mech.rogue.game.model.map.Ground$;
 import org.mech.rogue.game.model.map.Type;
 import org.mech.rogue.game.model.map.Wall$;
 import org.mech.rogue.game.render.map.Fixed$;
+import org.mech.rogue.game.render.map.Memorable$;
 import org.mech.rogue.game.render.map.RenderObject;
 import org.mech.rogue.game.render.map.RenderOption;
 import org.mech.rougue.core.game.GameContext;
@@ -79,7 +80,7 @@ public class Door implements RenderObject, EnvironmentObject, InteractiveObject,
 
     @Override
     public RenderOption getRenderOptions() {
-        return Fixed$.MODULE$;
+        return Memorable$.MODULE$;
     }
 
     public String getType() {

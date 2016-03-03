@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.util.Random;
 
 import org.mech.rogue.game.export.Exportable;
 import org.mech.rogue.game.model.map.Map;
@@ -24,98 +25,102 @@ import org.slf4j.LoggerFactory;
 
 public class ObjectExporter<T extends Exportable> extends AbstractObjectManipulator {
 
-	private final static Logger LOG = LoggerFactory.getLogger(ObjectExporter.class);
+    private final static Logger LOG = LoggerFactory.getLogger(ObjectExporter.class);
 
-	public ObjectExporter(final String folder) {
-		super(folder);
-	}
+    public ObjectExporter(final String folder) {
+        super(folder);
+    }
 
-	public String serialize(final T obj) {
-		return serialize(obj, obj.objectId());
-	}
-	
-	public String serialize(final T obj, final String name) {
-		FileOutputStream fileOut = null;
-		ObjectOutputStream out = null;
-		final String filename = getFilename(name);
-		final File f = new File(filename);
+    public String serialize(final T obj) {
+        return serialize(obj, obj.objectId());
+    }
 
-		f.getParentFile().mkdirs();
+    public String serialize(final T obj, final String name) {
+        FileOutputStream fileOut = null;
+        ObjectOutputStream out = null;
+        final String filename = getFilename(name);
+        final File f = new File(filename);
 
-		try {
-			fileOut = new FileOutputStream(filename);
-			out = new ObjectOutputStream(fileOut);
-			out.writeObject(obj);
-			LOG.info("Object serialize into [" + filename + "]");
-		} catch (final IOException i) {
-			i.printStackTrace();
-		} finally {
-			IOUtils.closeQuietly(out);
-			IOUtils.closeQuietly(fileOut);
-		}
+        f.getParentFile().mkdirs();
 
-		return filename;
-	}
-	
-	public static void main(final String[] args) {
+        try {
+            fileOut = new FileOutputStream(filename);
+            out = new ObjectOutputStream(fileOut);
+            out.writeObject(obj);
+            LOG.info("Object serialize into [" + filename + "]");
+        } catch (final IOException i) {
+            i.printStackTrace();
+        } finally {
+            IOUtils.closeQuietly(out);
+            IOUtils.closeQuietly(fileOut);
+        }
 
-		final ObjectExporter exporter = new ObjectExporter(Folders.MAP_DEFAULT_FOLDER);
-		exporter.serialize(getMap());
-		//		final Map newMap = new ObjectImporter("bin/").deserialize(name, Map.class);
+        return filename;
+    }
 
-		//		System.out.println(newMap);
-		//		System.out.println(newMap.getSize());
-		//		System.out.println(newMap.getGameObjects().size());
-		//		System.out.println(newMap.getGameObjects().get(0));
-	}
+    public static void main(final String[] args) {
 
-	public static Map getMap(){
-		final Area area = new Area();
-		area.setAreaId("north.forest");
-		area.setTheme("north.forest");
-		final Map map = new Map("test_2", Dimension.of(15), area, Tiles.ROOM_GROUND);
+        final ObjectExporter exporter = new ObjectExporter(Folders.MAP_DEFAULT_FOLDER);
+        exporter.serialize(getMap());
+        //		final Map newMap = new ObjectImporter("bin/").deserialize(name, Map.class);
+
+        //		System.out.println(newMap);
+        //		System.out.println(newMap.getSize());
+        //		System.out.println(newMap.getGameObjects().size());
+        //		System.out.println(newMap.getGameObjects().get(0));
+    }
+
+    public static Map getMap() {
+        final Area area = new Area();
+        area.setAreaId("north.forest");
+        area.setTheme("north.forest");
+        final Map map = new Map("test_2", Dimension.of(50), area, Tiles.ROOM_GROUND);
 
 
-		final DamageTrap damageTrap = new DamageTrap(new PhysicalDamage(10));
-		damageTrap.setPosition(Position.at(2, 2));
-		map.add(damageTrap);
 
-		final MapGate gate = new MapGate(Position.at(15, 14), Position.at(9, 9), "test_1", "test_2");
-		map.add(gate.twoWay());
+        final MapGate gate = new MapGate(Position.at(15, 14), Position.at(9, 9), "test_1", "test_2");
+        map.add(gate.twoWay());
 
-		final Door door1 = new Door();
-		door1.setPosition(Position.at(7,0));
-		door1.setOpen(false);
-		map.add(door1);
+        for (int i = 0; i < 7; i++) {
+            createDoor(map);
+            createDagger(map);
+            createTrap(map);
+        }
 
-		final Door door2 = new Door();
-		door2.setPosition(Position.at(7,1));
-		door2.setOpen(false);
-		map.add(door2);
 
-		final Door door3 = new Door();
-		door3.setPosition(Position.at(7,2));
-		door3.setOpen(false);
-		map.add(door3);
+        return map;
+    }
 
-		final Door door4 = new Door();
-		door4.setPosition(Position.at(7,3));
-		door4.setOpen(false);
-		map.add(door4);
+    private static void createTrap(Map map) {
+        int x = new Random().nextInt(map.size().getWidth());
+        int y = new Random().nextInt(map.size().getHeight());
+        final DamageTrap damageTrap = new DamageTrap(new PhysicalDamage(10));
+        final Position at = Position.at(x, y);
+        damageTrap.setPosition(at);
+        map.add(damageTrap);
+    }
 
-		final Door door5 = new Door();
-		door5.setPosition(Position.at(7,4));
-		door5.setOpen(false);
-		map.add(door5);
+    private static void createDoor(Map map) {
+        int x = new Random().nextInt(map.size().getWidth());
+        int y = new Random().nextInt(map.size().getHeight());
+        final Door door1 = new Door();
+        door1.setPosition(Position.at(x, y));
+        door1.setOpen(false);
+        map.add(door1);
+    }
 
-		final OneHandedWeapon dagger = new OneHandedWeapon();
-		dagger.setWeaponType(WeaponType.DAGGER);
-		dagger.setName("dagger");
+    private static void createDagger(Map map) {
+        int x = new Random().nextInt(map.size().getWidth());
+        int y = new Random().nextInt(map.size().getHeight());
 
-		final ItemMapObject itemMapObject = new ItemMapObject(dagger);
-		itemMapObject.setPosition(Position.at(3, 3));
+        final Position at = Position.at(x, y);
+        final OneHandedWeapon dagger = new OneHandedWeapon();
+        dagger.setWeaponType(WeaponType.DAGGER);
+        dagger.setName("dagger " + at);
 
-		map.add(itemMapObject);
-		return map;
-	}
+        final ItemMapObject itemMapObject = new ItemMapObject(dagger);
+        itemMapObject.setPosition(at);
+
+        map.add(itemMapObject);
+    }
 }

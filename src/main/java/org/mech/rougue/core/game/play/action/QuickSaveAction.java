@@ -1,5 +1,6 @@
 package org.mech.rougue.core.game.play.action;
 
+import org.mech.rougue.core.game.GameContext;
 import org.mech.rougue.core.game.GameLoader;
 import org.mech.rougue.factory.Inject;
 
@@ -9,7 +10,7 @@ public class QuickSaveAction extends DefaultAction {
 	private GameLoader loader;
 
 	@Override
-	protected void doInvoke() {
+	protected void doInvoke(GameContext context) {
 			loader.quicksave();
 	}
 

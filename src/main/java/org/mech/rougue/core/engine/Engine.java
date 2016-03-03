@@ -2,6 +2,7 @@ package org.mech.rougue.core.engine;
 
 import javax.annotation.PostConstruct;
 import org.mech.rougue.core.game.GameConstants;
+import org.mech.rougue.core.game.GameContext;
 import org.mech.rougue.core.game.play.component.map.MapComponent;
 import org.mech.rougue.core.game.play.handler.GameInput;
 import org.mech.rougue.core.game.play.handler.GameUpdate;
@@ -24,6 +25,9 @@ public class Engine {
 
 	@Inject
 	private GameUpdate gameUpdate;
+
+	@Inject
+	private GameContext gameContext;
 
 	private TickTimer engineTimer;
 
@@ -64,7 +68,7 @@ public class Engine {
 	}
 
 	public void processInputs() {
-		gameInput.processInput();
+		gameInput.processInput(gameContext);
 	}
 
 	public void update() {

@@ -1,7 +1,6 @@
 package org.mech.rougue.core.game.play.action;
 
-import org.mech.rogue.game.context.State;
-import org.mech.rougue.factory.Inject;
+import org.mech.rougue.core.game.GameContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -9,17 +8,14 @@ public abstract class DefaultAction extends Action {
 
 	private static final Logger LOG = LoggerFactory.getLogger(DefaultAction.class);
 
-	@Inject
-	private State gameState;
-
 	@Override
-	protected void invoke() {
-		if (!gameState.isPaused()) {
+	protected void invoke(GameContext context) {
+		if (!context.getState().isPaused()) {
 			LOG.debug("action [" + getClass().getSimpleName() + "] invoked");
-			doInvoke();
+			doInvoke(context);
 		}
 	}
 
-	protected abstract void doInvoke();
+	protected abstract void doInvoke(GameContext ctx);
 
 }

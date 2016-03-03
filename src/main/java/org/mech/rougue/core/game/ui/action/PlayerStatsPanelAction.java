@@ -12,13 +12,10 @@ public class PlayerStatsPanelAction extends DefaultAction {
 	private GameFrame panel;
 
 	@Inject
-	private GameContext context;
-
-	@Inject
 	private PlayerStatsPanel playerStatsPanel;
 
 	@Override
-	protected void doInvoke() {
+	protected void doInvoke(GameContext context) {
 		playerStatsPanel.setPlayerStats(context);
 		playerStatsPanel.showInPanel(panel.getRightPanel());
 	}

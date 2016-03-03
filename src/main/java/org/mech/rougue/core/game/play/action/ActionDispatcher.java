@@ -2,6 +2,7 @@ package org.mech.rougue.core.game.play.action;
 
 import java.util.List;
 import org.mech.rougue.core.engine.handler.input.InputEvent;
+import org.mech.rougue.core.game.GameContext;
 import org.mech.rougue.factory.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +17,7 @@ public class ActionDispatcher {
 	@Inject
 	private ActionMapping mapping;
 
-	public void invokeAction(InputEvent event) {
+	public void invokeAction(InputEvent event, GameContext context) {
 		final String actionType = mapping.getActionType(event);
 
 		if (actionType == null) {
@@ -33,7 +34,7 @@ public class ActionDispatcher {
 		}
 
 		if (action != null) {
-			action.invoke();
+			action.invoke(context);
 		}
 
 		if (action == null) {

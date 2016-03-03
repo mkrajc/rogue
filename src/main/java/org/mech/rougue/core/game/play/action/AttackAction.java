@@ -11,11 +11,8 @@ import org.mech.terminator.geometry.Position;
 
 public class AttackAction extends DefaultAction {
 
-	@Inject
-	private GameContext context;
-
 	@Override
-	protected void doInvoke() {
+	protected void doInvoke(GameContext context) {
 		if(Attacks.action != null){
 			System.out.println("TODO action ");
 			final Combat combat = new Combat();

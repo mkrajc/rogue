@@ -27,9 +27,6 @@ public class GameContext {
     @Inject
     public State state;
 
-    @Inject
-    public ActionDispatcher actionDispatcher;
-
     public final EventBus eventBus = new EventBus(this);
     public GameData data = new GameData();
 

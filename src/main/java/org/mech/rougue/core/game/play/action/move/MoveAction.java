@@ -12,19 +12,12 @@ public abstract class MoveAction extends DefaultAction {
 
 	private PlayerMover mover = new PlayerMover();
 
-	@Inject
-	private GameContext context;
-
-	@Inject
-	private ActionDispatcher actionDispatcher;
-
 	@Override
-	protected void doInvoke() {
-		
-		final org.mech.rogue.game.model.map.Map map = context.getData().getMap();
-		final Player player = context.getData().getPlayer();
+	protected void doInvoke(GameContext ctx) {
+		final org.mech.rogue.game.model.map.Map map = ctx.getData().getMap();
+		final Player player = ctx.getData().getPlayer();
 
-		mover.movePlayer(context, player, getMove(), map);
+		mover.movePlayer(ctx, player, getMove(), map);
 
 	}
 

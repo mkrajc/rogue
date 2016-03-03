@@ -3,6 +3,7 @@ package org.mech.rougue.core.game.play.action.game;
 import javax.swing.JOptionPane;
 
 import org.mech.rogue.game.context.State;
+import org.mech.rougue.core.game.GameContext;
 import org.mech.rougue.core.game.play.action.DefaultAction;
 import org.mech.rougue.factory.Inject;
 import org.mech.rougue.lang.LocalizedResourceBundle;
@@ -20,12 +21,12 @@ public class PauseAction extends DefaultAction {
 	private LocalizedResourceBundle bundle;
 
 	@Override
-	protected void invoke() {
-		doInvoke();
+	protected void invoke(GameContext ctx) {
+		doInvoke(ctx);
 	}
 
 	@Override
-	protected void doInvoke() {
+	protected void doInvoke(GameContext context) {
 		gameState.setPaused(true);
 		JOptionPane.showMessageDialog(gameFrame, "game paused", "Pause", JOptionPane.INFORMATION_MESSAGE);
 		gameState.setPaused(false);

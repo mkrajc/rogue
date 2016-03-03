@@ -12,13 +12,10 @@ public class InventoryPanelAction extends DefaultAction {
 	private GameFrame panel;
 
 	@Inject
-	private GameContext context;
-
-	@Inject
 	private InventoryPanel inventoryPanel;
 
 	@Override
-	protected void doInvoke() {
+	protected void doInvoke(GameContext context) {
 		inventoryPanel.setInventory(context.getData().getPlayer().inventory);
 		inventoryPanel.showInPanel(panel.getLeftPanel());
 	}

@@ -2,6 +2,8 @@ package org.mech.rougue.core.engine.handler.input;
 
 import java.awt.event.KeyEvent;
 import java.util.concurrent.ConcurrentLinkedQueue;
+
+import org.mech.rougue.core.game.GameContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,14 +32,14 @@ public abstract class InputHandlerAdapter implements InputListener, InputHandler
 	}
 
 	@Override
-	public void processInput() {
+	public void processInput(GameContext ctx) {
 		while (hasNext()) {
 			final InputEvent next = next();
 			LOG.trace(getClass().getSimpleName() + " process input [" + next + "]");
-			onInput(next);
+			onInput(next, ctx);
 		}
 
 	}
 
-	protected abstract void onInput(InputEvent event);
+	protected abstract void onInput(InputEvent event, GameContext ctx);
 }

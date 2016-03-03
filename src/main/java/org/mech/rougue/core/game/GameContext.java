@@ -4,17 +4,16 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.mech.rogue.game.context.State;
 import org.mech.rogue.game.render.map.RenderObject;
 import org.mech.rougue.core.game.model.player.Player;
 import org.mech.rougue.core.game.play.action.ActionDispatcher;
-import org.mech.rougue.core.game.state.GameState;
 import org.mech.rougue.core.r.context.ContextAwareGObject;
 import org.mech.rougue.core.r.event.Event;
 import org.mech.rougue.core.r.event.EventBus;
 import org.mech.rougue.core.r.handler.game.UpdateAwareGObject;
 import org.mech.rougue.core.r.handler.game.light.LightMask;
 import org.mech.rougue.core.r.model.common.GObject;
-import org.mech.rougue.core.r.model.geom.Positionable;
 import org.mech.rougue.core.r.object.GObjectUtils;
 import org.mech.rougue.factory.Inject;
 import org.mech.terminator.geometry.Position;
@@ -26,7 +25,7 @@ public class GameContext {
     private static final Logger LOG = LoggerFactory.getLogger(GameContext.class);
 
     @Inject
-    public GameState state;
+    public State state;
 
     @Inject
     public ActionDispatcher actionDispatcher;
@@ -42,11 +41,11 @@ public class GameContext {
         return data;
     }
 
-    public GameState getState() {
+    public State getState() {
         return state;
     }
 
-    public void setState(final GameState state) {
+    public void setState(final State state) {
         this.state = state;
     }
 

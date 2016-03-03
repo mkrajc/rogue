@@ -6,15 +6,10 @@ import org.mech.rougue.core.game.model.player.Player;
 import org.mech.rougue.core.game.play.component.map.MapTerminalAdapter;
 import org.mech.rougue.core.game.play.component.map.RenderedMapTile;
 import org.mech.rougue.core.game.play.component.map.cursor.Cursor;
-import org.mech.rougue.core.game.state.GameState;
-import org.mech.rougue.factory.Inject;
 
 public class PlayerRenderer extends AbstractMapObjectRenderer<Player> {
 
-	@Inject
-	private GameState gameState;
-
-	private Cursor playerCursor;
+		private Cursor playerCursor;
 
 	@Override
 	public void doRender(Player player, GameContext context, MapTerminalAdapter mapTerminal) {
@@ -23,7 +18,7 @@ public class PlayerRenderer extends AbstractMapObjectRenderer<Player> {
 	}
 
 	private void updateCursor(Player player, GameContext context, MapTerminalAdapter mapTerminal) {
-		if (gameState.isTurnFreezed()) {
+		if (context.state.isTurnFrozen()) {
 			if (playerCursor == null) {
 				playerCursor = new PlayerCursor();
 			}

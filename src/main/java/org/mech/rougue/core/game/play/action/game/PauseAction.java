@@ -1,8 +1,9 @@
 package org.mech.rougue.core.game.play.action.game;
 
 import javax.swing.JOptionPane;
+
+import org.mech.rogue.game.context.State;
 import org.mech.rougue.core.game.play.action.DefaultAction;
-import org.mech.rougue.core.game.state.GameState;
 import org.mech.rougue.factory.Inject;
 import org.mech.rougue.lang.LocalizedResourceBundle;
 import org.mech.rougue.ui.GameFrame;
@@ -10,7 +11,7 @@ import org.mech.rougue.ui.GameFrame;
 public class PauseAction extends DefaultAction {
 
 	@Inject
-	private GameState gameState;
+	private State gameState;
 
 	@Inject
 	private GameFrame gameFrame;

@@ -1,17 +1,17 @@
 package org.mech.rougue.core.game.play.action.turn;
 
+import org.mech.rogue.game.context.State;
 import org.mech.rougue.core.game.play.action.DefaultAction;
-import org.mech.rougue.core.game.state.GameState;
 import org.mech.rougue.factory.Inject;
 
 public class TurnFreezeAction extends DefaultAction {
 
 	@Inject
-	private GameState state;
+	private State state;
 
 	@Override
 	protected void doInvoke() {
-		state.setTurnFreezed(!state.isTurnFreezed());
+		state.setTurnFrozen(!state.isTurnFrozen());
 	}
 
 	@Override

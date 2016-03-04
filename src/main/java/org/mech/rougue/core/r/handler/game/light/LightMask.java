@@ -85,7 +85,7 @@ public class LightMask implements UpdateAwareGObject {
 	public void update(final GameContext context) {
 		reset();
 		
-		final List<LightSource> lightSources = context.getGameObjects(LightSource.class);
+		final List<LightSource> lightSources = context.getLightSources();
 
 		for (LightSource source : lightSources) {
 			final Collection<Light> lights = source.getLights();

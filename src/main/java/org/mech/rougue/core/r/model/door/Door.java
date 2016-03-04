@@ -80,7 +80,7 @@ public class Door implements RenderObject, EnvironmentObject, InteractiveObject,
 
     @Override
     public RenderOption getRenderOptions() {
-        return Memorable$.MODULE$;
+        return Fixed$.MODULE$;
     }
 
     public String getType() {

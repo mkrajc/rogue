@@ -5,10 +5,13 @@ import java.util.List;
 
 @SuppressWarnings("rawtypes")
 public class GObjectUtils {
+	public static int count = 0;
+
 	public static <T> List<T> getObjectsOfType(List gObjects, Class<T> clazz) {
 		List list = new ArrayList();
 		synchronized (gObjects) {
 			for (Object gObject : gObjects) {
+				count ++;
 				if (clazz.isAssignableFrom(gObject.getClass())) {
 					list.add(gObject);
 				}

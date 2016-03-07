@@ -3,6 +3,7 @@ package org.mech.rougue.core.r.model.light;
 import java.util.Collection;
 
 import org.mech.rogue.game.model.map.Map;
+import org.mech.rougue.core.game.GameData;
 import org.mech.rougue.core.game.model.light.LightType;
 import org.mech.rougue.core.game.model.player.FOV;
 import org.mech.rougue.core.r.event.EventBus;
@@ -59,11 +60,11 @@ public class CircleLightSource extends AbstractLightSource {
 	}
 
 	@Override
-	protected void rebuildLights(final Map gameMap) {
+	protected void rebuildLights(final GameData data) {
 		LOG.debug("Recounting light on light source [" + this + "]");
 		getLights().clear();
 
-		final Collection<Position> positions = FOV.doFov(gameMap, getPosition(), getRadius());
+		final Collection<Position> positions = FOV.doFov(data, getPosition(), getRadius());
 		addLights(positions);
 	}
 

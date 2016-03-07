@@ -11,6 +11,7 @@ import scala.collection.mutable.ListBuffer
 
 class Map(val mapId: String, val size: Dimension, val area: Area, defaultTile: TileConfig) extends Exportable {
   private val gameObjects: ListBuffer[GObject] = new ListBuffer[GObject]
+
   val tiles: Array[Array[MapTile]] = Array.fill(size.width, size.height)(new MapTile(defaultTile))
   val stats = new Stats(this)
 
@@ -29,6 +30,8 @@ class Map(val mapId: String, val size: Dimension, val area: Area, defaultTile: T
   }
 
   def objects(): List[GObject] = gameObjects.toList
+
+  def objects(position: Position): List[GObject] = gameObjects.toList
 
   def get(x: Int, y: Int): Option[MapTile] = get(Position.at(x, y))
 

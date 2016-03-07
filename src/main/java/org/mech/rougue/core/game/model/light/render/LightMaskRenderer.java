@@ -25,6 +25,8 @@ public class LightMaskRenderer implements Renderer {
             return;
         }
 
+        // TODO optimize according to lighteb value.
+
         final Color bgColor = rTile.getBg();
 
         Color newColor = bgColor == null ? Color.BLACK : ColorUtils.blend(bgColor, SHADOW, lightMask.getShadowIntensity(at));

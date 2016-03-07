@@ -24,7 +24,7 @@ public class TakeItemAction implements ObjectAction {
 		ctx.getData().getPlayer().inventory.take(itemMapObject.getItem());
 		// remove wrapped item from contenxt map
 		ctx.remove(itemMapObject);
-		ctx.data.map.remove(itemMapObject);
+		ctx.data.getMap().remove(itemMapObject);
 	}
 
 	@Override

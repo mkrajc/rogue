@@ -15,12 +15,4 @@ public class GameUpdate implements UpdateHandler {
 		context.update();
 	}
 
-	public GameContext getGameContext() {
-		return context;
-	}
-
-	public GameData getGame() {
-		return context.getData();
-	}
-
 }

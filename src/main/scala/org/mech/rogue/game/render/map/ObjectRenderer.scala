@@ -5,30 +5,29 @@ import org.mech.rougue.core.game.GameContext
 import org.mech.rougue.core.game.model.map.render.DefaultMapObjectRenderer
 import org.mech.rougue.core.game.play.component.map.MapTerminalAdapter
 import org.mech.rougue.core.r.handler.game.light.LightMask
-import org.mech.terminator.geometry.Position
+import org.mech.terminator.geometry.{Position, Rectangle}
 
 import scala.collection.JavaConversions
 
 
-class ObjectRenderer(val defRenderer: DefaultMapObjectRenderer) extends Renderer {
+class ObjectRenderer(val defRenderer: DefaultMapObjectRenderer) extends MapSceneRenderer {
   private val renderStrategyMap = scala.collection.immutable.HashMap[RenderOption, ObjectRenderStrategy](
     Normal -> new NormalStrategy,
     Memorable -> new MemorableStrategy,
     Fixed -> new FixedStrategy,
     Invisible -> new InvisibleStrategy)
 
-  override def render(pos: Position, context: GameContext, mapTerminal: MapTerminalAdapter): Unit = {
-    val objects = JavaConversions.collectionAsScalaIterable(context.getRenderObjects(pos))
-
-    for (obj <- objects) {
-      // player must go last
-      // better mapping, maybe implicit conversions
-      renderStrategyMap.get(obj.getRenderOptions).get.render(defRenderer, obj, context, mapTerminal)
-    }
-
+  def render(renderObject: RenderObject, context: GameContext, mapTerminal: MapTerminalAdapter): Unit = {
+    renderStrategyMap.get(renderObject.getRenderOptions).get.render(defRenderer, renderObject, context, mapTerminal)
   }
 
-
+  override def render(scene: Rectangle, context: GameContext, mapTerminal: MapTerminalAdapter): Unit = {
+    val objs: List[RenderObject] = JavaConversions.asScalaBuffer(context.getRenderObjects).toList
+    for (obj <- objs) {
+      if (scene.isIn(obj.getPosition))
+        render(obj, context, mapTerminal)
+    }
+  }
 }
 
 trait ObjectRenderStrategy {
@@ -42,9 +41,8 @@ private class MemorableStrategy extends ObjectRenderStrategy {
     val at: Position = obj.getPosition
     if (cMap.stats.seen(at)) {
       defRenderer.render(obj, context, mapTerminal)
-      return true
-    }
-    return false
+      true
+    } else false
   }
 }
 
@@ -54,9 +52,8 @@ private class NormalStrategy extends ObjectRenderStrategy {
     val at: Position = obj.getPosition
     if (lightMask.isLighten(at)) {
       defRenderer.render(obj, context, mapTerminal)
-      return true
-    }
-    return false
+      true
+    } else false
   }
 
 }

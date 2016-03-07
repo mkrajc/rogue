@@ -6,11 +6,9 @@ import org.mech.rogue.game.model.map.Ground$;
 import org.mech.rogue.game.model.map.Type;
 import org.mech.rogue.game.model.map.Wall$;
 import org.mech.rogue.game.render.map.Fixed$;
-import org.mech.rogue.game.render.map.Memorable$;
 import org.mech.rogue.game.render.map.RenderObject;
 import org.mech.rogue.game.render.map.RenderOption;
 import org.mech.rougue.core.game.GameContext;
-import org.mech.rougue.core.game.model.map.render.EnvironmentObject;
 import org.mech.rougue.core.game.model.map.tile.Tiles;
 import org.mech.rougue.core.r.action.object.InteractiveObject;
 import org.mech.rougue.core.r.action.object.PlayerMoveInFrontOfItemInteraction;
@@ -25,7 +23,7 @@ import org.mech.rougue.core.r.render.RenderId;
 import org.mech.rougue.utils.CollectionUtils;
 import org.mech.terminator.geometry.Position;
 
-public class Door implements RenderObject, EnvironmentObject, InteractiveObject, ContextAwareGObject {
+public class Door implements RenderObject, InteractiveObject, ContextAwareGObject {
 
     public static final String TYPE = "DOOR";
 
@@ -35,7 +33,7 @@ public class Door implements RenderObject, EnvironmentObject, InteractiveObject,
     private final RenderId renderId;
 
     private Position position;
-    private boolean open = true;
+    private boolean open = false;
 
     private final PlayerMoveInFrontOfItemInteraction interaction;
 
@@ -66,7 +64,12 @@ public class Door implements RenderObject, EnvironmentObject, InteractiveObject,
 
     public void setOpen(final boolean open) {
         this.open = open;
+        refresh();
+    }
+
+    private void refresh(){
         this.renderId.setId(open ? Tiles.DOOR_OPENED_ID : Tiles.DOOR_CLOSED_ID);
+        this.context.data.shadowMap.setShadow(getPosition(), isClosed());
     }
 
     public boolean isClosed() {
@@ -117,6 +120,7 @@ public class Door implements RenderObject, EnvironmentObject, InteractiveObject,
     public void onAdd(final GameContext context) {
         this.context = context;
         this.context.eventBus.addHandler(PlayerMoveEvent.class, interaction);
+        refresh();
     }
 
     @Override
@@ -125,8 +129,9 @@ public class Door implements RenderObject, EnvironmentObject, InteractiveObject,
         this.context.eventBus.removeHandler(interaction);
     }
 
-    @Override
+    //@Override
     public Type getTileType() {
         return isOpen() ? Ground$.MODULE$ : Wall$.MODULE$;
     }
+
 }

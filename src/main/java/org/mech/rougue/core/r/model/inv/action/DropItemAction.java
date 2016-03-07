@@ -29,7 +29,7 @@ public class DropItemAction implements ObjectAction {
 		final ItemMapObject itemMapObject = new ItemMapObject(item);
 		itemMapObject.setPosition(Position.clone(player.getPosition()));
 		ctx.add(itemMapObject);
-		ctx.data.map.add(itemMapObject);
+		ctx.data.getMap().add(itemMapObject);
 		
 	}
 

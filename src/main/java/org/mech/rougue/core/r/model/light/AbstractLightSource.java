@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.mech.rogue.game.model.map.Map;
+import org.mech.rougue.core.game.GameData;
 import org.mech.rougue.core.r.event.RebuildLightEvent;
 import org.mech.rougue.core.r.handler.game.light.LightMask;
 
@@ -20,10 +21,10 @@ public abstract class AbstractLightSource implements LightSource {
 
 	@Override
 	public void onLightRebuild(final RebuildLightEvent event) {
-		rebuildLights(event.getContext().getData().getMap());
+		rebuildLights(event.getContext().getData());
 	}
 	
-	protected abstract void rebuildLights(Map map);
+	protected abstract void rebuildLights(GameData data);
 	
 	// TODO some generic value
 	protected abstract double getShadowIntensity(float distanceFromCenter);

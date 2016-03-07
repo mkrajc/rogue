@@ -5,14 +5,18 @@ import java.util.Collection;
 import javax.annotation.PostConstruct;
 
 import org.mech.rogue.game.render.map.MapRenderer;
+import org.mech.rogue.game.render.map.MapSceneRenderer;
 import org.mech.rogue.game.render.map.ObjectRenderer;
+import org.mech.rogue.game.render.map.RenderObject;
 import org.mech.rogue.game.render.map.Renderer;
+import org.mech.rogue.game.render.map.SceneToPositionRenderer;
 import org.mech.rougue.core.engine.handler.render.RenderHandler;
 import org.mech.rougue.core.game.GameContext;
 import org.mech.rougue.core.game.model.light.render.LightMaskRenderer;
 import org.mech.rougue.core.game.model.map.render.DefaultMapObjectRenderer;
 import org.mech.rougue.core.game.model.map.render.SeenMapRenderer;
 import org.mech.rougue.factory.Inject;
+import org.mech.terminator.geometry.Position;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,29 +34,32 @@ public class MapComponent implements RenderHandler {
     private SeenMapRenderer seenMapRenderer;
 
     @Inject
-    private DefaultMapObjectRenderer objectRenderer;
+    private DefaultMapObjectRenderer defObjectRenderer;
 
     //	@Inject
     //	private GameInput gameInput;
 
     private MapRenderer mapRenderer;
 
+
     final MapTerminalAdapter mapTerminal = new MapTerminalAdapter();
 
     @PostConstruct
     public void setup() {
-        java.util.List<Renderer> rList = Arrays.asList(
+        final java.util.List<Renderer> rList = Arrays.asList(
                 seenMapRenderer,
-                new ObjectRenderer(objectRenderer),
                 new LightMaskRenderer());
         final List<Renderer> renderers = JavaConversions.asScalaBuffer(rList).toList();
-        mapRenderer = new MapRenderer(renderers);
+        final java.util.List<MapSceneRenderer> sceneRendererList = Arrays.asList(
+                new SceneToPositionRenderer(renderers),
+                new ObjectRenderer(defObjectRenderer));
+        final List<MapSceneRenderer> sceneRenderers = JavaConversions.asScalaBuffer(sceneRendererList).toList();
+        this.mapRenderer = new MapRenderer(sceneRenderers);
     }
 
     @Override
     public void render() {
         mapTerminal.adapt(context);
-
         mapRenderer.render(context, mapTerminal);
 
         final Collection<RenderedMapTile> tiles = mapTerminal.getTiles();

@@ -1,8 +1,8 @@
 package org.mech.rougue.core.game;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import javax.annotation.PostConstruct;
 
@@ -35,9 +35,9 @@ public class GameContext {
 
     private LightMask lightMask;
 
-    private final List<GObject> gameObjects = new ArrayList<GObject>();
-    private final List<RenderObject> renderObjects = new ArrayList<RenderObject>();
-    private final List<UpdateAwareGObject> updateAwareObjects = new ArrayList<UpdateAwareGObject>();
+    private final List<GObject> gameObjects = new ArrayList<>();
+    private final List<RenderObject> renderObjects = new ArrayList<>();
+    private final List<UpdateAwareGObject> updateAwareObjects = new ArrayList<>();
 
     public GameData getData() {
         return data;
@@ -85,11 +85,57 @@ public class GameContext {
             }
             if (gObject instanceof RenderObject) {
                 renderObjects.add((RenderObject) gObject);
+                sortRenderObjects();
             }
             if (gObject instanceof UpdateAwareGObject) {
                 updateAwareObjects.add((UpdateAwareGObject) gObject);
             }
         }
+    }
+
+    private void sortRenderObjects() {
+        Collections.sort(renderObjects, new Comparator<RenderObject>() {
+            @Override
+            public int compare(RenderObject o1, RenderObject o2) {
+                return o1.getPosition().compareTo(o2.getPosition());
+            }
+        });
+        System.out.println("sorting rendered objects");
+    }
+
+    public List<RenderObject> getRenderObjects(Position position) {
+        int from = binary_search_starting_point(renderObjects, position, 0, renderObjects.size());
+        if (from < 0) {
+            return null;
+        } else {
+            List<RenderObject> ro = new ArrayList<>(3);
+            for (int i = from; i < renderObjects.size() && renderObjects.get(i).getPosition().equals(position); i++) {
+                ro.add(renderObjects.get(i));
+            }
+            return ro;
+        }
+
+    }
+
+    private int binary_search_starting_point(List<RenderObject> arr, Position position, int imin, int imax) {
+        // continue searching while [imin,imax] is not empty
+        while (imin <= imax) {
+            // calculate the midpoint for roughly equal partition
+            int imid = (imin + imax) / 2;
+            int cmp = arr.get(imid).getPosition().compareTo(position);
+            if (cmp == 0)
+                // key found at index imid
+                return imid;
+                // determine which subarray to search
+            else if (cmp < 0)
+                // change min index to search upper subarray
+                imin = imid + 1;
+            else
+                // change max index to search lower subarray
+                imax = imid - 1;
+        }
+        // key was not found
+        return -1;
     }
 
     public void remove(final GObject gObject) {
@@ -103,15 +149,12 @@ public class GameContext {
             }
             if (gObject instanceof RenderObject) {
                 renderObjects.remove((RenderObject) gObject);
+                sortRenderObjects();
             }
             if (gObject instanceof UpdateAwareGObject) {
                 updateAwareObjects.remove((UpdateAwareGObject) gObject);
             }
         }
-    }
-
-    private <T> List<T> getGameObjects(final Class<T> clazz) {
-        return GObjectUtils.getObjectsOfType(gameObjects, clazz);
     }
 
     public LightMask getLightMask() {
@@ -122,26 +165,14 @@ public class GameContext {
         return GObjectUtils.getObjectOfType(gameObjects, Player.class);
     }
 
-    public static long rtime = 0;
     public static long ltime = 0;
 
     public List<UpdateAwareGObject> getUpdateAwareObjects() {
         return updateAwareObjects;
     }
 
-
-    public List<RenderObject> getRenderObjects(Position pos) {
-        long start = System.currentTimeMillis();
-        //TODO better finding
-        final ArrayList<RenderObject> filteredRenderObjects = new ArrayList<>();
-        for (Iterator<RenderObject> it = renderObjects.iterator(); it.hasNext(); ) {
-            RenderObject obj = it.next();
-            if (obj.getPosition().equals(pos)) {
-                filteredRenderObjects.add(obj);
-            }
-        }
-        rtime += (System.currentTimeMillis() - start);
-        return filteredRenderObjects;
+    public List<RenderObject> getRenderObjects() {
+        return renderObjects;
     }
 
 

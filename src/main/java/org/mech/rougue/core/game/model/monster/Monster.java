@@ -45,7 +45,7 @@ public class Monster extends LiveObject implements RenderObject {
 
 		final Position newMonsterPosition = getPosition().addXY(x, y);
 
-		Option<Position> newPosition = mapMoveVisitor.move(getPosition(), newMonsterPosition, context.getData().getMap());
+		Option<Position> newPosition = mapMoveVisitor.move(getPosition(), newMonsterPosition, context.getData().getMap(), context);
 		System.out.println("new position " + newPosition);
 
 		if (getPosition().equals(playerPosition)) {

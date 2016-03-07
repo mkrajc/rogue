@@ -86,7 +86,7 @@ public class MapGate implements RenderObject, PlayerMoveEvent.Handler {
 			if (!isOnSameMap()) {
 				new PlayerChangeMapRequestEvent(fromMapId, toMapId, player, to).fire(ctx);
 			} else {
-				new PlayerMover().movePlayer(ctx, player, to, ctx.data.map);
+				new PlayerMover().movePlayer(ctx, player, to, ctx.data.getMap());
 			}
 
 		}

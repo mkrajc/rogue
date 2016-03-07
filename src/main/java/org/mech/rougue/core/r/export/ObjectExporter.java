@@ -105,7 +105,7 @@ public class ObjectExporter<T extends Exportable> extends AbstractObjectManipula
         int y = new Random().nextInt(map.size().getHeight());
         final Door door1 = new Door();
         door1.setPosition(Position.at(x, y));
-        door1.setOpen(false);
+        //door1.setOpen(false);
         map.add(door1);
     }
 

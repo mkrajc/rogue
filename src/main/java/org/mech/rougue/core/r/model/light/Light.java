@@ -1,8 +1,10 @@
 package org.mech.rougue.core.r.model.light;
 
+import java.io.Serializable;
+
 import org.mech.terminator.geometry.Position;
 
-public class Light {
+public class Light implements Serializable {
     private Position pos;
 
     public Light(Position position) {

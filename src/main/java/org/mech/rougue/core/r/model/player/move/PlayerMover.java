@@ -21,7 +21,7 @@ public class PlayerMover {
 
 	public void placePlayer(final GameContext context, final Player player, final Position position, final Map map, final boolean notify) {
 		final Position old = player.getPosition();
-		Option<Position> newPos = mapMovement.place(position, map);
+		Option<Position> newPos = mapMovement.place(position, map, context);
 		player.setPosition(newPos.get());
 		if (notify) {
 			notifyPlayerMove(context, player, old, player.getPosition());
@@ -30,7 +30,7 @@ public class PlayerMover {
 
 	public void movePlayer(final GameContext context, final Player player, final Position destination, final Map map) {
 		final Position old = player.getPosition();
-		final Option<Position> newPos = mapMovement.move(old, destination, map);
+		final Option<Position> newPos = mapMovement.move(old, destination, map, context);
 		boolean moved = (newPos.isDefined() && !newPos.get().equals(old));
 		if (moved) {
 			player.setPosition(newPos.get());

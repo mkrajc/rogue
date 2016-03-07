@@ -74,7 +74,7 @@ public class GameLoader implements GObject, LoadMapEvent.Handler, PlayerChangeMa
 
 		final org.mech.rogue.game.model.map.Map map = ObjectExporter.getMap(); //mapExporter.load(id);
 
-		context.data.map = map;
+		context.data.setMap(map);
 		theme.setTheme(map.area().getTheme());
 
 		mapRegistration = new BulkRegistration<GameContext, GObject>(context, JavaConversions$.MODULE$.asJavaCollection(map.objects()), new GObjectOnGameContextRegistrationHandler());
@@ -92,7 +92,7 @@ public class GameLoader implements GObject, LoadMapEvent.Handler, PlayerChangeMa
 		context.add(player);
 		
 		final PlayerMover playerMover = new PlayerMover();
-		playerMover.placePlayer(context, player, player.getPosition(), context.data.map, false);
+		playerMover.placePlayer(context, player, player.getPosition(), context.data.getMap(), false);
 		
 		new RebuildLightEvent().fire(context);
 		
@@ -102,11 +102,11 @@ public class GameLoader implements GObject, LoadMapEvent.Handler, PlayerChangeMa
 	protected void autosave(){
 		System.out.println("autosave...");
 		
-		mapExporter.save(context.data.map);
+		mapExporter.save(context.data.getMap());
 		playerExporter.save(context.data.player);
 		
 		final State state = new State();
-		state.setMapId(context.data.map.mapId());
+		state.setMapId(context.data.getMap().mapId());
 		
 		// TODO player
 		state.setPlayerId("player");
@@ -117,11 +117,11 @@ public class GameLoader implements GObject, LoadMapEvent.Handler, PlayerChangeMa
 	public void quicksave(){
 		System.out.println("quicksave...");
 		
-		mapExporter.quicksave(context.data.map);
+		mapExporter.quicksave(context.data.getMap());
 		playerExporter.quicksave(context.data.player);
 		
 		final State state = new State();
-		state.setMapId(context.data.map.mapId());
+		state.setMapId(context.data.getMap().mapId());
 		
 		// TODO player
 		state.setPlayerId("player");
@@ -141,12 +141,12 @@ public class GameLoader implements GObject, LoadMapEvent.Handler, PlayerChangeMa
 		final Player player = event.getPlayer();
 
 		// persist state of current map
-		mover.displacePlayer(player, context.data.map);
-		mapExporter.save(context.data.map);
+		mover.displacePlayer(player, context.data.getMap());
+		mapExporter.save(context.data.getMap());
 		
 		// load new map and place player on it
 		loadMap(event.getToMapId());
-		mover.placePlayer(event.getContext(), player, event.getDestinationPosition(), context.data.map, true);
+		mover.placePlayer(event.getContext(), player, event.getDestinationPosition(), context.data.getMap(), true);
 		
 		// persist state
 		autosave();

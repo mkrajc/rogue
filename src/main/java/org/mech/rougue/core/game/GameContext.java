@@ -8,7 +8,7 @@ import javax.annotation.PostConstruct;
 
 import org.mech.rogue.game.context.State;
 import org.mech.rogue.game.render.map.RenderObject;
-import org.mech.rougue.core.game.model.map.render.SeenMapRenderer;
+import org.mech.rogue.game.render.map.SeenMapRenderer$;
 import org.mech.rougue.core.game.model.player.Player;
 import org.mech.rougue.core.r.context.ContextAwareGObject;
 import org.mech.rougue.core.r.event.Event;
@@ -53,8 +53,7 @@ public class GameContext {
 
     @PostConstruct
     public void after() {
-        System.out.println("creating context");
-        getState().switchState(SeenMapRenderer.SEE_ALL_SWITCH);
+        getState().switchState(SeenMapRenderer$.MODULE$.SEE_ALL_SWITCH());
     }
 
     public void update() {
@@ -100,7 +99,6 @@ public class GameContext {
                 return o1.getPosition().compareTo(o2.getPosition());
             }
         });
-        System.out.println("sorting rendered objects");
     }
 
     public List<RenderObject> getRenderObjects(Position position) {

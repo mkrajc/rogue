@@ -7,16 +7,14 @@ import javax.annotation.PostConstruct;
 import org.mech.rogue.game.render.map.MapRenderer;
 import org.mech.rogue.game.render.map.MapSceneRenderer;
 import org.mech.rogue.game.render.map.ObjectRenderer;
-import org.mech.rogue.game.render.map.RenderObject;
 import org.mech.rogue.game.render.map.Renderer;
 import org.mech.rogue.game.render.map.SceneToPositionRenderer;
+import org.mech.rogue.game.render.map.SeenMapRenderer;
 import org.mech.rougue.core.engine.handler.render.RenderHandler;
 import org.mech.rougue.core.game.GameContext;
 import org.mech.rougue.core.game.model.light.render.LightMaskRenderer;
-import org.mech.rougue.core.game.model.map.render.DefaultMapObjectRenderer;
-import org.mech.rougue.core.game.model.map.render.SeenMapRenderer;
+import org.mech.rougue.core.r.render.terminal.DefaultTerminalConfigProvider;
 import org.mech.rougue.factory.Inject;
-import org.mech.terminator.geometry.Position;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,28 +29,21 @@ public class MapComponent implements RenderHandler {
     private GameContext context;
 
     @Inject
-    private SeenMapRenderer seenMapRenderer;
-
-    @Inject
-    private DefaultMapObjectRenderer defObjectRenderer;
-
-    //	@Inject
-    //	private GameInput gameInput;
+    private DefaultTerminalConfigProvider configProvider;
 
     private MapRenderer mapRenderer;
-
 
     final MapTerminalAdapter mapTerminal = new MapTerminalAdapter();
 
     @PostConstruct
     public void setup() {
         final java.util.List<Renderer> rList = Arrays.asList(
-                seenMapRenderer,
+                new SeenMapRenderer(configProvider),
                 new LightMaskRenderer());
         final List<Renderer> renderers = JavaConversions.asScalaBuffer(rList).toList();
         final java.util.List<MapSceneRenderer> sceneRendererList = Arrays.asList(
                 new SceneToPositionRenderer(renderers),
-                new ObjectRenderer(defObjectRenderer));
+                new ObjectRenderer(configProvider));
         final List<MapSceneRenderer> sceneRenderers = JavaConversions.asScalaBuffer(sceneRendererList).toList();
         this.mapRenderer = new MapRenderer(sceneRenderers);
     }
@@ -68,24 +59,5 @@ public class MapComponent implements RenderHandler {
             tile.render();
         }
     }
-
-    //	private void renderTile(ITermirminal, RenderedMapTile tile) {
-    //		int line = tile.getLine();
-    //		int column = tile.getColumn();
-    //		terminal.put(tile.getChar(), line, column);
-    //		Color bgColor = tile.getBg();
-    //		Color fgColor = tile.getFg();
-    //
-    //		if (tile.isGrayscale()) {
-    //			fgColor = ColorConfigUtils.toGrayScale(tile.getFg());
-    //		}
-    //
-    //		if(tile.isBold()) {
-    //			terminal.bold(line, column);
-    //		}
-    //
-    //		terminal.bg(bgColor, line, column);
-    //		terminal.fg(fgColor, line, column);
-    //	}
 
 }

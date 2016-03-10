@@ -33,7 +33,7 @@ class NormalMapMovement extends MapMovement {
     val tileOk = map.get(dest).exists(canMove)
 
     val door = GObjectUtils.getObjectOfType(context.getRenderObjects(dest),classOf[Door])
-    val objectsOk = door != null && door.isOpen
+    val objectsOk = (door != null && door.isOpen) || door == null
 
     if(tileOk && objectsOk) Some(dest)
     else None

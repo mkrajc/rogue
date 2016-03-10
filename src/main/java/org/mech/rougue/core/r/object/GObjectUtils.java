@@ -5,27 +5,26 @@ import java.util.List;
 
 @SuppressWarnings("rawtypes")
 public class GObjectUtils {
-	public static int count = 0;
 
-	public static <T> List<T> getObjectsOfType(List gObjects, Class<T> clazz) {
-		List list = new ArrayList();
-		synchronized (gObjects) {
-			for (Object gObject : gObjects) {
-				count ++;
-				if (clazz.isAssignableFrom(gObject.getClass())) {
-					list.add(gObject);
-				}
-			}
-		}
-		return list;
-	}
+    public static <T> List<T> getObjectsOfType(List gObjects, Class<T> clazz) {
+        List<T> list = new ArrayList<>();
+        if (gObjects != null) {
+            for (Object gObject : gObjects) {
+                if (clazz.isAssignableFrom(gObject.getClass())) {
+                    list.add((T)gObject);
+                }
+            }
+        }
 
-	public static <T> T getObjectOfType(List gObjects, final Class<T> clazz) {
-		final List<T> objs = getObjectsOfType(gObjects, clazz);
-		if (objs != null && objs.size() > 1) {
-			throw new IllegalStateException("More objects in context");
-		}
-		return objs == null ? null : objs.get(0);
-	}
+        return list;
+    }
+
+    public static <T> T getObjectOfType(List gObjects, final Class<T> clazz) {
+        final List<T> objs = getObjectsOfType(gObjects, clazz);
+        if (objs != null && objs.size() > 1) {
+            throw new IllegalStateException("More objects in context");
+        }
+        return objs == null || objs.isEmpty() ? null : objs.get(0);
+    }
 
 }

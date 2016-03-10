@@ -73,7 +73,7 @@ public class ObjectExporter<T extends Exportable> extends AbstractObjectManipula
     public static Map getMap() {
         final Area area = new Area();
         area.setAreaId("north.forest");
-        area.setTheme("north.forest");
+        area.setTheme("ice.temple");
         final Map map = new Map("test_2", Dimension.of(50), area, Tiles.ROOM_GROUND);
 
 

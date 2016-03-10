@@ -51,7 +51,7 @@ public class Engine {
 					update();
 					render();
 					if(count == 0){
-						System.out.println("" + ((System.currentTimeMillis() - start) / 1000) + "s " + GObjectUtils.count);
+						System.out.println("" + ((System.currentTimeMillis() - start) / 1000) + "s ");
 						System.out.println("finding lights: " + GameContext.ltime + "ms");
 						System.exit(1);
 					}
